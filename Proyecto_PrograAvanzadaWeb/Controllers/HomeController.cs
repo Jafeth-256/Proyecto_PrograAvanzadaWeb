@@ -18,7 +18,7 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Inicio()
         {
             return View();
         }
