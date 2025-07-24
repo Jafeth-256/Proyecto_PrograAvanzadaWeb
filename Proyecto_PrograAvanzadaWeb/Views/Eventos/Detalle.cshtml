@@ -1,0 +1,9 @@
+﻿@model Evento
+<h2>@Model.Titulo</h2>
+<img src="@Model.ImagenRuta" class="img-fluid mb-3" style="max-height:300px;" />
+<p><strong>Tipo:</strong> @Model.Tipo</p>
+<p><strong>Ubicación:</strong> @Model.Ubicacion</p>
+<p><strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy")</p>
+<p><strong>Organizador:</strong> @Model.Organizador</p>
+<p><strong>Contacto:</strong> @Model.Contacto</p>
+<p><strong>Descripción:</strong><br /> @Model.Descripcion</p>
