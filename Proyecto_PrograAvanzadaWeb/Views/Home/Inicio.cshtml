@@ -2,6 +2,712 @@
     ViewData["Title"] = "";
 }
 
+<style>
+    /* Estilos específicos para la vista de inicio */
+    .inicio-container {
+        background: linear-gradient(135deg, var(--gray-50) 0%, #f0f4f8 100%);
+        min-height: calc(100vh - var(--header-height));
+        padding: 0;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 40px 30px;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+
+    .calendar-section {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .destinations-section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 0 5px;
+    }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0;
+        }
+
+    .ver-todo-btn {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        border-bottom: 2px solid transparent;
+    }
+
+        .ver-todo-btn:hover {
+            border-bottom-color: #10b981;
+            transform: translateY(-1px);
+        }
+
+    .destinations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .destination-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+        .destination-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+    .destination-image {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+        .destination-image::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.3));
+        }
+
+    .destination-info {
+        padding: 20px;
+        position: relative;
+    }
+
+    .destination-name {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin-bottom: 8px;
+    }
+
+    .destination-price {
+        font-size: 1.1rem;
+        color: #10b981;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    /* Tabs */
+    .tabs-container {
+        margin-bottom: 30px;
+    }
+
+    .tabs-nav {
+        display: flex;
+        background: white;
+        border-radius: 15px;
+        padding: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .tab-button {
+        flex: 1;
+        padding: 12px 20px;
+        background: transparent;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        color: var(--gray-600);
+    }
+
+        .tab-button.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+    .tab-content {
+        display: none;
+    }
+
+        .tab-content.active {
+            display: block;
+        }
+
+    /* Popular destinations grid */
+    .popular-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .popular-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .popular-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .popular-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+
+    .popular-location {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .location-flag {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: white;
+        font-size: 0.9rem;
+    }
+
+    .location-info h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--gray-900);
+        margin: 0 0 4px 0;
+    }
+
+    .location-country {
+        font-size: 0.9rem;
+        color: var(--gray-600);
+        margin: 0;
+    }
+
+    .location-price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #10b981;
+        margin: 0;
+    }
+
+    /* Calendar styles */
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .calendar-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .calendar-day-header {
+        text-align: center;
+        font-weight: 600;
+        color: var(--gray-600);
+        font-size: 0.85rem;
+        padding: 8px 0;
+    }
+
+    .calendar-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+
+        .calendar-day:hover {
+            background: var(--gray-100);
+        }
+
+        .calendar-day.today {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 700;
+        }
+
+        .calendar-day.selected {
+            background: #10b981;
+            color: white;
+            font-weight: 700;
+        }
+
+    .calendar-month-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .calendar-month-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--gray-900);
+    }
+
+    .calendar-nav-btn {
+        background: var(--gray-100);
+        border: none;
+        border-radius: 8px;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: var(--gray-600);
+    }
+
+        .calendar-nav-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+    /* Reservas sidebar */
+    .reservas-sidebar {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .reservas-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .reservas-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0;
+        }
+
+    .reserva-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--gray-100);
+    }
+
+        .reserva-item:last-child {
+            border-bottom: none;
+        }
+
+    .reserva-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .reserva-info h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin: 0 0 4px 0;
+    }
+
+    .reserva-date {
+        font-size: 0.85rem;
+        color: var(--gray-600);
+        margin: 0;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .hero-title
+
+    {
+        font-size: 2rem;
+    }
+
+    .destinations-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .popular-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-section,
+    .reservas-sidebar {
+        padding: 20px;
+    }
+
+    }
+</style>
+
+<div class="inicio-container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">¡Hola Usuario!</h1>
+            <p class="hero-subtitle">Bienvenido de nuevo y explora el mundo.</p>
+        </div>
+    </div>
+
+    <div style="padding: 0 30px;">
+        <!-- Main Content Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 320px; gap: 30px; align-items: start;">
+
+            <!-- Left Column -->
+            <div>
+                <!-- Destinos con visa Section -->
+                <div class="destinations-section">
+                    <div class="section-title">
+                        <h2>Destinos con visa</h2>
+                        <a href="#" class="ver-todo-btn">Ver Todo</a>
+                    </div>
+
+                    <div class="destinations-grid">
+                        <div class="destination-card">
+                            <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="destination-info">
+                                <h3 class="destination-name">Bali</h3>
+                                <p class="destination-price">Desde los ₡ 190,500</p>
+                            </div>
+                        </div>
+
+                        <div class="destination-card">
+                            <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="destination-info">
+                                <h3 class="destination-name">Dubai</h3>
+                                <p class="destination-price">Desde los ₡ 210,700</p>
+                            </div>
+                        </div>
+
+                        <div class="destination-card">
+                            <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="destination-info">
+                                <h3 class="destination-name">Maldivas</h3>
+                                <p class="destination-price">Desde los ₡ 110,500</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Section -->
+                <div class="tabs-container">
+                    <div class="tabs-nav">
+                        <button class="tab-button active" onclick="switchTab('populares')">Más Populares</button>
+                        <button class="tab-button" onclick="switchTab('especiales')">Ofertas Especiales</button>
+                        <button class="tab-button" onclick="switchTab('cercamio')">Cerca mío</button>
+                    </div>
+
+                    <div id="populares" class="tab-content active">
+                        <div class="popular-grid">
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #10b981, #059669);">IN</div>
+                                    <div class="location-info">
+                                        <h3>Kerala</h3>
+                                        <p class="location-country">in India</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 48,000 / día</p>
+                            </div>
+
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #3b82f6, #1d4ed8);">TH</div>
+                                    <div class="location-info">
+                                        <h3>Sukhothai</h3>
+                                        <p class="location-country">in Tailandia</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 45,000 / día</p>
+                            </div>
+
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #f59e0b, #d97706);">FR</div>
+                                    <div class="location-info">
+                                        <h3>Torre Eiffel</h3>
+                                        <p class="location-country">in Paris</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 68,000 / día</p>
+                            </div>
+
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #8b5cf6, #7c3aed);">IN</div>
+                                    <div class="location-info">
+                                        <h3>Kashmir</h3>
+                                        <p class="location-country">in India</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 52,000 / día</p>
+                            </div>
+
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #06b6d4, #0891b2);">SK</div>
+                                    <div class="location-info">
+                                        <h3>Shimla</h3>
+                                        <p class="location-country">18 Jul - 25 Jul</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 45,000 / día</p>
+                            </div>
+
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #ec4899, #db2777);">HW</div>
+                                    <div class="location-info">
+                                        <h3>Hawaii</h3>
+                                        <p class="location-country">17 Nov - 29 Nov</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 78,000 / día</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="especiales" class="tab-content">
+                        <div class="popular-grid">
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #ef4444, #dc2626);">JP</div>
+                                    <div class="location-info">
+                                        <h3>Tokio</h3>
+                                        <p class="location-country">in Japón</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 85,000 / día</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cercamio" class="tab-content">
+                        <div class="popular-grid">
+                            <div class="popular-card">
+                                <div class="popular-location">
+                                    <div class="location-flag" style="background: linear-gradient(45deg, #10b981, #059669);">CR</div>
+                                    <div class="location-info">
+                                        <h3>Manuel Antonio</h3>
+                                        <p class="location-country">in Costa Rica</p>
+                                    </div>
+                                </div>
+                                <p class="location-price">₡ 25,000 / día</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <!-- Calendar Section -->
+                <div class="calendar-section">
+                    <div class="calendar-month-header">
+                        <button class="calendar-nav-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 class="calendar-month-title">SEPTIEMBRE 2025</h3>
+                        <button class="calendar-nav-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="calendar-header">
+                        <div class="calendar-day-header">SUN</div>
+                        <div class="calendar-day-header">MON</div>
+                        <div class="calendar-day-header">TUE</div>
+                        <div class="calendar-day-header">WED</div>
+                        <div class="calendar-day-header">THU</div>
+                        <div class="calendar-day-header">FRI</div>
+                        <div class="calendar-day-header">SAT</div>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div>
+                        <div class="calendar-day">5</div>
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day today">14</div>
+                        <div class="calendar-day">15</div>
+                        <div class="calendar-day selected">16</div>
+                        <div class="calendar-day selected">17</div>
+                        <div class="calendar-day">18</div>
+                        <div class="calendar-day">19</div>
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div>
+                        <div class="calendar-day">26</div>
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day">29</div>
+                        <div class="calendar-day">30</div>
+                    </div>
+                </div>
+
+                <!-- Reservas Section -->
+                <div class="reservas-sidebar">
+                    <div class="reservas-title">
+                        <h3>Reservas</h3>
+                        <a href="#" class="ver-todo-btn">Ver Todo</a>
+                    </div>
+
+                    <div class="reserva-item">
+                        <div class="reserva-color" style="background: #10b981;"></div>
+                        <div class="reserva-info">
+                            <h4>Goa</h4>
+                            <p class="reserva-date">16 Jun - 20 Jun</p>
+                        </div>
+                    </div>
+
+                    <div class="reserva-item">
+                        <div class="reserva-color" style="background: #f59e0b;"></div>
+                        <div class="reserva-info">
+                            <h4>Shimla</h4>
+                            <p class="reserva-date">18 Jul - 25 Jul</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 25px;">
+                        <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 15px;">2025</h4>
+
+                        <div class="reserva-item">
+                            <div class="reserva-color" style="background: #10b981;"></div>
+                            <div class="reserva-info">
+                                <h4>Goa</h4>
+                                <p class="reserva-date">16 Jun - 20 Jun</p>
+                            </div>
+                        </div>
+
+                        <div class="reserva-item">
+                            <div class="reserva-color" style="background: #f59e0b;"></div>
+                            <div class="reserva-info">
+                                <h4>Shimla</h4>
+                                <p class="reserva-date">18 Jul - 25 Jul</p>
+                            </div>
+                        </div>
+
+                        <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin: 20px 0 15px 0;">2026</h4>
+
+                        <div class="reserva-item">
+                            <div class="reserva-color" style="background: #ec4899;"></div>
+                            <div class="reserva-info">
+                                <h4>Hawaii</h4>
+                                <p class="reserva-date">17 Nov - 29 Nov</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // Actualizar el nombre del usuario en el header
     document.addEventListener('DOMContentLoaded', function() {
@@ -11,6 +717,42 @@
             if (userNameElement) {
                 userNameElement.textContent = userName.split(' ')[0]; // Solo el primer nombre
             }
+
+            // También actualizar el saludo en el hero
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                heroTitle.textContent = `¡Hola ${userName.split(' ')[0]}!`;
+            }
+        }
+    });
+
+    // Función para cambiar tabs
+    function switchTab(tabName) {
+        // Remover clase active de todos los botones y contenidos
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        // Agregar clase active al botón clickeado
+        event.target.classList.add('active');
+
+        // Mostrar el contenido correspondiente
+        document.getElementById(tabName).classList.add('active');
+    }
+
+    // Funcionalidad del calendario
+    document.querySelectorAll('.calendar-day').forEach(day => {
+        if (day.textContent) {
+            day.addEventListener('click', function() {
+                // Remover selección previa (excepto today)
+                document.querySelectorAll('.calendar-day.selected').forEach(selected => {
+                    selected.classList.remove('selected');
+                });
+
+                // Agregar selección al día clickeado (si no es today)
+                if (!this.classList.contains('today')) {
+                    this.classList.add('selected');
+                }
+            });
         }
     });
 </script>
