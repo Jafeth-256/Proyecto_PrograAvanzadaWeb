@@ -120,16 +120,16 @@
 
 <style>
     .edit-container {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         padding: 0 20px;
-        margin-left: 280px; 
+        margin-left: 280px;
     }
 
     .edit-header {
         background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
         border-radius: 20px;
-        padding: 30px;
+        padding: 40px;
         margin-bottom: 30px;
         display: flex;
         align-items: center;
@@ -157,6 +157,7 @@
         align-items: center;
         gap: 20px;
         z-index: 1;
+        flex: 1;
     }
 
     .header-icon {
@@ -170,27 +171,34 @@
         font-size: 1.8rem;
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.3);
+        flex-shrink: 0;
     }
 
-    .header-text h1 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin: 0 0 4px 0;
+    .header-text {
+        flex: 1;
     }
 
-    .header-text p {
-        font-size: 1rem;
-        opacity: 0.9;
-        margin: 0;
-    }
+        .header-text h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+            line-height: 1.4;
+        }
 
     .btn-back {
         background: rgba(255, 255, 255, 0.2);
         color: white;
         border-radius: 12px;
-        padding: 10px 20px;
+        padding: 12px 24px;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
@@ -198,6 +206,7 @@
         border: 1px solid rgba(255, 255, 255, 0.3);
         z-index: 1;
         transition: all 0.3s ease;
+        flex-shrink: 0;
     }
 
         .btn-back:hover {
@@ -211,7 +220,7 @@
         background: white;
         border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 25px rgba(0,0,0,0.08);
         border: 1px solid rgba(0,0,0,0.05);
     }
 
@@ -225,9 +234,9 @@
 
     .form-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 25px;
-        margin-bottom: 30px;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 35px;
     }
 
     .form-field.full-width {
@@ -237,26 +246,28 @@
     .field-label {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         font-weight: 600;
         color: #374151;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
+        margin-bottom: 10px;
+        font-size: 1rem;
     }
 
     .required {
         color: #ef4444;
+        font-weight: 700;
     }
 
     .field-input {
         width: 100%;
-        padding: 14px 16px;
+        padding: 16px 18px;
         border: 2px solid #e5e7eb;
         border-radius: 12px;
         font-size: 1rem;
         transition: all 0.3s ease;
         background: #f8fafc;
         color: #374151;
+        font-family: inherit;
     }
 
         .field-input:focus {
@@ -272,15 +283,16 @@
         }
 
     .field-hint {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         color: #6b7280;
-        margin-top: 6px;
+        margin-top: 8px;
+        line-height: 1.4;
     }
 
     .form-actions {
         display: flex;
-        gap: 15px;
-        padding-top: 20px;
+        gap: 20px;
+        padding-top: 25px;
         border-top: 1px solid #e2e8f0;
         flex-wrap: wrap;
     }
@@ -288,33 +300,37 @@
     .btn-modern {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 14px 28px;
+        gap: 10px;
+        padding: 16px 32px;
         border-radius: 12px;
         font-weight: 600;
-        font-size: 0.95rem;
+        font-size: 1rem;
         transition: all 0.3s ease;
         border: none;
         cursor: pointer;
         text-decoration: none;
+        min-height: 50px;
+        flex: 1;
+        justify-content: center;
     }
 
     .btn-primary {
         background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
         color: white;
-        box-shadow: 0 4px 12px rgba(75, 85, 99, 0.3);
+        box-shadow: 0 4px 15px rgba(75, 85, 99, 0.3);
     }
 
         .btn-primary:hover {
             background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(75, 85, 99, 0.4);
+            box-shadow: 0 6px 25px rgba(75, 85, 99, 0.4);
         }
 
     .btn-secondary {
         background: #f3f4f6;
         color: #374151;
         border: 1px solid #e5e7eb;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
         .btn-secondary:hover {
@@ -322,11 +338,12 @@
             transform: translateY(-1px);
             color: #1f2937;
             text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
     .alert {
-        margin: 20px;
-        padding: 20px;
+        margin: 25px;
+        padding: 20px 25px;
         border-radius: 12px;
         display: flex;
         align-items: flex-start;
@@ -346,57 +363,169 @@
         color: #166534;
     }
 
+    .alert-icon {
+        font-size: 1.3rem;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    .alert-content {
+        flex: 1;
+    }
+
+        .alert-content strong {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .alert-content p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
     .alert-close {
         position: absolute;
         top: 15px;
         right: 15px;
         background: none;
         border: none;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         cursor: pointer;
         opacity: 0.6;
         transition: opacity 0.3s ease;
+        padding: 4px;
     }
 
         .alert-close:hover {
             opacity: 1;
         }
 
-    @@media only screen and (max-width: 1024px) {
-        .edit-container {
-            margin-left: 0;
-            padding: 0 15px;
-        }
+    /* Responsive Design */
+    @@media (max-width: 1200px) {
+        .edit-container
+
+    {
+        margin-left: 0;
+        max-width: 95%;
     }
 
-    @@media only screen and (max-width: 768px) {
-        .edit-container {
-            margin-left: 0;
-            padding: 0 10px;
-        }
+    }
 
-        .edit-header {
-            flex-direction: column;
-            text-align: center;
-            gap: 20px;
-        }
+    @@media (max-width: 1024px) {
+        .edit-container
 
-        .header-content {
-            flex-direction: column;
-            text-align: center;
-        }
+    {
+        margin-left: 0;
+        padding: 0 20px;
+        max-width: 100%;
+    }
 
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
+    .edit-header {
+        padding: 30px;
+    }
 
-        .form-actions {
-            flex-direction: column;
-        }
+    .header-text h1 {
+        font-size: 1.8rem;
+    }
 
-        .btn-modern {
-            justify-content: center;
-            width: 100%;
-        }
+    }
+
+    @@media (max-width: 768px) {
+        .edit-container
+
+    {
+        padding: 0 15px;
+    }
+
+    .edit-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+        padding: 25px 20px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .header-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .header-text p {
+        font-size: 1rem;
+    }
+
+    .btn-back {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .alert {
+        margin: 20px 15px;
+        padding: 18px 20px;
+    }
+
+    .form-card {
+        padding: 25px 20px;
+    }
+
+    .form-grid {
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .field-input {
+        padding: 14px 16px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-modern {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 0.95rem;
+    }
+
+    }
+
+    @@media (max-width: 480px) {
+        .edit-container
+
+    {
+        padding: 0 10px;
+    }
+
+    .edit-header {
+        padding: 20px 15px;
+    }
+
+    .header-text h1 {
+        font-size: 1.4rem;
+    }
+
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .form-card {
+        padding: 20px 15px;
+    }
+
+    .alert {
+        margin: 15px 10px;
+        padding: 15px;
+    }
+
     }
 </style>

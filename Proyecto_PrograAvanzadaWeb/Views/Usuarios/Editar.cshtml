@@ -1,0 +1,649 @@
+﻿@model Proyecto_PrograAvanzadaWeb.Models.UsuarioViewModel
+@{
+    ViewData["Title"] = "Editar Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="edit-container">
+    <!-- Mensajes de error -->
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            <i class="mdi mdi-alert-circle"></i>
+            @ViewBag.Error
+        </div>
+    }
+
+    <!-- Header -->
+    <div class="edit-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <a href="/Usuarios/Index" class="breadcrumb-link">
+                    <i class="mdi mdi-account-multiple"></i> Usuarios
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Editar Usuario</span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-pencil"></i>
+                Editar Usuario
+            </h1>
+            <p class="page-subtitle">Modifica la información del usuario #@Model.IdUsuario</p>
+        </div>
+    </div>
+
+    <form asp-action="Editar" method="post" class="edit-form">
+        <input type="hidden" asp-for="IdUsuario" />
+        <input type="hidden" asp-for="FechaRegistro" />
+        <input type="hidden" asp-for="FechaActualizacion" />
+
+        <div class="form-content">
+            <!-- Información Principal -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h3><i class="mdi mdi-account-circle"></i> Información Principal</h3>
+                    <p>Datos básicos del usuario</p>
+                </div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label asp-for="Nombre" class="form-label">
+                                <i class="mdi mdi-account"></i>
+                                Nombre Completo
+                            </label>
+                            <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre completo" required>
+                            <span asp-validation-for="Nombre" class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Correo" class="form-label">
+                                <i class="mdi mdi-email"></i>
+                                Correo Electrónico
+                            </label>
+                            <input asp-for="Correo" type="email" class="form-control" placeholder="correo@ejemplo.com" required>
+                            <span asp-validation-for="Correo" class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Identificacion" class="form-label">
+                                <i class="mdi mdi-card-account-details"></i>
+                                Identificación
+                            </label>
+                            <input asp-for="Identificacion" class="form-control" placeholder="Número de identificación" required>
+                            <span asp-validation-for="Identificacion" class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Telefono" class="form-label">
+                                <i class="mdi mdi-phone"></i>
+                                Teléfono
+                            </label>
+                            <input asp-for="Telefono" class="form-control" placeholder="Número de teléfono">
+                            <span asp-validation-for="Telefono" class="form-error"></span>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label asp-for="Direccion" class="form-label">
+                                <i class="mdi mdi-map-marker"></i>
+                                Dirección
+                            </label>
+                            <textarea asp-for="Direccion" class="form-control" rows="3" placeholder="Dirección completa"></textarea>
+                            <span asp-validation-for="Direccion" class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FechaNacimiento" class="form-label">
+                                <i class="mdi mdi-calendar"></i>
+                                Fecha de Nacimiento
+                            </label>
+                            <input asp-for="FechaNacimiento" type="date" class="form-control">
+                            <span asp-validation-for="FechaNacimiento" class="form-error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuración de Sistema -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h3><i class="mdi mdi-cog"></i> Configuración del Sistema</h3>
+                    <p>Permisos y estado del usuario</p>
+                </div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label asp-for="IdRol" class="form-label">
+                                <i class="mdi mdi-shield-account"></i>
+                                Rol de Usuario
+                            </label>
+                            <select asp-for="IdRol" class="form-control" required>
+                                <option value="">Seleccione un rol</option>
+                                @if (ViewBag.Roles != null)
+                                {
+                                    @foreach (var rol in (List<Proyecto_PrograAvanzadaWeb.Models.RolViewModel>)ViewBag.Roles)
+                                    {
+                                        <option value="@rol.IdRol">@rol.NombreRol</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="IdRol" class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="mdi mdi-toggle-switch"></i>
+                                Estado del Usuario
+                            </label>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input asp-for="Estado" type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="switch-label">
+                                    <span class="status-text">@(Model.Estado ? "Activo" : "Inactivo")</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información Adicional -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h3><i class="mdi mdi-information"></i> Información del Sistema</h3>
+                    <p>Datos de registro y última actualización</p>
+                </div>
+                <div class="card-body">
+                    <div class="info-display">
+                        <div class="info-item">
+                            <label><i class="mdi mdi-calendar-plus"></i> Fecha de Registro</label>
+                            <span>@Model.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                        <div class="info-item">
+                            <label><i class="mdi mdi-update"></i> Última Actualización</label>
+                            <span>@Model.FechaActualizacion.ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                        <div class="info-item">
+                            <label><i class="mdi mdi-identifier"></i> ID de Usuario</label>
+                            <span class="user-id">#@Model.IdUsuario</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="form-actions">
+            <button type="submit" class="btn-modern btn-primary">
+                <i class="mdi mdi-content-save"></i>
+                Guardar Cambios
+            </button>
+            <a href="/Usuarios/Detalles/@Model.IdUsuario" class="btn-modern btn-secondary">
+                <i class="mdi mdi-eye"></i>
+                Ver Detalles
+            </a>
+            <a href="/Usuarios/Index" class="btn-modern btn-outline">
+                <i class="mdi mdi-arrow-left"></i>
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .edit-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+        margin-left: 280px;
+    }
+
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .edit-header {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .edit-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .breadcrumb-link:hover {
+            color: white;
+        }
+
+    .breadcrumb-separator {
+        margin: 0 10px;
+        opacity: 0.6;
+    }
+
+    .breadcrumb-current {
+        color: white;
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    .edit-form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .form-content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .form-card .card-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+            .form-card .card-header h3 {
+                margin: 0 0 5px 0;
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #374151;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .form-card .card-header p {
+                margin: 0;
+                font-size: 0.9rem;
+                color: #6b7280;
+            }
+
+        .form-card .card-body {
+            padding: 30px;
+        }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+    .form-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #374151;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #374151;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #6b7280;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .form-error {
+        color: #dc2626;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .switch-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 0;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #cbd5e1;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+    input:checked + .slider {
+        background-color: #10b981;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+    .switch-label {
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .status-text {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        background: #f3f4f6;
+        color: #6b7280;
+    }
+
+    .info-display {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .info-item {
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border-left: 4px solid #6b7280;
+    }
+
+        .info-item label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .info-item span {
+            font-size: 1rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+    .user-id {
+        font-family: monospace;
+        background: #e5e7eb;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        padding: 20px 0;
+        flex-wrap: wrap;
+    }
+
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        min-width: 150px;
+        justify-content: center;
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-secondary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-secondary:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-outline:hover {
+            background: #f9fafb;
+            border-color: #6b7280;
+            color: #374151;
+        }
+
+    @@media only screen and (max-width: 1024px) {
+        .edit-container
+
+    {
+        margin-left: 0;
+        padding: 0 15px;
+    }
+
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .edit-container
+
+    {
+        margin-left: 0;
+        padding: 0 10px;
+    }
+
+    .edit-header {
+        padding: 25px 20px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .info-display {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-modern {
+        width: 100%;
+    }
+
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Actualizar texto del estado cuando cambie el switch
+        const estadoSwitch = document.querySelector('input[name="Estado"]');
+        const statusText = document.querySelector('.status-text');
+
+        if (estadoSwitch && statusText) {
+            estadoSwitch.addEventListener('change', function() {
+                statusText.textContent = this.checked ? 'Activo' : 'Inactivo';
+            });
+        }
+
+        // Validación del formulario
+        const form = document.querySelector('.edit-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.style.borderColor = '#dc2626';
+                        field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                    } else {
+                        field.style.borderColor = '#e5e7eb';
+                        field.style.boxShadow = 'none';
+                    }
+                });
+
+                if (!isValid) {
+                    e.preventDefault();
+                    // Scroll al primer campo con error
+                    const firstError = form.querySelector('input[style*="border-color: rgb(220, 38, 38)"]');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstError.focus();
+                    }
+                }
+            });
+        }
+
+        // Limpiar estilos de error cuando el usuario escriba
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = '#e5e7eb';
+                    this.style.boxShadow = 'none';
+                }
+            });
+        });
+    });
+</script>
