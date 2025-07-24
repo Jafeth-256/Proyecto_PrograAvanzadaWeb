@@ -3,4 +3,58 @@
     Layout = "_LayoutExterno";
 }
 
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="d-flex flex-column justify-content-between">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="card card-default mb-0">
+                    <div class="card-header pb-0">
+                        <div class="app-brand w-100 d-flex justify-content-center border-bottom-0">
+                            <a class="w-auto pl-0" href="/">
+                                <span class="brand-name text-dark">Tico Tours</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body px-5 pb-5 pt-0">
+                        <h4 class="text-dark mb-4 text-center">Iniciar sesión con nosotros!</h4>
 
+                        @if (!string.IsNullOrEmpty(ViewBag.Error))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <form method="post" action="@Url.Action("Index", "Home")">
+                            <div class="row">
+                                <div class="form-group col-md-12 mb-3">
+                                    <input type="email" class="form-control input-lg" name="email" id="email"
+                                           placeholder="Correo" required>
+                                </div>
+                                <div class="form-group col-md-12 mb-3">
+                                    <input type="password" class="form-control input-lg" name="password"
+                                           id="password" placeholder="Contraseña" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                            <label class="custom-control-label" for="customCheck2">Recuérdame</label>
+                                        </div>
+                                        <a class="text-muted font-weight-medium" href="#">¿Olvidaste tu contraseña?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-pill mb-3" style="background-color: #6c757d; color: white; width: 100%;">
+                                        Iniciar sesión
+                                    </button>
+                                    <div class="text-center">
+                                        <a href="@Url.Action("Registro", "Home")" class="text-muted font-weight-medium">¿No tienes cuenta? Regístrate aquí</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
