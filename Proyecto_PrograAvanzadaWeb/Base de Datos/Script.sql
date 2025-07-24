@@ -119,3 +119,119 @@ BEGIN
 	SELECT SCOPE_IDENTITY() AS Resultado, 'Usuario registrado exitosamente' AS Mensaje
 END
 GO
+
+
+
+-- Agregar campos adicionales a la tabla TUsuario
+ALTER TABLE [dbo].[TUsuario] 
+ADD [Telefono] VARCHAR(20) NULL,
+    [Direccion] VARCHAR(500) NULL,
+    [FechaNacimiento] DATE NULL,
+    [FotoPath] VARCHAR(255) NULL,
+    [FechaRegistro] DATETIME2 DEFAULT GETDATE(),
+    [FechaActualizacion] DATETIME2 DEFAULT GETDATE();
+GO
+
+-- Procedimiento para obtener perfil completo del usuario
+CREATE PROCEDURE [dbo].[ObtenerPerfilUsuario]
+    @IdUsuario BIGINT
+AS
+BEGIN
+    SELECT  IdUsuario,
+            Nombre,
+            Correo,
+            Identificacion,
+            Telefono,
+            Direccion,
+            FechaNacimiento,
+            FotoPath,
+            Estado,
+            U.IdRol,
+            R.NombreRol,
+            FechaRegistro,
+            FechaActualizacion
+    FROM    dbo.TUsuario U
+    INNER JOIN dbo.TRol R ON U.IdRol = R.IdRol
+    WHERE   IdUsuario = @IdUsuario
+        AND Estado = 1;
+END;
+GO
+
+-- Procedimiento para actualizar perfil básico (datos editables)
+CREATE PROCEDURE [dbo].[ActualizarPerfilBasico]
+    @IdUsuario BIGINT,
+    @Nombre VARCHAR(255),
+    @Correo VARCHAR(100),
+    @Identificacion VARCHAR(20)
+AS
+BEGIN
+    -- Verificar si el correo ya existe en otro usuario
+    IF EXISTS (SELECT 1 FROM dbo.TUsuario WHERE Correo = @Correo AND IdUsuario != @IdUsuario)
+    BEGIN
+        SELECT -1 AS Resultado, 'El correo ya está registrado por otro usuario' AS Mensaje
+        RETURN
+    END
+    
+    -- Verificar si la identificación ya existe en otro usuario
+    IF EXISTS (SELECT 1 FROM dbo.TUsuario WHERE Identificacion = @Identificacion AND IdUsuario != @IdUsuario)
+    BEGIN
+        SELECT -2 AS Resultado, 'La identificación ya está registrada por otro usuario' AS Mensaje
+        RETURN
+    END
+    
+    -- Actualizar datos básicos
+    UPDATE dbo.TUsuario 
+    SET Nombre = @Nombre,
+        Correo = @Correo,
+        Identificacion = @Identificacion,
+        FechaActualizacion = GETDATE()
+    WHERE IdUsuario = @IdUsuario;
+    
+    SELECT 1 AS Resultado, 'Perfil actualizado exitosamente' AS Mensaje
+END;
+GO
+
+-- Procedimiento para actualizar información adicional del perfil
+CREATE PROCEDURE [dbo].[ActualizarInformacionAdicional]
+    @IdUsuario BIGINT,
+    @Telefono VARCHAR(20) = NULL,
+    @Direccion VARCHAR(500) = NULL,
+    @FechaNacimiento DATE = NULL,
+    @FotoPath VARCHAR(255) = NULL
+AS
+BEGIN
+    UPDATE dbo.TUsuario 
+    SET Telefono = ISNULL(@Telefono, Telefono),
+        Direccion = ISNULL(@Direccion, Direccion),
+        FechaNacimiento = ISNULL(@FechaNacimiento, FechaNacimiento),
+        FotoPath = ISNULL(@FotoPath, FotoPath),
+        FechaActualizacion = GETDATE()
+    WHERE IdUsuario = @IdUsuario;
+    
+    SELECT 1 AS Resultado, 'Información adicional actualizada exitosamente' AS Mensaje
+END;
+GO
+
+-- Procedimiento para cambiar contraseña
+CREATE PROCEDURE [dbo].[CambiarContrasena]
+    @IdUsuario BIGINT,
+    @ContrasenaActual VARCHAR(255),
+    @ContrasenaNueva VARCHAR(255)
+AS
+BEGIN
+    -- Verificar contraseña actual
+    IF NOT EXISTS (SELECT 1 FROM dbo.TUsuario WHERE IdUsuario = @IdUsuario AND Contrasenna = @ContrasenaActual)
+    BEGIN
+        SELECT -1 AS Resultado, 'La contraseña actual es incorrecta' AS Mensaje
+        RETURN
+    END
+    
+    -- Actualizar contraseña
+    UPDATE dbo.TUsuario 
+    SET Contrasenna = @ContrasenaNueva,
+        FechaActualizacion = GETDATE()
+    WHERE IdUsuario = @IdUsuario;
+    
+    SELECT 1 AS Resultado, 'Contraseña actualizada exitosamente' AS Mensaje
+END;
+GO

@@ -1,86 +1,76 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Proyecto</title>
-
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
     <link href="~/css/materialdesignicons.min.css" rel="stylesheet" />
     <link href="~/css/simplebar.css" rel="stylesheet" />
     <link id="main-css-href" rel="stylesheet" href="~/css/inicio.css" />
-
     <link href="~/images/favicon.png" rel="shortcut icon" />
 </head>
 
-
 <body class="navbar-fixed sidebar-fixed" id="body">
-    @RenderBody()
     <div class="wrapper">
-
+        <!-- Sidebar -->
         <aside class="left-sidebar" id="left-sidebar">
             <div id="sidebar" class="sidebar sidebar-with-footer">
                 <div class="app-brand">
-                    <a href="/index.html">
+                    <a href="/Home/Inicio">
                         <span class="brand-name">Tico Tours</span>
                     </a>
                 </div>
                 <div class="sidebar-left" data-simplebar style="height: 100%;">
                     <ul class="nav sidebar-inner" id="sidebar-menu">
-
                         <li>
-                            <a class="sidenav-item-link" href="index.html">
+                            <a class="sidenav-item-link" href="/Home/Inicio">
                                 <i class="mdi mdi-home-variant"></i>
                                 <span class="nav-text">Inicio</span>
                             </a>
                         </li>
 
                         <li>
-                            <a class="sidenav-item-link" href="chat.html">
+                            <a class="sidenav-item-link" href="/Tours/Explorar">
                                 <i class="mdi mdi-map-search"></i>
                                 <span class="nav-text">Explorar Tours</span>
                             </a>
                         </li>
 
                         <li>
-                            <a class="sidenav-item-link" href="contacts.html">
+                            <a class="sidenav-item-link" href="/Eventos/Sociales">
                                 <i class="mdi mdi-account-multiple"></i>
                                 <span class="nav-text">Eventos Sociales</span>
                             </a>
                         </li>
 
                         <li>
-                            <a class="sidenav-item-link" href="team.html">
+                            <a class="sidenav-item-link" href="/Eventos/Universitarios">
                                 <i class="mdi mdi-school"></i>
                                 <span class="nav-text">Eventos Universitarios</span>
                             </a>
                         </li>
 
                         <li>
-                            <a class="sidenav-item-link" href="calendar.html">
+                            <a class="sidenav-item-link" href="/Calendario/Index">
                                 <i class="mdi mdi-calendar"></i>
                                 <span class="nav-text">Calendario</span>
                             </a>
                         </li>
 
-
-
-                        <li class="has-sub">
-                            <a class="sidenav-item-link" href="javascript:void(0)">
+                        <li>
+                            <a class="sidenav-item-link" href="/Perfil/Index">
                                 <i class="mdi mdi-account-circle"></i>
-                                <span class="nav-text">Perfil</span> 
-                            </a> 
+                                <span class="nav-text">Perfil</span>
+                            </a>
                         </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
 
-    </ul>
-    </div>
-    </div>
-    </aside>
-
-
+        <!-- Main Dashboard Container -->
         <div class="dashboard-container">
             <!-- Header -->
             <div class="header">
@@ -94,271 +84,102 @@
                     <div class="notification-badge">
                         <i class="fas fa-bell" style="color: rgba(255,255,255,0.8);"></i>
                     </div>
-                    <div class="user-avatar">S</div>
+                    <div class="user-avatar">
+                        @if (!string.IsNullOrEmpty(ViewBag.FotoPath))
+                        {
+                            <img src="@ViewBag.FotoPath" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                        }
+                        else
+                        {
+                            @(ViewBag.NombreUsuario?.ToString()?.Substring(0, 1).ToUpper() ?? "U")
+                        }
+                    </div>
                     <div>
-                        <div style="font-weight: 600;">Ana</div>
-                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7);">Pro viajera</div>
+                        <div style="font-weight: 600;">@ViewBag.NombreUsuario</div>
+                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.7);">@ViewBag.NombreRol</div>
                     </div>
-                    <i class="fas fa-chevron-down" style="color: rgba(255,255,255,0.6);"></i>
+                    <div class="dropdown">
+                        <i class="fas fa-chevron-down" style="color: rgba(255,255,255,0.6); cursor: pointer;" data-toggle="dropdown"></i>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/Perfil/Index">Mi Perfil</a>
+                            <a class="dropdown-item" href="/Home/Logout">Cerrar Sesión</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="main-content">
-                <!-- Welcome Section -->
-                <div class="welcome-section">
-                    <h1>Hola Usuario!</h1>
-                    <p>Bienvenido de nuevo y explora el mundo.</p>
-                </div>
-
-         
-                <section>
-                    <div class="section-header">
-                        <h2 class="section-title">Destinos con visa</h2>
-                        <a href="#" class="view-all-btn">Ver Todo</a>
-                    </div>
-                    <div class="destinations-grid">
-                        <div class="destination-card">
-                            <div class="card-image bali-bg">
-                                <img src="https://digital.ihg.com/is/image/ihg/intercontinental-bali-9719167392-16x9" alt="Bali" style="width:100%; height:auto; border-radius: 8px;">
-                            </div>
-                            <div class="card-content">
-                                <h3 class="destination-name">Bali</h3>
-                                <div class="price-info">
-                                    Desde los <span class="price">₡ 190,600</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="destination-card">
-                            <div class="card-image dubai-bg">
-                                <img src="https://content.r9cdn.net/rimg/dimg/9c/5d/375edbe5-city-6080-166f9a95b45.jpg?width=1366&height=768&xhint=3688&yhint=2622&crop=true" alt="Bali" style="width:100%; height:auto; border-radius: 8px;">
-                            </div>
-                            <div class="card-content">
-                                <h3 class="destination-name">Dubai</h3>
-                                <div class="price-info">
-                                    Desde los <span class="price">₡ 210,700</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="destination-card">
-                            <div class="card-image maldives-bg">
-                                <img src="https://arenatours.com/wp-content/uploads/2019/07/hard-rock-hotel-maldives-3.jpg" alt="Bali" style="width:100%; height:auto; border-radius: 8px;">
-                            </div>
-                            <div class="card-content">
-                                <h3 class="destination-name">Maldivas</h3>
-                                <div class="price-info">
-                                    Desde los <span class="price">₡ 110,300</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            
-                <section>
-                    <div class="popular-tabs">
-                        <div class="tab active">Más Populares</div>
-                        <div class="tab">Ofertas Especiales</div>
-                        <div class="tab">Cerca mío</div>
-                    </div>
-                    <div class="popular-grid">
-                        <div class="popular-card">
-                            <div class="popular-card-header">
-                                <div class="location-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="location-info">
-                                    <h3>Kerala</h3>
-                                    <div class="location-country">🇮🇳 India</div>
-                                </div>
-                            </div>
-                            <div class="location-price">₡ 40 000 / día</div>
-                        </div>
-                        <div class="popular-card">
-                            <div class="popular-card-header">
-                                <div class="location-icon">
-                                    <i class="fas fa-mountain"></i>
-                                </div>
-                                <div class="location-info">
-                                    <h3>Sukhothai</h3>
-                                    <div class="location-country">🇹🇭 Tailandia</div>
-                                </div>
-                            </div>
-                            <div class="location-price">₡ 48 000 / día</div>
-                        </div>
-                        <div class="popular-card">
-                            <div class="popular-card-header">
-                                <div class="location-icon">
-                                    <i class="fas fa-landmark"></i>
-                                </div>
-                                <div class="location-info">
-                                    <h3>Torre Eiffel</h3>
-                                    <div class="location-country">🇫🇷 Paris</div>
-                                </div>
-                            </div>
-                            <div class="location-price">₡ 68 000 / día</div>
-                        </div>
-                        <div class="popular-card">
-                            <div class="popular-card-header">
-                                <div class="location-icon">
-                                    <i class="fas fa-mountain"></i>
-                                </div>
-                                <div class="location-info">
-                                    <h3>Kashmir</h3>
-                                    <div class="location-country">🇮🇳 India</div>
-                                </div>
-                            </div>
-                            <div class="location-price">₡ 48 000 / día</div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Calendar -->
-                <div class="calendar-widget">
-                    <div class="calendar-nav">
-                        <button><i class="fas fa-chevron-left"></i></button>
-                        <h3>SEPTIEMBRE 2025</h3>
-                        <button><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <div class="calendar-grid">
-                        <div class="calendar-header">SUN</div>
-                        <div class="calendar-header">MON</div>
-                        <div class="calendar-header">TUE</div>
-                        <div class="calendar-header">WED</div>
-                        <div class="calendar-header">THU</div>
-                        <div class="calendar-header">FRI</div>
-                        <div class="calendar-header">SAT</div>
-
-                        <div class="calendar-day"></div>
-                        <div class="calendar-day"></div>
-                        <div class="calendar-day"></div>
-                        <div class="calendar-day"></div>
-                        <div class="calendar-day">1</div>
-                        <div class="calendar-day">2</div>
-                        <div class="calendar-day">3</div>
-
-                        <div class="calendar-day">4</div>
-                        <div class="calendar-day">5</div>
-                        <div class="calendar-day">6</div>
-                        <div class="calendar-day">7</div>
-                        <div class="calendar-day">8</div>
-                        <div class="calendar-day">9</div>
-                        <div class="calendar-day">10</div>
-
-                        <div class="calendar-day">11</div>
-                        <div class="calendar-day">12</div>
-                        <div class="calendar-day">13</div>
-                        <div class="calendar-day today">14</div>
-                        <div class="calendar-day">15</div>
-                        <div class="calendar-day">16</div>
-                        <div class="calendar-day highlight">17</div>
-
-                        <div class="calendar-day">18</div>
-                        <div class="calendar-day">19</div>
-                        <div class="calendar-day">20</div>
-                        <div class="calendar-day">21</div>
-                        <div class="calendar-day">22</div>
-                        <div class="calendar-day">23</div>
-                        <div class="calendar-day">24</div>
-
-                        <div class="calendar-day">25</div>
-                        <div class="calendar-day">26</div>
-                        <div class="calendar-day">27</div>
-                        <div class="calendar-day">28</div>
-                        <div class="calendar-day">29</div>
-                        <div class="calendar-day">30</div>
-                        <div class="calendar-day"></div>
-                    </div>
-                </div>
-
-                <!-- Bookings Widget -->
-                <div class="bookings-widget">
-                    <div class="widget-header">
-                        <h3>Reservas</h3>
-                        <a href="#" class="view-all-btn">Ver Todo</a>
-                    </div>
-
-                    <div style="margin-bottom: 20px; font-weight: 600;">2025</div>
-
-                    <div class="booking-item">
-                        <div class="booking-image"></div>
-                        <div class="booking-info">
-                            <h4>Goa</h4>
-                            <div class="booking-date">
-                                <i class="fas fa-calendar-alt"></i>
-                                16 Jun - 20 Jun
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="booking-item">
-                        <div class="booking-image"></div>
-                        <div class="booking-info">
-                            <h4>Shimla</h4>
-                            <div class="booking-date">
-                                <i class="fas fa-calendar-alt"></i>
-                                18 Jul - 25 Jul
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin: 20px 0; font-weight: 600;">2026</div>
-
-                    <div class="booking-item">
-                        <div class="booking-image"></div>
-                        <div class="booking-info">
-                            <h4>Hawaii</h4>
-                            <div class="booking-date">
-                                <i class="fas fa-calendar-alt"></i>
-                                17 Nov - 20 Nov
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Content Area -->
+            <div class="main-content" style="padding: 20px;">
+                @RenderBody()
             </div>
         </div>
-
-        <script>
-            // Tab functionality
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-
-            // Calendar navigation
-            document.querySelectorAll('.calendar-nav button').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Add calendar navigation logic here
-                    console.log('Calendar navigation clicked');
-                });
-            });
-
-            // Destination cards hover effect
-            document.querySelectorAll('.destination-card, .popular-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        </script>
+    </div>
 
     <script src="~/lib/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery.min.js"></script>
     <script src="~/lib/simplebar.min.js"></script>
 
+    <script>
+        // Dropdown functionality for user menu
+        document.querySelectorAll('[data-toggle="dropdown"]').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.nextElementSibling;
+                if (dropdown && dropdown.classList.contains('dropdown-menu')) {
+                    dropdown.classList.toggle('show');
+                }
+            });
+        });
 
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('[data-toggle="dropdown"]')) {
+                document.querySelectorAll('.dropdown-menu.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
+    </script>
 
+    <style>
+        .dropdown {
+            position: relative;
+        }
 
-    <!--  -->
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 8px 0;
+            z-index: 1000;
+        }
 
+            .dropdown-menu.show {
+                display: block;
+            }
 
+        .dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .dropdown-item:hover {
+                background-color: #f8f9fa;
+            }
+
+        .user-avatar img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
 </body>
 </html>

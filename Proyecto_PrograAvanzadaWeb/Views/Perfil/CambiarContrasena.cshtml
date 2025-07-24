@@ -1,0 +1,676 @@
+﻿@model Proyecto_PrograAvanzadaWeb.Models.CambiarContrasena
+@{
+    ViewData["Title"] = "Cambiar Contraseña";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="edit-container">
+    <div class="edit-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="mdi mdi-shield-lock"></i>
+            </div>
+            <div class="header-text">
+                <h1>Cambiar Contraseña</h1>
+                <p>Actualiza tu contraseña para mantener tu cuenta segura</p>
+            </div>
+        </div>
+        <a href="@Url.Action("Index", "Perfil")" class="btn-back">
+            <i class="mdi mdi-arrow-left"></i>
+            Volver al Perfil
+        </a>
+    </div>
+
+    <div class="form-container">
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-error">
+                <div class="alert-icon">
+                    <i class="mdi mdi-alert-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong>Error</strong>
+                    <p>@ViewBag.Error</p>
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="mdi mdi-close"></i>
+                </button>
+            </div>
+        }
+
+        @if (ViewBag.Exito != null)
+        {
+            <div class="alert alert-success">
+                <div class="alert-icon">
+                    <i class="mdi mdi-check-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong>¡Éxito!</strong>
+                    <p>@ViewBag.Exito</p>
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="mdi mdi-close"></i>
+                </button>
+            </div>
+        }
+
+        <div class="security-tips">
+            <h3 class="tips-title">
+                <i class="mdi mdi-shield-check"></i>
+                Consejos de Seguridad
+            </h3>
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <i class="mdi mdi-key-variant"></i>
+                    <span>Mínimo 6 caracteres</span>
+                </div>
+                <div class="tip-item">
+                    <i class="mdi mdi-eye-off"></i>
+                    <span>No compartas tu contraseña</span>
+                </div>
+                <div class="tip-item">
+                    <i class="mdi mdi-refresh"></i>
+                    <span>Cámbiala periódicamente</span>
+                </div>
+                <div class="tip-item">
+                    <i class="mdi mdi-shield-account"></i>
+                    <span>Usa una contraseña única</span>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" asp-action="CambiarContrasena" asp-controller="Perfil" class="modern-form" id="passwordForm">
+            @Html.HiddenFor(m => m.IdUsuario)
+
+            <div class="form-card">
+                <div class="form-grid">
+                    <div class="form-field full-width">
+                        <label for="ContrasenaActual" class="field-label">
+                            <i class="mdi mdi-lock"></i>
+                            Contraseña Actual
+                            <span class="required">*</span>
+                        </label>
+                        <div class="password-field">
+                            <input type="password"
+                                   class="field-input"
+                                   id="ContrasenaActual"
+                                   name="ContrasenaActual"
+                                   required
+                                   placeholder="Ingresa tu contraseña actual">
+                            <button type="button" class="password-toggle" onclick="togglePassword('ContrasenaActual')">
+                                <i class="mdi mdi-eye" id="eye-ContrasenaActual"></i>
+                            </button>
+                        </div>
+                        <div class="field-hint">Confirma tu identidad con tu contraseña actual</div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="ContrasenaNueva" class="field-label">
+                            <i class="mdi mdi-lock-plus"></i>
+                            Nueva Contraseña
+                            <span class="required">*</span>
+                        </label>
+                        <div class="password-field">
+                            <input type="password"
+                                   class="field-input"
+                                   id="ContrasenaNueva"
+                                   name="ContrasenaNueva"
+                                   required
+                                   minlength="6"
+                                   placeholder="Ingresa tu nueva contraseña">
+                            <button type="button" class="password-toggle" onclick="togglePassword('ContrasenaNueva')">
+                                <i class="mdi mdi-eye" id="eye-ContrasenaNueva"></i>
+                            </button>
+                        </div>
+                        <div class="strength-meter">
+                            <div class="strength-bar" id="strengthBar"></div>
+                        </div>
+                        <div class="field-hint">Mínimo 6 caracteres</div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="ConfirmarContrasena" class="field-label">
+                            <i class="mdi mdi-lock-check"></i>
+                            Confirmar Nueva Contraseña
+                            <span class="required">*</span>
+                        </label>
+                        <div class="password-field">
+                            <input type="password"
+                                   class="field-input"
+                                   id="ConfirmarContrasena"
+                                   name="ConfirmarContrasena"
+                                   required
+                                   minlength="6"
+                                   placeholder="Confirma tu nueva contraseña">
+                            <button type="button" class="password-toggle" onclick="togglePassword('ConfirmarContrasena')">
+                                <i class="mdi mdi-eye" id="eye-ConfirmarContrasena"></i>
+                            </button>
+                        </div>
+                        <div id="password-match-message" class="match-message"></div>
+                        <div class="field-hint">Repite exactamente la nueva contraseña</div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-modern btn-primary" id="submitBtn">
+                        <i class="mdi mdi-shield-check"></i>
+                        Cambiar Contraseña
+                    </button>
+                    <a href="@Url.Action("Index", "Perfil")" class="btn-modern btn-secondary">
+                        <i class="mdi mdi-close"></i>
+                        Cancelar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .edit-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        margin-left: 280px;
+    }
+
+    .edit-header {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+        .edit-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        z-index: 1;
+    }
+
+    .header-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header-text h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+    }
+
+    .header-text p {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .btn-back {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    .alert-error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+    }
+
+    .alert-icon {
+        font-size: 1.2rem;
+        margin-top: 2px;
+    }
+
+    .alert-content strong {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .alert-content p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+
+        .alert-close:hover {
+            opacity: 1;
+        }
+
+    .security-tips {
+        padding: 20px;
+        margin: 20px;
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        border-radius: 16px;
+        border: 1px solid #d1d5db;
+    }
+
+    .tips-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 15px;
+    }
+
+    .tips-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .tip-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        color: #374151;
+        font-weight: 500;
+    }
+
+        .tip-item i {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+    .modern-form {
+        padding: 0;
+    }
+
+    .form-card {
+        padding: 40px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+
+    .form-field.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .field-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .required {
+        color: #ef4444;
+        font-weight: 700;
+    }
+
+    .password-field {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .field-input {
+        width: 100%;
+        padding: 14px 50px 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+        color: #374151;
+    }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #6b7280;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .field-input::placeholder {
+            color: #9ca3af;
+        }
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        background: none;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+
+        .password-toggle:hover {
+            background: rgba(0,0,0,0.05);
+            color: #334155;
+        }
+
+    .strength-meter {
+        width: 100%;
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 2px;
+        margin-top: 8px;
+        overflow: hidden;
+    }
+
+    .strength-bar {
+        height: 100%;
+        width: 0;
+        background: #ef4444;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+        .strength-bar.weak {
+            width: 33%;
+            background: #ef4444;
+        }
+
+        .strength-bar.medium {
+            width: 66%;
+            background: #f59e0b;
+        }
+
+        .strength-bar.strong {
+            width: 100%;
+            background: #10b981;
+        }
+
+    .field-hint {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .match-message {
+        margin-top: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .match-message.success {
+            color: #059669;
+        }
+
+        .match-message.error {
+            color: #dc2626;
+        }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        flex-wrap: wrap;
+    }
+
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(75, 85, 99, 0.3);
+    }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(75, 85, 99, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 12px rgba(75, 85, 99, 0.2);
+        }
+
+    .btn-secondary {
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+    }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+            color: #1f2937;
+            text-decoration: none;
+        }
+
+    @@media only screen and (max-width: 1024px) {
+        .edit-container {
+            margin-left: 0;
+            padding: 0 15px;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .edit-container {
+            margin-left: 0;
+            padding: 0 10px;
+        }
+
+        .edit-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .header-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .tips-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .form-card {
+            padding: 25px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-modern {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    function togglePassword(fieldId) {
+        const passwordField = document.getElementById(fieldId);
+        const eyeIcon = document.getElementById('eye-' + fieldId);
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.className = 'mdi mdi-eye-off';
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.className = 'mdi mdi-eye';
+        }
+    }
+
+    function checkPasswordStrength(password) {
+        const strengthBar = document.getElementById('strengthBar');
+        let strength = 0;
+
+        if (password.length >= 6) strength++;
+        if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+        if (password.match(/[0-9]/)) strength++;
+        if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+        strengthBar.className = 'strength-bar';
+
+        if (strength >= 4) {
+            strengthBar.classList.add('strong');
+        } else if (strength >= 2) {
+            strengthBar.classList.add('medium');
+        } else if (strength >= 1) {
+            strengthBar.classList.add('weak');
+        } else {
+            strengthBar.style.width = '0';
+        }
+    }
+
+    function checkPasswordMatch() {
+        const newPassword = document.getElementById('ContrasenaNueva').value;
+        const confirmPassword = document.getElementById('ConfirmarContrasena').value;
+        const messageDiv = document.getElementById('password-match-message');
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (confirmPassword.length > 0) {
+            if (newPassword === confirmPassword) {
+                messageDiv.innerHTML = '<i class="mdi mdi-check-circle"></i> Las contraseñas coinciden';
+                messageDiv.className = 'match-message success';
+                submitBtn.disabled = false;
+            } else {
+                messageDiv.innerHTML = '<i class="mdi mdi-close-circle"></i> Las contraseñas no coinciden';
+                messageDiv.className = 'match-message error';
+                submitBtn.disabled = true;
+            }
+        } else {
+            messageDiv.innerHTML = '';
+            messageDiv.className = 'match-message';
+            submitBtn.disabled = false;
+        }
+    }
+
+    document.getElementById('ContrasenaNueva').addEventListener('input', function() {
+        checkPasswordStrength(this.value);
+        if (document.getElementById('ConfirmarContrasena').value.length > 0) {
+            checkPasswordMatch();
+        }
+    });
+
+    document.getElementById('ConfirmarContrasena').addEventListener('input', checkPasswordMatch);
+
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+        const newPassword = document.getElementById('ContrasenaNueva').value;
+        const confirmPassword = document.getElementById('ConfirmarContrasena').value;
+
+        if (newPassword !== confirmPassword) {
+            e.preventDefault();
+            alert('Las contraseñas no coinciden. Por favor verifica e intenta nuevamente.');
+        }
+    });
+</script>
