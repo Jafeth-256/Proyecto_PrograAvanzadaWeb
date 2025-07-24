@@ -1,0 +1,576 @@
+﻿@{
+    ViewData["Title"] = "Editar Tour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-container">
+    <!-- Mensajes de error -->
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Header de la página -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <a href="/Tours/Index" class="breadcrumb-link">
+                    <i class="mdi mdi-map-search"></i> Tours
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Editar Tour</span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-pencil me-2"></i>
+                Editar Tour
+            </h1>
+            <p class="page-subtitle">Modifica la información del tour seleccionado</p>
+        </div>
+        <div class="header-icon">
+            <i class="mdi mdi-map-edit"></i>
+        </div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="form-card">
+        <form method="post" action="/Tours/EditarTour" id="tourForm">
+            <input type="hidden" name="idTour" value="@Model.IdTour" />
+
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="mdi mdi-information"></i>
+                    Información General
+                </h3>
+
+                <div class="form-group">
+                    <label class="form-label" for="nombre">
+                        <i class="mdi mdi-tag"></i>
+                        Nombre del Tour
+                    </label>
+                    <input type="text" id="nombre" name="nombre" class="form-control"
+                           value="@Model.Nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="destino">
+                        <i class="mdi mdi-map-marker"></i>
+                        Destino
+                    </label>
+                    <input type="text" id="destino" name="destino" class="form-control"
+                           value="@Model.Destino" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="descripcion">
+                        <i class="mdi mdi-text"></i>
+                        Descripción
+                    </label>
+                    <textarea id="descripcion" name="descripcion" class="form-control form-textarea" required>@Model.Descripcion</textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="mdi mdi-cog"></i>
+                    Detalles del Tour
+                </h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="precio">
+                            <i class="mdi mdi-currency-usd"></i>
+                            Precio (₡)
+                        </label>
+                        <input type="number" id="precio" name="precio" class="form-control"
+                               value="@Model.Precio" min="1" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="cantidadPersonas">
+                            <i class="mdi mdi-account-group"></i>
+                            Cantidad de Personas
+                        </label>
+                        <input type="number" id="cantidadPersonas" name="cantidadPersonas" class="form-control"
+                               value="@Model.CantidadPersonas" min="1" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="fechaInicio">
+                            <i class="mdi mdi-calendar-start"></i>
+                            Fecha de Inicio
+                        </label>
+                        <input type="date" id="fechaInicio" name="fechaInicio" class="form-control"
+                               value="@Model.FechaInicio.ToString("yyyy-MM-dd")" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="fechaFin">
+                            <i class="mdi mdi-calendar-end"></i>
+                            Fecha de Fin
+                        </label>
+                        <input type="date" id="fechaFin" name="fechaFin" class="form-control"
+                               value="@Model.FechaFin.ToString("yyyy-MM-dd")" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-modern btn-primary">
+                    <i class="mdi mdi-content-save"></i>
+                    Actualizar Tour
+                </button>
+                <a href="/Tours/Index" class="btn-modern btn-secondary">
+                    <i class="mdi mdi-close"></i>
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Contenedor principal */
+    .form-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Alerts */
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #166534;
+    }
+
+    /* Header */
+    .page-header {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .breadcrumb-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.3s ease;
+    }
+
+        .breadcrumb-link:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    .breadcrumb-separator {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 300;
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    .header-icon {
+        z-index: 1;
+        position: relative;
+        font-size: 3rem;
+        opacity: 0.7;
+    }
+
+    /* Form card */
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        padding: 40px;
+    }
+
+    /* Form sections */
+    .form-section {
+        margin-bottom: 40px;
+    }
+
+        .form-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #f3f4f6;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .section-title i {
+            color: #10b981;
+            font-size: 1.4rem;
+        }
+
+    /* Form groups */
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.95rem;
+    }
+
+        .form-label i {
+            color: #10b981;
+            font-size: 1rem;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #374151;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    /* Form actions */
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid #f3f4f6;
+    }
+
+    /* Botones modernos */
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        font-family: inherit;
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-secondary:hover {
+            background: #5b6570;
+            color: white;
+        }
+
+    /* Responsive */
+    @@media only screen and (max-width: 1024px) {
+        .form-container
+
+    {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .page-header {
+        padding: 25px 20px;
+    }
+
+    .form-card {
+        padding: 30px 25px;
+    }
+
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .form-container
+
+    {
+        padding: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .form-card {
+        padding: 25px 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-modern {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .form-container
+
+    {
+        padding: 8px;
+    }
+
+    .page-header {
+        padding: 15px 10px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .form-card {
+        padding: 20px 15px;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    .form-control {
+        padding: 12px 14px;
+    }
+
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Establecer validación inicial
+        const fechaInicio = document.getElementById('fechaInicio');
+        const fechaFin = document.getElementById('fechaFin');
+
+        fechaFin.min = fechaInicio.value;
+
+        // Validar que la fecha de fin sea posterior a la de inicio
+        fechaInicio.addEventListener('change', function() {
+            fechaFin.min = this.value;
+
+            // Si la fecha de fin ya está seleccionada y es menor o igual, limpiarla
+            if (fechaFin.value && fechaFin.value <= this.value) {
+                fechaFin.value = '';
+            }
+        });
+
+        fechaFin.addEventListener('change', function() {
+            const fechaInicioValue = fechaInicio.value;
+            if (fechaInicioValue && this.value <= fechaInicioValue) {
+                showAlert('error', 'La fecha de fin debe ser posterior a la fecha de inicio');
+                this.value = '';
+            }
+        });
+
+        // Validación del formulario
+        document.getElementById('tourForm').addEventListener('submit', function(e) {
+            const nombre = document.getElementById('nombre').value.trim();
+            const destino = document.getElementById('destino').value.trim();
+            const descripcion = document.getElementById('descripcion').value.trim();
+            const precio = document.getElementById('precio').value;
+            const cantidadPersonas = document.getElementById('cantidadPersonas').value;
+            const fechaInicioValue = fechaInicio.value;
+            const fechaFinValue = fechaFin.value;
+
+            if (!nombre || !destino || !descripcion || !precio || !cantidadPersonas || !fechaInicioValue || !fechaFinValue) {
+                e.preventDefault();
+                showAlert('error', 'Por favor, completa todos los campos requeridos');
+                return;
+            }
+
+            if (parseFloat(precio) <= 0) {
+                e.preventDefault();
+                showAlert('error', 'El precio debe ser mayor a cero');
+                return;
+            }
+
+            if (parseInt(cantidadPersonas) <= 0) {
+                e.preventDefault();
+                showAlert('error', 'La cantidad de personas debe ser mayor a cero');
+                return;
+            }
+
+            if (fechaFinValue <= fechaInicioValue) {
+                e.preventDefault();
+                showAlert('error', 'La fecha de fin debe ser posterior a la fecha de inicio');
+                return;
+            }
+        });
+    });
+
+    // Función para mostrar alertas
+    function showAlert(type, message) {
+        const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+        const icon = type === 'success' ? 'mdi-check-circle' : 'mdi-alert-circle';
+
+        const alertHtml = `
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                <i class="mdi ${icon} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+
+        const container = document.querySelector('.form-container');
+        const existingAlert = container.querySelector('.alert');
+
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        container.insertAdjacentHTML('afterbegin', alertHtml);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            const alert = container.querySelector('.alert');
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+</script>

@@ -1,0 +1,978 @@
+﻿@model List<Proyecto_PrograAvanzadaWeb.Models.UsuarioViewModel>
+@{
+    ViewData["Title"] = "Gestión de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="users-container">
+    <!-- Mensajes de éxito/error -->
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-circle me-2"></i>
+            @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Header de la página -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <span class="breadcrumb-current">
+                    <i class="mdi mdi-account-multiple"></i> Usuarios
+                </span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-account-multiple me-2"></i>
+                Gestión de Usuarios
+            </h1>
+            <p class="page-subtitle">Administra los usuarios del sistema</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-number">@Model.Count</span>
+                <span class="stat-label">Usuarios Totales</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros de búsqueda -->
+    <div class="filters-card">
+        <div class="card-header">
+            <h3><i class="mdi mdi-filter"></i> Filtros de Búsqueda</h3>
+            <p>Encuentra usuarios específicos usando los filtros</p>
+        </div>
+        <div class="card-body">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-magnify"></i>
+                        Buscar por nombre o correo
+                    </label>
+                    <input type="text" id="filtro-busqueda" class="form-control" placeholder="Escriba para buscar...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-toggle-switch"></i>
+                        Estado
+                    </label>
+                    <select id="filtro-estado" class="form-control">
+                        <option value="">Todos los estados</option>
+                        <option value="true">Activos</option>
+                        <option value="false">Inactivos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-shield-account"></i>
+                        Rol
+                    </label>
+                    <select id="filtro-rol" class="form-control">
+                        <option value="">Todos los roles</option>
+                        <option value="Usuario Administrador">Administrador</option>
+                        <option value="Usuario Cliente">Cliente</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button id="limpiar-filtros" class="btn-modern btn-outline">
+                        <i class="mdi mdi-filter-remove"></i>
+                        Limpiar Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de usuarios -->
+    <div class="table-card">
+        <div class="card-header">
+            <h3><i class="mdi mdi-table"></i> Lista de Usuarios</h3>
+            <p>Información detallada de todos los usuarios registrados</p>
+        </div>
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="modern-table" id="tabla-usuarios">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Correo</th>
+                                <th>Identificación</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Registro</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usuario in Model)
+                            {
+                                <tr data-nombre="@usuario.Nombre.ToLower()"
+                                    data-correo="@usuario.Correo.ToLower()"
+                                    data-estado="@usuario.Estado.ToString().ToLower()"
+                                    data-rol="@usuario.NombreRol">
+                                    <td>
+                                        <span class="id-badge">#@usuario.IdUsuario</span>
+                                    </td>
+                                    <td>
+                                        <div class="user-info">
+                                            <div class="user-avatar">
+                                                @usuario.Nombre.Substring(0, 1).ToUpper()
+                                            </div>
+                                            <div class="user-details">
+                                                <strong class="user-name">@usuario.Nombre</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="email-cell">@usuario.Correo</td>
+                                    <td class="id-cell">@usuario.Identificacion</td>
+                                    <td>
+                                        <span class="role-badge @(usuario.NombreRol == "Usuario Administrador" ? "role-admin" : "role-client")">
+                                            <i class="mdi @(usuario.NombreRol == "Usuario Administrador" ? "mdi-shield-crown" : "mdi-account")"></i>
+                                            @usuario.NombreRol
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="status-switch-container">
+                                            <label class="status-switch">
+                                                <input class="status-input estado-switch"
+                                                       type="checkbox"
+                                                       @(usuario.Estado ? "checked" : "")
+                                                       data-usuario-id="@usuario.IdUsuario">
+                                                <span class="status-slider"></span>
+                                            </label>
+                                            <span class="status-badge @(usuario.Estado ? "status-active" : "status-inactive")">
+                                                @usuario.EstadoTexto
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="date-cell">
+                                        <div class="date-info">
+                                            <i class="mdi mdi-calendar"></i>
+                                            @usuario.FechaRegistro.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <a href="/Usuarios/Detalles/@usuario.IdUsuario"
+                                               class="btn-action btn-view"
+                                               title="Ver detalles">
+                                                <i class="mdi mdi-eye"></i>
+                                            </a>
+                                            <a href="/Usuarios/Editar/@usuario.IdUsuario"
+                                               class="btn-action btn-edit"
+                                               title="Editar usuario">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="mdi mdi-account-off"></i>
+                    </div>
+                    <h4 class="empty-title">No hay usuarios registrados</h4>
+                    <p class="empty-subtitle">Aún no se han registrado usuarios en el sistema.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Contenedor principal */
+    .users-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Alerts */
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #166534;
+    }
+
+    /* Header */
+    .page-header {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    .header-stats {
+        z-index: 1;
+        position: relative;
+    }
+
+    .stat-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px 25px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    /* Cards */
+    .filters-card,
+    .table-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 25px 30px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .card-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    /* Filtros */
+    .filters-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr auto;
+        gap: 20px;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #374151;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #374151;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #6b7280;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+    /* Botones modernos */
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    }
+
+        .btn-modern.btn-outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-outline:hover {
+            background: #f9fafb;
+            border-color: #6b7280;
+            color: #374151;
+        }
+
+    /* Tabla moderna */
+    .table-responsive {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+        .modern-table thead {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            color: white;
+        }
+
+        .modern-table th {
+            padding: 20px 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: left;
+            border: none;
+            position: relative;
+        }
+
+        .modern-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: middle;
+            font-size: 0.95rem;
+            color: #374151;
+        }
+
+        .modern-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+            .modern-table tbody tr:hover {
+                background: #f9fafb;
+                transform: scale(1.01);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            }
+
+    /* Elementos de la tabla */
+    .id-badge {
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: monospace;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1rem;
+        border: 2px solid white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .user-name {
+        color: #374151;
+        font-size: 0.95rem;
+    }
+
+    .email-cell {
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    .id-cell {
+        font-family: monospace;
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    /* Role badges */
+    .role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+        .role-badge.role-admin {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .role-badge.role-client {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+    /* Status switch */
+    .status-switch-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .status-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 26px;
+    }
+
+    .status-input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .status-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #cbd5e1;
+        transition: 0.4s;
+        border-radius: 26px;
+    }
+
+        .status-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+    .status-input:checked + .status-slider {
+        background-color: #10b981;
+    }
+
+        .status-input:checked + .status-slider:before {
+            transform: translateX(24px);
+        }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+        .status-badge.status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.status-inactive {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+    .date-cell {
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    .date-info {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Action buttons */
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        border: 2px solid transparent;
+    }
+
+        .btn-action.btn-view {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-action.btn-edit {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        .btn-action.btn-view:hover {
+            color: white;
+        }
+
+        .btn-action.btn-edit:hover {
+            color: white;
+        }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        color: #d1d5db;
+        margin-bottom: 20px;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 10px;
+    }
+
+    .empty-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    /* Responsive */
+    @@media only screen and (max-width: 1024px) {
+        .users-container {
+            padding: 15px;
+            max-width: 100%;
+        }
+
+        .page-header {
+            padding: 25px 20px;
+        }
+
+        .filters-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .filter-actions {
+            grid-column: 1 / -1;
+            justify-self: center;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .users-container {
+            padding: 10px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            padding: 20px 15px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+        }
+
+        .filters-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .filter-actions {
+            grid-column: 1;
+            justify-self: stretch;
+        }
+
+        .card-body {
+            padding: 20px 15px;
+        }
+        /* Tabla responsive */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modern-table {
+            min-width: 800px;
+            font-size: 0.85rem;
+        }
+
+            .modern-table th,
+            .modern-table td {
+                padding: 12px 8px;
+                min-width: 100px;
+            }
+
+        .user-info {
+            min-width: 150px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            flex-direction: row;
+            gap: 6px;
+            min-width: 80px;
+        }
+
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+        }
+
+        .status-switch-container {
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .role-badge {
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .users-container {
+            padding: 8px;
+        }
+
+        .page-header {
+            padding: 15px 10px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .card-header {
+            padding: 20px 15px;
+        }
+
+        .card-body {
+            padding: 15px 10px;
+        }
+
+        .modern-table {
+            min-width: 700px;
+            font-size: 0.8rem;
+        }
+
+            .modern-table th,
+            .modern-table td {
+                padding: 10px 6px;
+            }
+
+        .user-info {
+            min-width: 120px;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+
+        .btn-action {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elementos de filtros
+        const filtroBusqueda = document.getElementById('filtro-busqueda');
+        const filtroEstado = document.getElementById('filtro-estado');
+        const filtroRol = document.getElementById('filtro-rol');
+        const limpiarFiltros = document.getElementById('limpiar-filtros');
+        const tabla = document.getElementById('tabla-usuarios');
+
+        // Función para aplicar filtros
+        function aplicarFiltros() {
+            const busqueda = filtroBusqueda.value.toLowerCase();
+            const estado = filtroEstado.value;
+            const rol = filtroRol.value;
+
+            const filas = tabla.querySelectorAll('tbody tr');
+
+            filas.forEach(fila => {
+                const nombre = fila.dataset.nombre || '';
+                const correo = fila.dataset.correo || '';
+                const estadoFila = fila.dataset.estado || '';
+                const rolFila = fila.dataset.rol || '';
+
+                const coincideBusqueda = busqueda === '' ||
+                                       nombre.includes(busqueda) ||
+                                       correo.includes(busqueda);
+
+                const coincideEstado = estado === '' || estadoFila === estado;
+                const coincideRol = rol === '' || rolFila === rol;
+
+                if (coincideBusqueda && coincideEstado && coincideRol) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+        }
+
+        // Event listeners para filtros
+        if (filtroBusqueda) filtroBusqueda.addEventListener('input', aplicarFiltros);
+        if (filtroEstado) filtroEstado.addEventListener('change', aplicarFiltros);
+        if (filtroRol) filtroRol.addEventListener('change', aplicarFiltros);
+
+        // Limpiar filtros
+        if (limpiarFiltros) {
+            limpiarFiltros.addEventListener('click', function() {
+                filtroBusqueda.value = '';
+                filtroEstado.value = '';
+                filtroRol.value = '';
+                aplicarFiltros();
+            });
+        }
+
+        // Cambio de estado con switches
+        document.querySelectorAll('.estado-switch').forEach(switch_ => {
+            switch_.addEventListener('change', function() {
+                const usuarioId = this.dataset.usuarioId;
+                const nuevoEstado = this.checked;
+
+                fetch('/Usuarios/CambiarEstado', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `idUsuario=${usuarioId}&nuevoEstado=${nuevoEstado}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualizar badge de estado
+                        const badge = this.closest('.status-switch-container').querySelector('.status-badge');
+                        if (nuevoEstado) {
+                            badge.className = 'status-badge status-active';
+                            badge.textContent = 'Activo';
+                        } else {
+                            badge.className = 'status-badge status-inactive';
+                            badge.textContent = 'Inactivo';
+                        }
+
+                        // Mostrar mensaje de éxito
+                        showAlert('success', data.message);
+                    } else {
+                        // Revertir el switch si hubo error
+                        this.checked = !nuevoEstado;
+                        showAlert('error', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    this.checked = !nuevoEstado;
+                    showAlert('error', 'Error al cambiar el estado del usuario');
+                });
+            });
+        });
+
+        // Función para mostrar alertas
+        function showAlert(type, message) {
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            const icon = type === 'success' ? 'mdi-check-circle' : 'mdi-alert-circle';
+
+            const alertHtml = `
+                <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                    <i class="mdi ${icon} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+
+            const container = document.querySelector('.users-container');
+            container.insertAdjacentHTML('afterbegin', alertHtml);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                const alert = container.querySelector('.alert');
+                if (alert) {
+                    alert.remove();
+                }
+            }, 5000);
+        }
+
+        // Animación smooth para hover en filas
+        const filas = document.querySelectorAll('.modern-table tbody tr');
+        filas.forEach(fila => {
+            fila.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.01)';
+            });
+
+            fila.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>

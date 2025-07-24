@@ -1,902 +1,850 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Proyecto</title>
-
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
     <link href="~/css/materialdesignicons.min.css" rel="stylesheet" />
     <link href="~/css/simplebar.css" rel="stylesheet" />
-    <link id="main-css-href" rel="stylesheet" href="~/css/style.css" />
-
     <link href="~/images/favicon.png" rel="shortcut icon" />
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-
 <body class="navbar-fixed sidebar-fixed" id="body">
-    @RenderBody()
     <div class="wrapper">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
 
-        <aside class="left-sidebar sidebar-dark" id="left-sidebar">
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+
+        <!-- Sidebar -->
+        <aside class="left-sidebar" id="left-sidebar">
             <div id="sidebar" class="sidebar sidebar-with-footer">
                 <div class="app-brand">
-                    <a href="/index.html">
-                        <img src="~/images/logo.png" alt="Mono">
-                        <span class="brand-name">MONO</span>
+                    <a href="/Home/Inicio">
+                        <span class="brand-name">Tico Tours</span>
                     </a>
+                    <button class="sidebar-close" id="sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <div class="sidebar-left" data-simplebar style="height: 100%;">
                     <ul class="nav sidebar-inner" id="sidebar-menu">
-
                         <li>
-                            <a class="sidenav-item-link" href="index.html">
-                                <i class="mdi mdi-briefcase-account-outline"></i>
-                                <span class="nav-text">Business Dashboard</span>
+                            <a class="sidenav-item-link" href="/Home/Inicio">
+                                <i class="mdi mdi-home-variant"></i>
+                                <span class="nav-text">Inicio</span>
                             </a>
-                        </li>
-
-                        <li>
-                            <a class="sidenav-item-link" href="analytics.html">
-                                <i class="mdi mdi-chart-line"></i>
-                                <span class="nav-text">Analytics Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="section-title">
-                            Apps
                         </li>
 
                         <li>
-                            <a class="sidenav-item-link" href="chat.html">
-                                <i class="mdi mdi-wechat"></i>
-                                <span class="nav-text">Chat</span>
+                            <a class="sidenav-item-link" href="/Tours/Explorar">
+                                <i class="mdi mdi-map-search"></i>
+                                <span class="nav-text">Explorar Tours</span>
                             </a>
                         </li>
-
-
-
-
 
                         <li>
-                            <a class="sidenav-item-link" href="contacts.html">
-                                <i class="mdi mdi-phone"></i>
-                                <span class="nav-text">Contacts</span>
+                            <a class="sidenav-item-link" href="/Eventos/Sociales">
+                                <i class="mdi mdi-account-multiple"></i>
+                                <span class="nav-text">Eventos Sociales</span>
                             </a>
                         </li>
-
-
-
-
 
                         <li>
-                            <a class="sidenav-item-link" href="team.html">
-                                <i class="mdi mdi-account-group"></i>
-                                <span class="nav-text">Team</span>
+                            <a class="sidenav-item-link" href="/Eventos/Universitarios">
+                                <i class="mdi mdi-school"></i>
+                                <span class="nav-text">Eventos Universitarios</span>
                             </a>
                         </li>
-
-
-
-
 
                         <li>
-                            <a class="sidenav-item-link" href="calendar.html">
-                                <i class="mdi mdi-calendar-check"></i>
-                                <span class="nav-text">Calendar</span>
+                            <a class="sidenav-item-link" href="/Tours/Index">
+                                <i class="mdi mdi-bus-double-decker"></i>
+                                <span class="nav-text">Crear tour</span>
                             </a>
                         </li>
 
-
-
-
-
-                        <li class="has-sub">
-                            <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#email"
-                               aria-expanded="false" aria-controls="email">
-                                <i class="mdi mdi-email"></i>
-                                <span class="nav-text">email</span> <b class="caret"></b>
-                            </a>
-                            <ul class="collapse" id="email"
-                                data-parent="#sidebar-menu">
-                                <div class="sub-menu">
-
-
-
-                                <li>
-                                    <a class="sidenav-item-link" href="email-inbox.html">
-                                        <span class="nav-text">Email Inbox</span>
-
-                                    </a>
-                                </li>
-
-
-
-
-
-
-                                <li>
-                                    <a class="sidenav-item-link" href="email-details.html">
-                                        <span class="nav-text">Email Details</span>
-
-                                    </a>
-                                </li>
-
-
-
-
-
-
-                                <li>
-                                    <a class="sidenav-item-link" href="email-compose.html">
-                                        <span class="nav-text">Email Compose</span>
-
-                                    </a>
-                                </li>
-
-
-
-
-                </div>
-                </ul>
-                </li>
-
-
-
-
-
-                
-
-
-
-
-
-                
-
-
-
-
-
-
-
-
-    <li class="section-title">
-        Documentation
-    </li>
-
-
-
-
-
-    <li>
-        <a class="sidenav-item-link" href="getting-started.html">
-            <i class="mdi mdi-airplane"></i>
-            <span class="nav-text">Getting Started</span>
-        </a>
-    </li>
-
-
-
-
-
-    <li class="has-sub">
-        <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#customization"
-           aria-expanded="false" aria-controls="customization">
-            <i class="mdi mdi-square-edit-outline"></i>
-            <span class="nav-text">Customization</span> <b class="caret"></b>
-        </a>
-        <ul class="collapse" id="customization"
-            data-parent="#sidebar-menu">
-            <div class="sub-menu">
-
-
-
-            <li>
-                <a class="sidenav-item-link" href="navbar-customization.html">
-                    <span class="nav-text">Navbar</span>
-
-                </a>
-            </li>
-
-
-
-
-
-
-            <li>
-                <a class="sidenav-item-link" href="sidebar-customization.html">
-                    <span class="nav-text">Sidebar</span>
-
-                </a>
-            </li>
-
-
-
-
-
-
-            <li>
-                <a class="sidenav-item-link" href="styling.html">
-                    <span class="nav-text">Styling</span>
-
-                </a>
-            </li>
-
-
-
-
-            </div>
-        </ul>
-    </li>
-
-
-
-    </ul>
-
-    </div>
-
-    <div class="sidebar-footer">
-        <div class="sidebar-footer-content">
-            <ul class="d-flex">
-                <li>
-                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a>
-                </li>
-                <li>
-                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    </div>
-    </aside>
-
-
-
-    <!-- ====================================
-    ——— PAGE WRAPPER
-    ===================================== -->
-    <div class="page-wrapper">
-
-        <!-- Header -->
-        <header class="main-header" id="header">
-            <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
-                <!-- Sidebar toggle button -->
-                <button id="sidebar-toggler" class="sidebar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                </button>
-
-                <span class="page-title">user profile settings</span>
-
-                <div class="navbar-right ">
-
-                    <!-- search form -->
-                    <div class="search-form">
-                        <form action="index.html" method="get">
-                            <div class="input-group input-group-sm" id="input-group-search">
-                                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control" placeholder="Search..." />
-                                <div class="input-group-append">
-                                    <button class="btn" type="button">/</button>
-                                </div>
-                            </div>
-                        </form>
-                        <ul class="dropdown-menu dropdown-menu-search">
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Morbi leo risus</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Dapibus ac facilisis in</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Porta ac consectetur ac</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.html">Vestibulum at eros</a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                    <ul class="nav navbar-nav">
-                        <!-- Offcanvas -->
-                        <li class="custom-dropdown">
-                            <a class="offcanvas-toggler active custom-dropdown-toggler" data-offcanvas="contact-off" href="javascript:">
-                                <i class="mdi mdi-contacts icon"></i>
+                        <li>
+                            <a class="sidenav-item-link" href="/Calendario/Index">
+                                <i class="mdi mdi-calendar"></i>
+                                <span class="nav-text">Calendario</span>
                             </a>
                         </li>
-                        <li class="custom-dropdown">
-                            <button class="notify-toggler custom-dropdown-toggler">
-                                <i class="mdi mdi-bell-outline icon"></i>
-                                <span class="badge badge-xs rounded-circle">21</span>
-                            </button>
-                            <div class="dropdown-notify">
 
-                                <header>
-                                    <div class="nav nav-underline" id="nav-tab" role="tablist">
-                                        <a class="nav-item nav-link active" id="all-tabs" data-toggle="tab" href="#all" role="tab" aria-controls="nav-home"
-                                           aria-selected="true">All (5)</a>
-                                        <a class="nav-item nav-link" id="message-tab" data-toggle="tab" href="#message" role="tab" aria-controls="nav-profile"
-                                           aria-selected="false">Msgs (4)</a>
-                                        <a class="nav-item nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="nav-contact"
-                                           aria-selected="false">Others (3)</a>
-                                    </div>
-                                </header>
-
-                                <div class="" data-simplebar style="height: 325px;">
-                                    <div class="tab-content" id="myTabContent">
-
-                                        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tabs">
-
-                                            <div class="media media-sm bg-warning-10 p-4 mb-0">
-                                                <div class="media-sm-wrapper">
-                                                    <a href="user-profile.html">
-                                                        <img src="~/images/user-sm-02.jpg" alt="User Image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">John Doe</span>
-                                                        <span class="discribe">Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible. Afraid at highly months do things on at.</span>
-                                                        <span class="time">
-                                                            <time>Just now</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 bg-light mb-0">
-                                                <div class="media-sm-wrapper bg-primary">
-                                                    <a href="user-profile.html">
-                                                        <i class="mdi mdi-calendar-check-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">New event added</span>
-                                                        <span class="discribe">1/3/2014 (1pm - 2pm)</span>
-                                                        <span class="time">
-                                                            <time>10 min ago...</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper">
-                                                    <a href="user-profile.html">
-                                                        <img src="~/images/user-sm-03.jpg" alt="User Image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Sagge Hudson</span>
-                                                        <span class="discribe">On disposal of as landlord Afraid at highly months do things on at.</span>
-                                                        <span class="time">
-                                                            <time>1 hrs ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper bg-info-dark">
-                                                    <a href="user-profile.html">
-                                                        <i class="mdi mdi-account-multiple-check"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Add request</span>
-                                                        <span class="discribe">Add Dany Jones as your contact.</span>
-                                                        <div class="buttons">
-                                                            <a href="#" class="btn btn-sm btn-success shadow-none text-white">accept</a>
-                                                            <a href="#" class="btn btn-sm shadow-none">delete</a>
-                                                        </div>
-                                                        <span class="time">
-                                                            <time>6 hrs ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper bg-info">
-                                                    <a href="user-profile.html">
-                                                        <i class="mdi mdi-playlist-check"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Task complete</span>
-                                                        <span class="discribe">Afraid at highly months do things on at.</span>
-                                                        <span class="time">
-                                                            <time>1 hrs ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="tab-pane fade" id="message" role="tabpanel" aria-labelledby="message-tab">
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper">
-                                                    <a href="user-profile.html">
-                                                        <img src="~/images/user-sm-01.jpg" alt="User Image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Selena Wagner</span>
-                                                        <span class="discribe">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
-                                                        <span class="time">
-                                                            <time>15 min ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper">
-                                                    <a href="user-profile.html">
-                                                        <img src="~/images/user-sm-03.jpg" alt="User Image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Sagge Hudson</span>
-                                                        <span class="discribe">On disposal of as landlord Afraid at highly months do things on at.</span>
-                                                        <span class="time">
-                                                            <time>1 hrs ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm bg-warning-10 p-4 mb-0">
-                                                <div class="media-sm-wrapper">
-                                                    <a href="user-profile.html">
-                                                        <img src="~/images/user-sm-02.jpg" alt="User Image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">John Doe</span>
-                                                        <span class="discribe">
-                                                            Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible. Afraid
-                                                            at highly months do things on at.
-                                                        </span>
-                                                        <span class="time">
-                                                            <time>Just now</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper">
-                                                    <a href="user-profile.html">
-                                                        <img src="~/images/user-sm-04.jpg" alt="User Image">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Albrecht Straub</span>
-                                                        <span class="discribe"> Beatae quia natus assumenda laboriosam, nisi perferendis aliquid consectetur expedita non tenetur.</span>
-                                                        <span class="time">
-                                                            <time>Just now</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="contact-tab">
-
-                                            <div class="media media-sm p-4 bg-light mb-0">
-                                                <div class="media-sm-wrapper bg-primary">
-                                                    <a href="user-profile.html">
-                                                        <i class="mdi mdi-calendar-check-outline"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">New event added</span>
-                                                        <span class="discribe">1/3/2014 (1pm - 2pm)</span>
-                                                        <span class="time">
-                                                            <time>10 min ago...</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper bg-info-dark">
-                                                    <a href="user-profile.html">
-                                                        <i class="mdi mdi-account-multiple-check"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Add request</span>
-                                                        <span class="discribe">Add Dany Jones as your contact.</span>
-                                                        <div class="buttons">
-                                                            <a href="#" class="btn btn-sm btn-success shadow-none text-white">accept</a>
-                                                            <a href="#" class="btn btn-sm shadow-none">delete</a>
-                                                        </div>
-                                                        <span class="time">
-                                                            <time>6 hrs ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="media media-sm p-4 mb-0">
-                                                <div class="media-sm-wrapper bg-info">
-                                                    <a href="user-profile.html">
-                                                        <i class="mdi mdi-playlist-check"></i>
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <a href="user-profile.html">
-                                                        <span class="title mb-0">Task complete</span>
-                                                        <span class="discribe">Afraid at highly months do things on at.</span>
-                                                        <span class="time">
-                                                            <time>1 hrs ago</time>...
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <footer class="border-top dropdown-notify-footer">
-                                    <div class="d-flex justify-content-between align-items-center py-2 px-4">
-                                        <span>Last updated 3 min ago</span>
-                                        <a id="refress-button" href="javascript:" class="btn mdi mdi-cached btn-refress"></a>
-                                    </div>
-                                </footer>
-                            </div>
+                        <li>
+                            <a class="sidenav-item-link" href="/Perfil/Index">
+                                <i class="mdi mdi-account-circle"></i>
+                                <span class="nav-text">Perfil</span>
+                            </a>
                         </li>
-                        <!-- User Account -->
-                        <li class="dropdown user-menu">
-                            <button class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <img src="~/images/favicon.png" class="user-image rounded-circle" alt="User Image" />
-                                <span class="d-none d-lg-inline-block">John Doe</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li>
-                                    <a class="dropdown-link-item" href="user-profile.html">
-                                        <i class="mdi mdi-account-outline"></i>
-                                        <span class="nav-text">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-link-item" href="email-inbox.html">
-                                        <i class="mdi mdi-email-outline"></i>
-                                        <span class="nav-text">Message</span>
-                                        <span class="badge badge-pill badge-primary">24</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-link-item" href="user-activities.html">
-                                        <i class="mdi mdi-diamond-stone"></i>
-                                        <span class="nav-text">Activitise</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-link-item" href="user-account-settings.html">
-                                        <i class="mdi mdi-settings"></i>
-                                        <span class="nav-text">Account Setting</span>
-                                    </a>
-                                </li>
 
-                                <li class="dropdown-footer">
-                                    <a class="dropdown-link-item" href="sign-in.html"> <i class="mdi mdi-logout"></i> Log Out </a>
-                                </li>
-                            </ul>
+                        <li>
+                            <a class="sidenav-item-link" href="/Usuarios/Index">
+                                <i class="mdi mdi-account-multiple-plus"></i>
+                                <span class="nav-text">Lista Usuarios</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
-            </nav>
+            </div>
+        </aside>
 
-
-        </header>
-
-        <!-- ====================================
-        ——— CONTENT WRAPPER
-        ===================================== -->
-        <div class="content-wrapper">
-            <div class="content">
-                <!-- Card Profile -->
-                <div class="card card-default card-profile">
-
-                   
-
-                    <div class="card-body card-profile-body">
-
-                        <div class="profile-avata">
-                            <img class="rounded-circle" src="~/images/favicon.png" alt="Avata Image">
-                            <a class="h5 d-block mt-3 mb-2" href="#">Albrecht Straub</a>
-                            <a class="d-block text-color" href="#">albercht@example.com</a>
-                        </div>
-
-                        <ul class="nav nav-profile-follow">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span class="h5 d-block">1503</span>
-                                    <span class="text-color d-block">Friends</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span class="h5 d-block">2905</span>
-                                    <span class="text-color d-block">Followers</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <span class="h5 d-block">1200</span>
-                                    <span class="text-color d-block">Following</span>
-                                </a>
-                            </li>
-
-                        </ul>
-
-                        <div class="profile-button">
-                            <a class="btn btn-primary btn-pill" href="user-planing-settings.html">Upgrade Plan</a>
-                        </div>
-
+        <!-- Main Dashboard Container -->
+        <div class="dashboard-container">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle desktop-only" id="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Busca tu destino favorito" class="search-input">
+                        <button class="search-btn">Buscar</button>
                     </div>
-
-                    <div class="card-footer card-profile-footer">
-                        <ul class="nav nav-border-top justify-content-center">
-                            <li class="nav-item">
-                                <a class="nav-link" href="user-profile.html">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="user-activities.html">Activities</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="user-profile-settings.html">Settings</a>
-                            </li>
-
-                        </ul>
-                    </div>
-
                 </div>
 
-                <div class="row">
-                    <div class="col-xl-3">
-                        <!--  -->
-                        <div class="card card-default">
-                            <div class="card-header">
-                                <h2>Settings</h2>
-                            </div>
-
-                            <div class="card-body pt-0">
-                                <ul class="nav nav-settings">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="user-profile-settings.html">
-                                            <i class="mdi mdi-account-outline mr-1"></i> Profile
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="user-account-settings.html">
-                                            <i class="mdi mdi-settings-outline mr-1"></i> Account
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="user-planing-settings.html">
-                                            <i class="mdi mdi-currency-usd mr-1"></i> Planing
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="user-billing.html">
-                                            <i class="mdi mdi-set-top-box mr-1"></i> Billing
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="user-notify-settings.html">
-                                            <i class="mdi mdi-bell-outline mr-1"></i> Notifications
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                <div class="user-profile">
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            @if (!string.IsNullOrEmpty(ViewBag.FotoPath))
+                            {
+                                <img src="@ViewBag.FotoPath" alt="Avatar">
+                            }
+                            else
+                            {
+                                @(ViewBag.NombreUsuario?.ToString()?.Substring(0, 1).ToUpper() ?? "U")
+                            }
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">@ViewBag.NombreUsuario</div>
+                            <div class="user-role">@ViewBag.NombreRol</div>
                         </div>
                     </div>
-                    <div class="col-xl-9">
-                        <div class="card card-default">
-                            <div class="card-header">
-                                <h2 class="mb-5">Profile Settings</h2>
-
-                            </div>
-
-                            <div class="card-body">
-                                <div class="media media-sm">
-                                    <div class="media-sm-wrapper">
-                                        <img src="~/images/user-sm-01.jpg" alt="User Image">
-                                    </div>
-                                    <div class="media-body">
-                                        <span class="title h3">The stars are twinkling.</span>
-                                        <p>Click the current avatar to change your photo.</p>
-                                    </div>
-                                </div>
-                                <form>
-                                    <div class="form-group row mb-6">
-                                        <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">Cover Image</label>
-                                        <div class="col-sm-8 col-lg-10">
-                                            <div class="custom-file mb-1">
-                                                <input type="file" class="custom-file-input" id="coverImage" required>
-                                                <label class="custom-file-label" for="coverImage">Choose file...</label>
-                                                <div class="invalid-feedback">Example invalid custom file feedback</div>
-                                            </div>
-                                            <span class="d-block ">Upload a new cover image, JPG 1200x300</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-6">
-                                        <label for="occupation" class="col-sm-4 col-lg-2 col-form-label">Occupation</label>
-                                        <div class="col-sm-8 col-lg-10">
-                                            <input type="text" class="form-control" id="occupation">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-6">
-                                        <label for="com-name" class="col-sm-4 col-lg-2 col-form-label">Company name</label>
-                                        <div class="col-sm-8 col-lg-10">
-                                            <input type="text" class="form-control" id="com-name">
-                                            <span class="d-block ">Upload a new cover image, JPG 1200x300</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary mb-2 btn-pill">Update Profile</button>
-                                    </div>
-
-                                </form>
-                            </div>
+                    <div class="dropdown">
+                        <i class="fas fa-chevron-down dropdown-toggle" data-toggle="dropdown"></i>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/Perfil/Index">
+                                <i class="fas fa-user"></i> Mi Perfil
+                            </a>
+                            <a class="dropdown-item" href="/Home/Logout">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                            </a>
                         </div>
-
-                        
-
-
-
                     </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
-    </div>
-
-    <!-- Card Offcanvas -->
-    <div class="card card-offcanvas" id="contact-off">
-        <div class="card-header">
-            <h2>Contacts</h2>
-            <a href="#" class="btn btn-primary btn-pill px-4">Add New</a>
-        </div>
-        <div class="card-body">
-
-            <div class="mb-4">
-                <input type="text" class="form-control form-control-lg form-control-secondary rounded-0" placeholder="Search contacts...">
-            </div>
-
-            <div class="media media-sm">
-                <div class="media-sm-wrapper">
-                    <a href="user-profile.html">
-                        <img src="~/images/user-sm-01.jpg" alt="User Image">
-                        <span class="active bg-primary"></span>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="user-profile.html">
-                        <span class="title">Selena Wagner</span>
-                        <span class="discribe">Designer</span>
-                    </a>
                 </div>
             </div>
 
-            <div class="media media-sm">
-                <div class="media-sm-wrapper">
-                    <a href="user-profile.html">
-                        <img src="~/images/user-sm-02.jpg" alt="User Image">
-                        <span class="active bg-primary"></span>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="user-profile.html">
-                        <span class="title">Walter Reuter</span>
-                        <span>Developer</span>
-                    </a>
-                </div>
+            <!-- Content Area -->
+            <div class="main-content">
+                @RenderBody()
             </div>
-
-            <div class="media media-sm">
-                <div class="media-sm-wrapper">
-                    <a href="user-profile.html">
-                        <img src="~/images/user-sm-03.jpg" alt="User Image">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="user-profile.html">
-                        <span class="title">Larissa Gebhardt</span>
-                        <span>Cyber Punk</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="media media-sm">
-                <div class="media-sm-wrapper">
-                    <a href="user-profile.html">
-                        <img src="~/images/user-sm-04.jpg" alt="User Image">
-                    </a>
-
-                </div>
-                <div class="media-body">
-                    <a href="user-profile.html">
-                        <span class="title">Albrecht Straub</span>
-                        <span>Photographer</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="media media-sm">
-                <div class="media-sm-wrapper">
-                    <a href="user-profile.html">
-                        <img src="~/images/user-sm-05.jpg" alt="User Image">
-                        <span class="active bg-danger"></span>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="user-profile.html">
-                        <span class="title">Leopold Ebert</span>
-                        <span>Fashion Designer</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="media media-sm">
-                <div class="media-sm-wrapper">
-                    <a href="user-profile.html">
-                        <img src="~/images/user-sm-06.jpg" alt="User Image">
-                        <span class="active bg-primary"></span>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a href="user-profile.html">
-                        <span class="title">Selena Wagner</span>
-                        <span>Photographer</span>
-                    </a>
-                </div>
-            </div>
-
         </div>
     </div>
-
 
     <script src="~/lib/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery.min.js"></script>
     <script src="~/lib/simplebar.min.js"></script>
 
+    <script>
+        // Variables globales
+        const sidebar = document.getElementById('left-sidebar');
+        const dashboardContainer = document.querySelector('.dashboard-container');
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const mobileOverlay = document.getElementById('mobile-overlay');
 
+        // Estado del sidebar
+        let sidebarCollapsed = false;
+        let isMobile = window.innerWidth <= 768;
 
+        // Inicializar
+        function initLayout() {
+            checkScreenSize();
+            updateLayout();
+        }
 
-    <!--  -->
+        // Verificar tamaño de pantalla
+        function checkScreenSize() {
+            const newIsMobile = window.innerWidth <= 768;
+            if (newIsMobile !== isMobile) {
+                isMobile = newIsMobile;
+                updateLayout();
+            }
+        }
 
+        // Actualizar layout
+        function updateLayout() {
+            if (isMobile) {
+                // Modo móvil
+                sidebar.classList.remove('collapsed');
+                sidebar.classList.add('mobile-hidden');
+                dashboardContainer.classList.remove('sidebar-collapsed');
+                dashboardContainer.classList.add('full-width');
+            } else {
+                // Modo desktop
+                sidebar.classList.remove('mobile-hidden');
+                dashboardContainer.classList.remove('full-width');
+                if (sidebarCollapsed) {
+                    sidebar.classList.add('collapsed');
+                    dashboardContainer.classList.add('sidebar-collapsed');
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    dashboardContainer.classList.remove('sidebar-collapsed');
+                }
+            }
+        }
 
+        // Toggle sidebar en desktop
+        function toggleSidebar() {
+            if (!isMobile) {
+                sidebarCollapsed = !sidebarCollapsed;
+                updateLayout();
+            }
+        }
+
+        // Mostrar sidebar en móvil
+        function showMobileSidebar() {
+            if (isMobile) {
+                sidebar.classList.remove('mobile-hidden');
+                mobileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Ocultar sidebar en móvil
+        function hideMobileSidebar() {
+            if (isMobile) {
+                sidebar.classList.add('mobile-hidden');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Event listeners
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', showMobileSidebar);
+        }
+
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', toggleSidebar);
+        }
+
+        if (sidebarClose) {
+            sidebarClose.addEventListener('click', hideMobileSidebar);
+        }
+
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', hideMobileSidebar);
+        }
+
+        // Resize listener
+        window.addEventListener('resize', checkScreenSize);
+
+        // Dropdown functionality
+        document.querySelectorAll('[data-toggle="dropdown"]').forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const dropdown = this.nextElementSibling;
+                if (dropdown && dropdown.classList.contains('dropdown-menu')) {
+                    // Cerrar otros dropdowns
+                    document.querySelectorAll('.dropdown-menu.show').forEach(d => {
+                        if (d !== dropdown) d.classList.remove('show');
+                    });
+                    dropdown.classList.toggle('show');
+                }
+            });
+        });
+
+        // Cerrar dropdowns al hacer click fuera
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown-menu.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            }
+        });
+
+        // Cerrar sidebar móvil al hacer click en enlaces
+        document.querySelectorAll('.sidenav-item-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMobile) {
+                    hideMobileSidebar();
+                }
+            });
+        });
+
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', initLayout);
+    </script>
+
+    <style>
+        /* Reset y variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sidebar-width: 280px;
+            --sidebar-collapsed-width: 70px;
+            --header-height: 70px;
+            --primary-color: #6b7280;
+            --primary-dark: #4b5563;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-600: #6b7280;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Karla', sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+        }
+
+        .wrapper {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1001;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+            .mobile-menu-toggle:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+            }
+
+        /* Mobile Overlay */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+            .mobile-overlay.active {
+                opacity: 1;
+            }
+
+        /* Sidebar */
+        .left-sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        }
+
+            .left-sidebar.collapsed {
+                width: var(--sidebar-collapsed-width);
+            }
+
+                .left-sidebar.collapsed .nav-text,
+                .left-sidebar.collapsed .brand-name {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+            .sidebar-close:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+        .app-brand {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+            .app-brand a {
+                text-decoration: none;
+                color: white;
+            }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-inner {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+            .sidebar-inner li {
+                margin-bottom: 5px;
+            }
+
+        .sidenav-item-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 0 25px 25px 0;
+            margin-right: 15px;
+        }
+
+            .sidenav-item-link:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                transform: translateX(5px);
+            }
+
+            .sidenav-item-link i {
+                font-size: 1.2rem;
+                margin-right: 12px;
+                width: 24px;
+                text-align: center;
+            }
+
+        .nav-text {
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+            .dashboard-container.sidebar-collapsed {
+                margin-left: var(--sidebar-collapsed-width);
+            }
+
+            .dashboard-container.full-width {
+                margin-left: 0;
+            }
+
+        /* Header */
+        .header {
+            height: var(--header-height);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .sidebar-toggle {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+            .sidebar-toggle:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 10px 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 400px;
+            flex: 1;
+        }
+
+        .search-icon {
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 10px;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            color: white;
+            flex: 1;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+            .search-input::placeholder {
+                color: rgba(255, 255, 255, 0.6);
+            }
+
+        .search-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .search-btn:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-1px);
+            }
+
+        /* User Profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-badge {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+            .notification-badge:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .notification-badge i {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 1.1rem;
+            }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+            .user-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+            .dropdown-toggle:hover {
+                color: white;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            min-width: 180px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            padding: 8px 0;
+            z-index: 1000;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+            .dropdown-menu.show {
+                display: block;
+                animation: dropdownFadeIn 0.2s ease;
+            }
+
+        @@keyframes dropdownFadeIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+            .dropdown-item:hover {
+                background-color: var(--gray-50);
+                color: var(--gray-900);
+            }
+
+            .dropdown-item i {
+                font-size: 0.9rem;
+                width: 16px;
+            }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Desktop only elements */
+        .desktop-only {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 1024px) {
+            .header {
+                padding: 0 20px;
+            }
+
+            .search-container {
+                max-width: 300px;
+            }
+
+            .user-details {
+                display: none;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .desktop-only {
+                display: none;
+            }
+
+            .left-sidebar {
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+                .left-sidebar.mobile-hidden {
+                    transform: translateX(-100%);
+                }
+
+                .left-sidebar:not(.mobile-hidden) {
+                    transform: translateX(0);
+                }
+
+            .mobile-overlay {
+                display: block;
+            }
+
+            .sidebar-close {
+                display: block;
+            }
+
+            .dashboard-container {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 0 70px 0 20px;
+            }
+
+            .header-left {
+                gap: 15px;
+            }
+
+            .search-container {
+                max-width: 250px;
+                padding: 8px 15px;
+            }
+
+            .search-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .user-profile {
+                gap: 10px;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .header {
+                padding: 0 60px 0 15px;
+            }
+
+            .search-container {
+                max-width: 200px;
+                padding: 6px 12px;
+            }
+
+            .search-input {
+                font-size: 0.8rem;
+            }
+
+            .search-btn {
+                display: none;
+            }
+
+            .user-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .mobile-menu-toggle {
+                width: 40px;
+                height: 40px;
+                top: 12px;
+                left: 12px;
+            }
+        }
+
+        /* Animaciones adicionales */
+        .sidenav-item-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .sidenav-item-link::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+                transition: left 0.5s;
+            }
+
+            .sidenav-item-link:hover::before {
+                left: 100%;
+            }
+    </style>
 </body>
 </html>

@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "";
+}
+
+<script>
+    // Actualizar el nombre del usuario en el header
+    document.addEventListener('DOMContentLoaded', function() {
+        const userName = '@ViewBag.NombreUsuario';
+        if (userName) {
+            const userNameElement = document.querySelector('.user-profile div:nth-child(3) div:first-child');
+            if (userNameElement) {
+                userNameElement.textContent = userName.split(' ')[0]; // Solo el primer nombre
+            }
+        }
+    });
+</script>

@@ -1,0 +1,647 @@
+﻿@model Proyecto_PrograAvanzadaWeb.Models.InformacionAdicional
+@{
+    ViewData["Title"] = "Información Adicional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="edit-container">
+    <div class="edit-header additional">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="mdi mdi-card-account-details"></i>
+            </div>
+            <div class="header-text">
+                <h1>Información Adicional</h1>
+                <p>Completa tu perfil con foto, contacto y ubicación</p>
+            </div>
+        </div>
+        <a href="@Url.Action("Index", "Perfil")" class="btn-back">
+            <i class="mdi mdi-arrow-left"></i>
+            Volver al Perfil
+        </a>
+    </div>
+
+    <div class="form-container">
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-error">
+                <div class="alert-icon">
+                    <i class="mdi mdi-alert-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong>Error</strong>
+                    <p>@ViewBag.Error</p>
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="mdi mdi-close"></i>
+                </button>
+            </div>
+        }
+
+        @if (ViewBag.Exito != null)
+        {
+            <div class="alert alert-success">
+                <div class="alert-icon">
+                    <i class="mdi mdi-check-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong>¡Éxito!</strong>
+                    <p>@ViewBag.Exito</p>
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="mdi mdi-close"></i>
+                </button>
+            </div>
+        }
+
+        <form method="post" asp-action="EditarAdicional" asp-controller="Perfil" enctype="multipart/form-data" class="modern-form">
+            @Html.HiddenFor(m => m.IdUsuario)
+            @Html.HiddenFor(m => m.FotoPath)
+
+            <div class="form-card">
+                <div class="photo-section">
+                    <h3 class="section-title">
+                        <i class="mdi mdi-camera"></i>
+                        Foto de Perfil
+                    </h3>
+                    <div class="photo-upload-container">
+                        <div class="photo-preview" onclick="document.getElementById('foto').click()">
+                            @if (!string.IsNullOrEmpty(Model.FotoPath))
+                            {
+                                <img id="preview-image" src="@Model.FotoPath" alt="Foto actual" class="current-photo">
+                            }
+                            else
+                            {
+                                <div id="preview-placeholder" class="photo-placeholder">
+                                    <i class="mdi mdi-camera-plus"></i>
+                                    <span>Subir Foto</span>
+                                </div>
+                            }
+                            <div class="photo-overlay">
+                                <i class="mdi mdi-camera-plus"></i>
+                                <span>Cambiar Foto</span>
+                            </div>
+                        </div>
+                        <input type="file" id="foto" name="foto" accept="image/*" class="photo-input" onchange="previewImage(this)" style="display: none;">
+                        <div class="photo-info">
+                            <div class="upload-specs">
+                                <div class="spec-item">
+                                    <i class="mdi mdi-file-image"></i>
+                                    <span>JPG, PNG, GIF</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="mdi mdi-weight"></i>
+                                    <span>Máximo 5MB</span>
+                                </div>
+                                <div class="spec-item">
+                                    <i class="mdi mdi-crop-square"></i>
+                                    <span>Recomendado: 400x400px</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h3 class="section-title">
+                        <i class="mdi mdi-account-details"></i>
+                        Información de Contacto
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="Telefono" class="field-label">
+                                <i class="mdi mdi-phone"></i>
+                                Teléfono
+                            </label>
+                            <input type="tel"
+                                   class="field-input"
+                                   id="Telefono"
+                                   name="Telefono"
+                                   value="@Model.Telefono"
+                                   placeholder="+506 8888-8888">
+                            <div class="field-hint">Número de contacto principal</div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="FechaNacimiento" class="field-label">
+                                <i class="mdi mdi-calendar"></i>
+                                Fecha de Nacimiento
+                            </label>
+                            <input type="date"
+                                   class="field-input"
+                                   id="FechaNacimiento"
+                                   name="FechaNacimiento"
+                                   value="@(Model.FechaNacimiento?.ToString("yyyy-MM-dd"))">
+                            <div class="field-hint">Tu fecha de nacimiento</div>
+                        </div>
+
+                        <div class="form-field full-width">
+                            <label for="Direccion" class="field-label">
+                                <i class="mdi mdi-map-marker"></i>
+                                Dirección Completa
+                            </label>
+                            <textarea class="field-textarea"
+                                      id="Direccion"
+                                      name="Direccion"
+                                      rows="3"
+                                      placeholder="Provincia, Cantón, Distrito, Señas exactas...">@Model.Direccion</textarea>
+                            <div class="field-hint">Dirección completa de residencia</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="mdi mdi-content-save"></i>
+                        Guardar Información
+                    </button>
+                    <a href="@Url.Action("Index", "Perfil")" class="btn-secondary">
+                        <i class="mdi mdi-close"></i>
+                        Cancelar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .edit-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+        margin-left: 280px; 
+    }
+
+    .edit-header {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+        .edit-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        z-index: 1;
+    }
+
+    .header-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .header-text h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .header-text p {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 1;
+    }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: white;
+        }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 12px;
+        position: relative;
+    }
+
+    .alert-error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+    }
+
+    .alert-icon {
+        font-size: 1.2rem;
+        margin-top: 2px;
+    }
+
+    .alert-content strong {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .alert-content p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .alert-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+
+        .alert-close:hover {
+            opacity: 1;
+        }
+
+    .modern-form {
+        padding: 0;
+    }
+
+    .form-card {
+        padding: 40px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .photo-section {
+        margin-bottom: 40px;
+    }
+
+    .photo-upload-container {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .photo-preview {
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 150px;
+        height: 150px;
+    }
+
+        .photo-preview:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-preview:hover {
+            transform: scale(1.02);
+        }
+
+    .current-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 20px;
+        object-fit: cover;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        border: 3px solid #e2e8f0;
+    }
+
+    .photo-placeholder {
+        width: 150px;
+        height: 150px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #64748b;
+        font-weight: 600;
+        border: 2px dashed #cbd5e1;
+        transition: all 0.3s ease;
+    }
+
+        .photo-placeholder:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-color: #94a3b8;
+        }
+
+        .photo-placeholder i {
+            font-size: 2rem;
+        }
+
+    .photo-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: white;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+        .photo-overlay i {
+            font-size: 1.5rem;
+        }
+
+    .photo-input {
+        display: none;
+    }
+
+    .photo-info {
+        flex: 1;
+    }
+
+    .upload-specs {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: #f8fafc;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+    }
+
+        .spec-item i {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+    .info-section {
+        margin-bottom: 30px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .form-field.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .field-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .field-input, .field-textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+        color: #334155;
+        font-family: inherit;
+        resize: vertical;
+    }
+
+        .field-input:focus, .field-textarea:focus {
+            outline: none;
+            border-color: #6b7280;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .field-input::placeholder, .field-textarea::placeholder {
+            color: #94a3b8;
+        }
+
+    .field-hint {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-top: 6px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(75, 85, 99, 0.3);
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(75, 85, 99, 0.4);
+        }
+
+    .btn-secondary {
+        background: #f3f4f6;
+        color: #374151;
+        border: 1px solid #e5e7eb;
+    }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+            color: #1f2937;
+            text-decoration: none;
+        }
+
+    @@media only screen and (max-width: 1024px) {
+        .edit-container {
+            margin-left: 0;
+            padding: 0 15px;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .edit-container {
+            margin-left: 0;
+            padding: 0 10px;
+        }
+
+        .edit-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .header-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .photo-upload-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-card {
+            padding: 25px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-primary, .btn-secondary {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                let previewImage = document.getElementById('preview-image');
+                const previewPlaceholder = document.getElementById('preview-placeholder');
+
+                if (previewImage) {
+                    previewImage.src = e.target.result;
+                } else {
+                    const newImg = document.createElement('img');
+                    newImg.id = 'preview-image';
+                    newImg.src = e.target.result;
+                    newImg.alt = 'Vista previa';
+                    newImg.className = 'current-photo';
+
+                    if (previewPlaceholder) {
+                        const photoPreview = previewPlaceholder.parentNode;
+                        photoPreview.insertBefore(newImg, previewPlaceholder);
+                        previewPlaceholder.remove();
+                    }
+                }
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const photoPreview = document.querySelector('.photo-preview');
+        const fileInput = document.getElementById('foto');
+
+        if (photoPreview && fileInput) {
+            photoPreview.addEventListener('click', function() {
+                fileInput.click();
+            });
+        }
+    });
+</script>
