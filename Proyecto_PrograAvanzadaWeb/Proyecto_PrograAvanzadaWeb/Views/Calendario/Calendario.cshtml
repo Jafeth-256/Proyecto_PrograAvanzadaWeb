@@ -1,0 +1,525 @@
+﻿@{
+    ViewData["Title"] = "Calendario de Actividades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .calendar-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .calendar-header {
+        background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .calendar-title {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .calendar-actions {
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn-calendar {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 10px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .btn-calendar:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+    .calendar-content {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .calendar-legend {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f9fafb;
+        border-radius: 12px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+    }
+
+    #calendar {
+        min-height: 600px;
+    }
+
+    /* Estilos para FullCalendar */
+    .fc-event {
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: none !important;
+        font-weight: 500;
+    }
+
+    .fc-event-tour {
+        background-color: #10b981 !important;
+        color: white !important;
+    }
+
+    .fc-event-evento {
+        background-color: #3b82f6 !important;
+        color: white !important;
+    }
+
+    .fc-button-primary {
+        background: #6b7280 !important;
+        border: none !important;
+    }
+
+        .fc-button-primary:hover {
+            background: #4b5563 !important;
+        }
+
+    .fc-button-active {
+        background: #374151 !important;
+    }
+
+    .event-details {
+        padding: 15px;
+        background: #f9fafb;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #374151;
+    }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .close:hover {
+            color: #000;
+        }
+
+    .event-info {
+        margin-bottom: 15px;
+    }
+
+    .event-info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        color: #6b7280;
+    }
+
+        .event-info-item i {
+            color: #10b981;
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+    .btn-add-calendar {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+        .btn-add-calendar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+    .btn-remove-calendar {
+        background: #ef4444;
+        color: white;
+    }
+
+        .btn-remove-calendar:hover {
+            background: #dc2626;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+        }
+</style>
+
+<div class="calendar-container">
+    <div class="calendar-header">
+        <div>
+            <h1 class="calendar-title">
+                <i class="mdi mdi-calendar"></i>
+                Calendario de Actividades
+            </h1>
+            <p>Tours y eventos disponibles</p>
+        </div>
+        <div class="calendar-actions">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="/Calendario/MiCalendario" class="btn-calendar">
+                    <i class="mdi mdi-calendar-account"></i>
+                    Mi Calendario Personal
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="calendar-content">
+        <div class="calendar-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #10b981;"></div>
+                <span>Tours</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3b82f6;"></div>
+                <span>Eventos</span>
+            </div>
+        </div>
+
+        <div id="calendar"></div>
+    </div>
+</div>
+
+<!-- Modal para detalles del evento -->
+<div id="eventModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modalTitle">Detalles</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="event-info" id="modalBody">
+            <!-- Contenido dinámico -->
+        </div>
+        <div id="modalActions">
+            <!-- Botones dinámicos -->
+        </div>
+    </div>
+</div>
+
+<!-- FullCalendar CSS y JS -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/es.js'></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var modal = document.getElementById('eventModal');
+        var span = document.getElementsByClassName('close')[0];
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'es',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,listMonth'
+            },
+            buttonText: {
+                today: 'Hoy',
+                month: 'Mes',
+                week: 'Semana',
+                list: 'Lista'
+            },
+            events: '/Calendario/ObtenerEventosCalendario',
+            eventClick: function (info) {
+                mostrarDetalleEvento(info.event);
+            },
+            eventClassNames: function (arg) {
+                return ['fc-event-' + arg.event.extendedProps.tipo];
+            }
+        });
+
+        calendar.render();
+
+        span.onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    });
+
+    function mostrarDetalleEvento(event) {
+        const modal = document.getElementById('eventModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalActions = document.getElementById('modalActions');
+
+        modalTitle.textContent = event.title;
+
+        const tipo = event.extendedProps.tipo;
+        const fechaInicio = new Date(event.start).toLocaleDateString('es-CR');
+        const fechaFin = event.end ? new Date(event.end).toLocaleDateString('es-CR') : fechaInicio;
+
+        let contenido = `
+                <div class="event-info-item">
+                    <i class="mdi mdi-tag"></i>
+                    <span>Tipo: ${tipo === 'tour' ? 'Tour' : 'Evento'}</span>
+                </div>
+                <div class="event-info-item">
+                    <i class="mdi mdi-calendar"></i>
+                    <span>Fecha: ${fechaInicio}${fechaFin !== fechaInicio ? ' - ' + fechaFin : ''}</span>
+                </div>
+            `;
+
+        modalBody.innerHTML = contenido;
+
+        // Botones de acción
+        let acciones = '';
+
+        if ('@User.Identity.IsAuthenticated' === 'True') {
+            acciones = `
+                    <button class="btn-add-calendar" onclick="agregarACalendario(${event.id}, '${tipo}')">
+                        <i class="mdi mdi-calendar-plus"></i>
+                        Agregar a Mi Calendario
+                    </button>
+                `;
+        }
+
+        if (tipo === 'tour') {
+            acciones += `
+                    <a href="/Reservas/DetalleTour/${event.id}" class="btn-add-calendar" style="display: block; text-align: center; margin-top: 10px;">
+                        <i class="mdi mdi-eye"></i>
+                        Ver Detalles del Tour
+                    </a>
+                `;
+        } else {
+            acciones += `
+                    <a href="/Eventos/Detalle/${event.id}" class="btn-add-calendar" style="display: block; text-align: center; margin-top: 10px;">
+                        <i class="mdi mdi-eye"></i>
+                        Ver Detalles del Evento
+                    </a>
+                `;
+        }
+
+        modalActions.innerHTML = acciones;
+        modal.style.display = 'block';
+    }
+
+    function agregarACalendario(itemId, tipo) {
+        fetch('/Calendario/AgregarACalendario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `itemId=${itemId}&tipo=${tipo}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    document.getElementById('eventModal').style.display = 'none';
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar al calendario');
+            });
+    }
+</script>
+    .fc-event {
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: none !important;
+        font-weight: 500;
+    }
+
+    .fc-event-tour {
+        background-color: #10b981 !important;
+        color: white !important;
+    }
+
+    .fc-event-evento {
+        background-color: #3b82f6 !important;
+        color: white !important;
+    }
+
+    .fc-button-primary {
+        background: #6b7280 !important;
+        border: none !important;
+    }
+
+    .fc-button-primary:hover {
+        background: #4b5563 !important;
+    }
+
+    .fc-button-active {
+        background: #374151 !important;
+    }
+
+    .event-details {
+        padding: 15px;
+        background: #f9fafb;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #374151;
+    }
+
+    .close {
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: #000;
+    }
+
+    .event-info {
+        margin-bottom: 15px;
+    }
+
+    .event-info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        color: #6b7280;
+    }
+
+    .event-info-item i {
+        color: #10b981;
+        font-size: 1.2rem;
+        width: 24px;
+    }
+
+    .btn-add-calendar {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .btn-add-calendar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-remove-calendar {
+        background: #ef4444;
+        color: white;
+    }
+
+    .btn-remove-calendar:hover {
+        background: #dc2626;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+    }

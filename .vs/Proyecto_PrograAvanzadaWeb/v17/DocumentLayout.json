@@ -1,0 +1,782 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\reservascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\reservascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\evento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\evento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\tourscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\tourscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\eventoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\eventoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\eventos\\detalle.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\eventos\\detalle.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\home\\restablecercontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\home\\restablecercontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\home\\recuperarcontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\home\\recuperarcontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\reservas\\crearreserva.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\reservas\\crearreserva.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\reservas\\detalletour.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\reservas\\detalletour.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\calendario\\calendario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\calendario\\calendario.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\tours\\creartour.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\tours\\creartour.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\tours\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\tours\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\tour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\tour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\base de datos\\script.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\base de datos\\script.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\controllers\\calendariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\controllers\\calendariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\eventofavorito.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\eventofavorito.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\reserva.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\reserva.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\usuarios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\usuarios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\usuarios\\editar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\usuarios\\editar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\usuarios\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\usuarios\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\tours\\editartour.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\tours\\editartour.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\shared\\_layoutexterno.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\shared\\_layoutexterno.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\perfil\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\perfil\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\perfil\\editarbasico.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\perfil\\editarbasico.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\perfil\\editaradicional.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\perfil\\editaradicional.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\perfil\\cambiarcontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\perfil\\cambiarcontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\home\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\home\\registro.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\home\\inicio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\home\\inicio.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\eventos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\eventos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\eventos\\editar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\eventos\\editar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\views\\eventos\\crear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\views\\eventos\\crear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\models\\perfilusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\models\\perfilusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_prograavanzadaweb\\base de datos\\script.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame",
+      "RelativeMoniker": "D:0:0:{09AE4326-BF37-4479-8E2D-F97690E4C844}|Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb.csproj|solutionrelative:proyecto_prograavanzadaweb\\base de datos\\script.sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 14,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:11:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RestablecerContrasena.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\RestablecerContrasena.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\RestablecerContrasena.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\RestablecerContrasena.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\RestablecerContrasena.cshtml",
+              "ViewState": "AQIAAHMAAAAAAAAAAAAowIsAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T05:49:49.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CrearReserva.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\CrearReserva.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\CrearReserva.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\CrearReserva.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\CrearReserva.cshtml",
+              "ViewState": "AQIAAMcAAAAAAAAAAAAkwM0AAAAGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T05:48:49.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DetalleTour.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\DetalleTour.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\DetalleTour.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\DetalleTour.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Reservas\\DetalleTour.cshtml",
+              "ViewState": "AQIAAHgBAAAAAAAAAAAowJABAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T05:32:04.289Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RecuperarContrasena.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\RecuperarContrasena.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\RecuperarContrasena.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\RecuperarContrasena.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\RecuperarContrasena.cshtml",
+              "ViewState": "AQIAADIAAAAAAAAAAAAAAEEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T05:30:38.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Calendario.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Calendario\\Calendario.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Calendario\\Calendario.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Calendario\\Calendario.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Calendario\\Calendario.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAP4BAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T05:29:21.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CalendarioController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\CalendarioController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\CalendarioController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\CalendarioController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\CalendarioController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T05:05:03.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "EventoFavorito.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\EventoFavorito.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\EventoFavorito.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\EventoFavorito.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\EventoFavorito.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T05:04:40.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ReservasController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\ReservasController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\ReservasController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\ReservasController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\ReservasController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T05:02:44.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Reserva.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Reserva.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\Reserva.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Reserva.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\Reserva.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAA5wAsAAABOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T05:01:36.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Script.sql ",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Base de Datos\\Script.sql",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Base de Datos\\Script.sql",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Base de Datos\\Script.sql",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Base de Datos\\Script.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-08-06T03:30:44.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\appsettings.json",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\appsettings.json",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\appsettings.json",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-06T03:25:19.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Program.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Program.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Program.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Program.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAkwCcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:25:18.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\appsettings.Development.json",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\appsettings.Development.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-06T03:25:09.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Index.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Index.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Index.cshtml",
+              "ViewState": "AQIAALcDAAAAAAAAAAAowNEDAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:24:27.618Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Editar.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Editar.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Editar.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Editar.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Editar.cshtml",
+              "ViewState": "AQIAAG4CAAAAAAAAAAAkwIgCAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:24:22.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Detalles.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Detalles.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Detalles.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Detalles.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Usuarios\\Detalles.cshtml",
+              "ViewState": "AQIAAJkCAAAAAAAAAAAowLMCAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:24:16.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Tours\\Index.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Tours\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Tours\\Index.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Tours\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAL0CAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:22:12.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "EditarTour.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Tours\\EditarTour.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Tours\\EditarTour.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Tours\\EditarTour.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Tours\\EditarTour.cshtml",
+              "ViewState": "AQIAACUCAAAAAAAAAAAowD8CAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:22:08.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CrearTour.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Tours\\CrearTour.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Tours\\CrearTour.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Tours\\CrearTour.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Tours\\CrearTour.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:21:59.759Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "_LayoutExterno.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_LayoutExterno.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_LayoutExterno.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_LayoutExterno.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_LayoutExterno.cshtml",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:21:03.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAADcDAAAAAAAAAAAkwFEDAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:20:54.415Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\Index.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\Index.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\Index.cshtml",
+              "ViewState": "AQIAALoBAAAAAAAAAAAkwNUBAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:20:37.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "EditarBasico.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarBasico.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarBasico.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarBasico.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarBasico.cshtml",
+              "ViewState": "AQIAAPcBAAAAAAAAAAAkwBICAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:20:27.449Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "EditarAdicional.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarAdicional.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarAdicional.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarAdicional.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\EditarAdicional.cshtml",
+              "ViewState": "AQIAAGsCAAAAAAAAAAAkwIYCAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:20:27.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "CambiarContrasena.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\CambiarContrasena.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\CambiarContrasena.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\CambiarContrasena.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Perfil\\CambiarContrasena.cshtml",
+              "ViewState": "AQIAAAgDAAAAAAAAAAAmwCMDAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:20:20.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Registro.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\Registro.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\Registro.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\Registro.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\Registro.cshtml",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAkwEgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:19:10.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Inicio.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\Inicio.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\Inicio.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\Inicio.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\Inicio.cshtml",
+              "ViewState": "AQIAANoCAAAAAAAAAAAkwPUCAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:19:53.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAACEAAAAAAAAAAAAkwDwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:11:08.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Index.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Index.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:10:56.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Editar.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Editar.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Editar.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Editar.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Editar.cshtml",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAkwCQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:10:51.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Detalle.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Detalle.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Detalle.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Detalle.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Detalle.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:10:42.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Crear.cshtml",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Crear.cshtml",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Crear.cshtml",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Crear.cshtml",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Views\\Eventos\\Crear.cshtml",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAkwCQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-06T03:10:32.227Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "UsuarioViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\UsuarioViewModel.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\UsuarioViewModel.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\UsuarioViewModel.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\UsuarioViewModel.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAcwBkAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:09:04.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Usuario.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\Usuario.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Usuario.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\Usuario.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:08:20.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Tour.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Tour.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\Tour.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Tour.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\Tour.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAmwBEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:08:04.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Rol.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Rol.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\Rol.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Rol.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\Rol.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:07:50.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "PerfilUsuario.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\PerfilUsuario.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\PerfilUsuario.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\PerfilUsuario.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\PerfilUsuario.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAswCsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:07:32.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Evento.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Evento.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Models\\Evento.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Models\\Evento.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Models\\Evento.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAYwAoAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:07:17.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\UsuariosController.cs",
+              "ViewState": "AQIAALEAAAAAAAAAAAAowMgAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:03:19.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ToursController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\ToursController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\ToursController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\ToursController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\ToursController.cs",
+              "ViewState": "AQIAALQAAAAAAAAAAAAgwMsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:03:00.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PerfilController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\PerfilController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\PerfilController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\PerfilController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\PerfilController.cs",
+              "ViewState": "AQIAADQBAAAAAAAAAAAgwEsBAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:02:37.582Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAJEAAAAAAAAAAADwv58AAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:02:13.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EventosController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\EventosController.cs",
+              "RelativeDocumentMoniker": "Proyecto_PrograAvanzadaWeb\\Controllers\\EventosController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_PrograAvanzadaWeb\\Controllers\\EventosController.cs",
+              "RelativeToolTip": "Proyecto_PrograAvanzadaWeb\\Controllers\\EventosController.cs",
+              "ViewState": "AQIAAOoAAAAAAAAAAAAowAIBAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:01:16.506Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

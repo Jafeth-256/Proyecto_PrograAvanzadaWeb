@@ -1,0 +1,388 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\services\\iusuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\services\\iusuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\dtos\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\dtos\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\controllers\\tourscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\controllers\\tourscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\helpers\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\helpers\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\helpers\\passwordhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\dtos\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\dtos\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\dtos\\tourdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\dtos\\tourdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\entities\\tour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\entities\\tour.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\models\\entities\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\models\\entities\\rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|c:\\users\\wstov\\desktop\\programacion avanzada\\proyecto_final\\proyecto_prograavanzadaweb\\proyecto_progaavanzadaweb_api\\proyecto_progaavanzadaweb_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DC7DBFA5-7828-45BC-9DA5-060BC756031D}|Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj|solutionrelative:proyecto_progaavanzadaweb_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 19,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:11:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Program.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Program.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Program.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Program.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:12:17.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\appsettings.json",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\appsettings.json",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\appsettings.json",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-06T04:04:07.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ResponseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\ResponseDTO.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\ResponseDTO.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\ResponseDTO.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\ResponseDTO.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAAAAcAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:03:56.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "TourDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\TourDTO.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\TourDTO.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\TourDTO.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\TourDTO.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAcwBgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:03:49.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UsuarioDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\UsuarioDTO.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\UsuarioDTO.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\UsuarioDTO.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\UsuarioDTO.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAAACYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:03:43.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LoginDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\LoginDTO.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\LoginDTO.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\LoginDTO.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\DTOs\\LoginDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:03:33.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Rol.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Rol.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Rol.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Rol.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Rol.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:03:04.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Tour.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Tour.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Tour.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Tour.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Tour.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:02:50.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Usuario.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Usuario.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Usuario.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Models\\Entities\\Usuario.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAowBIAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:02:39.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PasswordHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Helpers\\PasswordHelper.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Helpers\\PasswordHelper.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Helpers\\PasswordHelper.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Helpers\\PasswordHelper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:02:14.41Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "JwtHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Helpers\\JwtHelper.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Helpers\\JwtHelper.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Helpers\\JwtHelper.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Helpers\\JwtHelper.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAowCoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:02:05.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DataContext.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Data\\DataContext.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Data\\DataContext.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Data\\DataContext.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Data\\DataContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:01:19.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuarioService.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\UsuarioService.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Services\\UsuarioService.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\UsuarioService.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Services\\UsuarioService.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:00:39.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IUsuarioService.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\IUsuarioService.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Services\\IUsuarioService.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\IUsuarioService.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Services\\IUsuarioService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:00:28.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\AuthService.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Services\\AuthService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA8AAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:00:19.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Services\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Services\\IAuthService.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Services\\IAuthService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:00:10.972Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PerfilController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\PerfilController.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\PerfilController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\PerfilController.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\PerfilController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:58:11.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ToursController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\ToursController.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\ToursController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\ToursController.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\ToursController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAwAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:57:59.915Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\UsuariosController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:57:51.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Proyecto_ProgaAvanzadaWeb_API\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAawBgAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T03:57:31.318Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

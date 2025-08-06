@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Proyecto_ProgaAvanzadaWeb_API.props" />
+</Project>

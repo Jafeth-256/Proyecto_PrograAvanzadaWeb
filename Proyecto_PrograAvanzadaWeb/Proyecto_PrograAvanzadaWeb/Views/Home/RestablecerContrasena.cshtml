@@ -1,0 +1,140 @@
+﻿<!-- Vista: Views/Home/RestablecerContrasena.cshtml -->
+@{
+    ViewData["Title"] = "Restablecer Contraseña";
+    Layout = "_LayoutExterno";
+}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="d-flex flex-column justify-content-between">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+                <div class="card card-default mb-0">
+                    <div class="card-header pb-0">
+                        <div class="app-brand w-100 d-flex justify-content-center border-bottom-0">
+                            <a class="w-auto pl-0" href="/">
+                                <span class="brand-name text-dark">Tico Tours</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body px-5 pb-5 pt-0">
+                        <h4 class="text-dark mb-4 text-center">Crear Nueva Contraseña</h4>
+
+                        @if (!string.IsNullOrEmpty(ViewBag.Correo))
+                        {
+                            <p class="text-center mb-4">
+                                Crea una nueva contraseña para: <strong>@ViewBag.Correo</strong>
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(ViewBag.Error))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <i class="mdi mdi-alert-circle me-2"></i>
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <form method="post" action="@Url.Action("RestablecerContrasena", "Home")" id="resetForm">
+                            <input type="hidden" name="token" value="@ViewBag.Token" />
+
+                            <div class="row">
+                                <div class="form-group col-md-12 mb-3">
+                                    <label class="font-weight-medium">Nueva Contraseña</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="nuevaContrasena"
+                                               id="nuevaContrasena" placeholder="Mínimo 6 caracteres"
+                                               required minlength="6">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    onclick="togglePassword('nuevaContrasena')">
+                                                <i class="mdi mdi-eye" id="eye-nuevaContrasena"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12 mb-4">
+                                    <label class="font-weight-medium">Confirmar Contraseña</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="confirmarContrasena"
+                                               id="confirmarContrasena" placeholder="Repite la contraseña"
+                                               required minlength="6">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    onclick="togglePassword('confirmarContrasena')">
+                                                <i class="mdi mdi-eye" id="eye-confirmarContrasena"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="password-match-message" class="mt-2"></div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-pill mb-3"
+                                            style="background-color: #10b981; color: white; width: 100%;">
+                                        <i class="mdi mdi-lock-reset"></i>
+                                        Restablecer Contraseña
+                                    </button>
+                                    <div class="text-center">
+                                        <a href="@Url.Action("Index", "Home")" class="text-muted font-weight-medium">
+                                            <i class="mdi mdi-arrow-left"></i>
+                                            Volver al inicio de sesión
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword(fieldId) {
+        const passwordField = document.getElementById(fieldId);
+        const eyeIcon = document.getElementById('eye-' + fieldId);
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.className = 'mdi mdi-eye-off';
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.className = 'mdi mdi-eye';
+        }
+    }
+
+    // Validación de contraseñas coincidentes
+    document.addEventListener('DOMContentLoaded', function () {
+        const nuevaContrasena = document.getElementById('nuevaContrasena');
+        const confirmarContrasena = document.getElementById('confirmarContrasena');
+        const mensaje = document.getElementById('password-match-message');
+        const form = document.getElementById('resetForm');
+
+        function verificarCoincidencia() {
+            if (confirmarContrasena.value.length > 0) {
+                if (nuevaContrasena.value === confirmarContrasena.value) {
+                    mensaje.innerHTML = '<span class="text-success"><i class="mdi mdi-check-circle"></i> Las contraseñas coinciden</span>';
+                    return true;
+                } else {
+                    mensaje.innerHTML = '<span class="text-danger"><i class="mdi mdi-close-circle"></i> Las contraseñas no coinciden</span>';
+                    return false;
+                }
+            } else {
+                mensaje.innerHTML = '';
+                return true;
+            }
+        }
+
+        confirmarContrasena.addEventListener('input', verificarCoincidencia);
+        nuevaContrasena.addEventListener('input', verificarCoincidencia);
+
+        form.addEventListener('submit', function (e) {
+            if (!verificarCoincidencia()) {
+                e.preventDefault();
+                alert('Las contraseñas no coinciden');
+            }
+        });
+    });
+</script>
