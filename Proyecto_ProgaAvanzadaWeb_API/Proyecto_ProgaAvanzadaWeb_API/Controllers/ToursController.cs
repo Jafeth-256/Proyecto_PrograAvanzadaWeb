@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_ProgaAvanzadaWeb_API.Models.DTOs;
 using Proyecto_ProgaAvanzadaWeb_API.Models.Entities;
@@ -12,7 +11,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ToursController : ControllerBase
     {
         private readonly DataContext _context;
@@ -22,6 +20,9 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Obtiene todos los tours disponibles - Acceso público
+        /// </summary>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ObtenerTodos()
@@ -50,12 +51,13 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
                 return Ok(new ResponseDTO<IEnumerable<TourDTO>>
                 {
                     Success = true,
+                    Message = "Tours obtenidos exitosamente",
                     Data = toursDto
                 });
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseDTO<object>
+                return StatusCode(500, new ResponseDTO<object>
                 {
                     Success = false,
                     Message = $"Error al obtener tours: {ex.Message}"
@@ -63,6 +65,9 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtiene un tour por ID - Acceso público
+        /// </summary>
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> ObtenerPorId(long id)
@@ -101,12 +106,13 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
                 return Ok(new ResponseDTO<TourDTO>
                 {
                     Success = true,
+                    Message = "Tour obtenido exitosamente",
                     Data = tourDto
                 });
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseDTO<object>
+                return StatusCode(500, new ResponseDTO<object>
                 {
                     Success = false,
                     Message = $"Error al obtener tour: {ex.Message}"
@@ -114,13 +120,28 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Crea un nuevo tour - Solo administradores
+        /// </summary>
         [HttpPost]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> Crear([FromBody] CrearTourDTO dto)
         {
             try
             {
-                var idUsuario = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim) || !long.TryParse(idUsuarioClaim, out long idUsuario))
+                {
+                    return BadRequest(new ResponseDTO<object>
+                    {
+                        Success = false,
+                        Message = "Token inválido o usuario no encontrado"
+                    });
+                }
 
                 using var connection = _context.CreateConnection();
                 var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
@@ -147,7 +168,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseDTO<object>
+                return StatusCode(500, new ResponseDTO<object>
                 {
                     Success = false,
                     Message = $"Error al crear tour: {ex.Message}"
@@ -155,12 +176,18 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Actualiza un tour existente - Solo administradores
+        /// </summary>
         [HttpPut("{id}")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> Actualizar(long id, [FromBody] CrearTourDTO dto)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
                 using var connection = _context.CreateConnection();
                 var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
                     "ActualizarTour",
@@ -186,7 +213,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseDTO<object>
+                return StatusCode(500, new ResponseDTO<object>
                 {
                     Success = false,
                     Message = $"Error al actualizar tour: {ex.Message}"
@@ -194,6 +221,9 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Elimina un tour (eliminación lógica) - Solo administradores
+        /// </summary>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> Eliminar(long id)
@@ -215,7 +245,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new ResponseDTO<object>
+                return StatusCode(500, new ResponseDTO<object>
                 {
                     Success = false,
                     Message = $"Error al eliminar tour: {ex.Message}"

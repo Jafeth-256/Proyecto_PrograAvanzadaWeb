@@ -39,12 +39,15 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     Telefono = u.Telefono,
                     Direccion = u.Direccion,
                     FechaNacimiento = u.FechaNacimiento,
-                    FotoPath = u.FotoPath
+                    FotoPath = u.FotoPath,
+                    FechaRegistro = u.FechaRegistro,
+                    FechaActualizacion = u.FechaActualizacion
                 }).ToList();
 
                 return new ResponseDTO<List<UsuarioDTO>>
                 {
                     Success = true,
+                    Message = "Usuarios obtenidos exitosamente",
                     Data = usuariosDto
                 };
             }
@@ -91,12 +94,15 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     Telefono = usuario.Telefono,
                     Direccion = usuario.Direccion,
                     FechaNacimiento = usuario.FechaNacimiento,
-                    FotoPath = usuario.FotoPath
+                    FotoPath = usuario.FotoPath,
+                    FechaRegistro = usuario.FechaRegistro,
+                    FechaActualizacion = usuario.FechaActualizacion
                 };
 
                 return new ResponseDTO<UsuarioDTO>
                 {
                     Success = true,
+                    Message = "Usuario obtenido exitosamente",
                     Data = usuarioDto
                 };
             }
@@ -140,7 +146,8 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<bool>
                 {
                     Success = false,
-                    Message = $"Error al actualizar perfil: {ex.Message}"
+                    Message = $"Error al actualizar perfil: {ex.Message}",
+                    Data = false
                 };
             }
         }
@@ -177,7 +184,8 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<bool>
                 {
                     Success = false,
-                    Message = $"Error al cambiar contraseña: {ex.Message}"
+                    Message = $"Error al cambiar contraseña: {ex.Message}",
+                    Data = false
                 };
             }
         }
@@ -206,10 +214,76 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<bool>
                 {
                     Success = false,
-                    Message = $"Error al cambiar estado: {ex.Message}"
+                    Message = $"Error al cambiar estado: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        public async Task<ResponseDTO<bool>> ActualizarUsuarioCompleto(long idUsuario, ActualizarUsuarioCompletoDTO dto)
+        {
+            try
+            {
+                using var connection = _context.CreateConnection();
+
+                var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
+                    "ActualizarUsuario",
+                    new
+                    {
+                        IdUsuario = idUsuario,
+                        Nombre = dto.Nombre,
+                        Correo = dto.Correo,
+                        Identificacion = dto.Identificacion,
+                        Estado = dto.Estado,
+                        IdRol = dto.IdRol
+                    },
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return new ResponseDTO<bool>
+                {
+                    Success = resultado.Resultado > 0,
+                    Message = resultado.Mensaje,
+                    Data = resultado.Resultado > 0
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO<bool>
+                {
+                    Success = false,
+                    Message = $"Error al actualizar usuario: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        public async Task<ResponseDTO<EstadisticasUsuariosDTO>> ObtenerEstadisticas()
+        {
+            try
+            {
+                using var connection = _context.CreateConnection();
+
+                var estadisticas = await connection.QueryFirstOrDefaultAsync<EstadisticasUsuariosDTO>(
+                    "ObtenerEstadisticasUsuarios",
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return new ResponseDTO<EstadisticasUsuariosDTO>
+                {
+                    Success = true,
+                    Message = "Estadísticas obtenidas exitosamente",
+                    Data = estadisticas
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO<EstadisticasUsuariosDTO>
+                {
+                    Success = false,
+                    Message = $"Error al obtener estadísticas: {ex.Message}"
                 };
             }
         }
     }
-
 }

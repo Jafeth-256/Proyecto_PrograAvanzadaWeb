@@ -4,19 +4,18 @@ using Proyecto_ProgaAvanzadaWeb_API.Models.Entities;
 using Proyecto_PrograAvanzadaWeb_API.Data;
 using System.Data;
 using Dapper;
-using Proyecto_ProgaAvanzadaWeb_API.Services;
 
 namespace Proyecto_ProgaAvanzadaWeb_API.Services
 {
     public class AuthService : IAuthService
     {
         private readonly DataContext _context;
-        private readonly IConfiguration _configuration;
+        private readonly JwtHelper _jwtHelper;
 
-        public AuthService(DataContext context, IConfiguration configuration)
+        public AuthService(DataContext context, JwtHelper jwtHelper)
         {
             _context = context;
-            _configuration = configuration;
+            _jwtHelper = jwtHelper;
         }
 
         public async Task<LoginResponseDTO> Login(LoginDTO loginDto)
@@ -42,8 +41,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     };
                 }
 
-                var jwtHelper = new JwtHelper(_configuration);
-                var token = jwtHelper.GenerateToken(usuario);
+                var token = _jwtHelper.GenerateToken(usuario);
 
                 return new LoginResponseDTO
                 {
@@ -58,7 +56,13 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                         Identificacion = usuario.Identificacion,
                         Estado = usuario.Estado,
                         IdRol = usuario.IdRol,
-                        NombreRol = usuario.NombreRol
+                        NombreRol = usuario.NombreRol,
+                        Telefono = usuario.Telefono,
+                        Direccion = usuario.Direccion,
+                        FechaNacimiento = usuario.FechaNacimiento,
+                        FotoPath = usuario.FotoPath,
+                        FechaRegistro = usuario.FechaRegistro,
+                        FechaActualizacion = usuario.FechaActualizacion
                     }
                 };
             }
@@ -95,7 +99,17 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<UsuarioDTO>
                 {
                     Success = resultado.Resultado > 0,
-                    Message = resultado.Mensaje
+                    Message = resultado.Mensaje,
+                    Data = resultado.Resultado > 0 ? new UsuarioDTO
+                    {
+                        IdUsuario = resultado.Resultado,
+                        Nombre = registroDto.Nombre,
+                        Correo = registroDto.Correo,
+                        Identificacion = registroDto.Identificacion,
+                        Estado = true,
+                        IdRol = 1,
+                        NombreRol = "Usuario Regular"
+                    } : null
                 };
             }
             catch (Exception ex)
