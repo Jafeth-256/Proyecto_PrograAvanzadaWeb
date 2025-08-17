@@ -16,10 +16,8 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
         }
 
         /// <summary>
-        /// Autentica a un usuario y devuelve un token JWT
+        /// Iniciar sesión
         /// </summary>
-        /// <param name="loginDto">Datos de login del usuario</param>
-        /// <returns>Token JWT y datos del usuario si la autenticación es exitosa</returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
         {
@@ -30,10 +28,10 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 
                 var result = await _authService.Login(loginDto);
 
-                if (!result.Success)
-                    return Unauthorized(result);
+                if (result.Success)
+                    return Ok(result);
 
-                return Ok(result);
+                return BadRequest(result);
             }
             catch (Exception ex)
             {
@@ -46,12 +44,10 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
         }
 
         /// <summary>
-        /// Registra un nuevo usuario en el sistema
+        /// Registrar nuevo usuario
         /// </summary>
-        /// <param name="registroDto">Datos del usuario a registrar</param>
-        /// <returns>Confirmación del registro</returns>
-        [HttpPost("registro")]
-        public async Task<IActionResult> Registro([FromBody] RegistroUsuarioDTO registroDto)
+        [HttpPost("registrar")]
+        public async Task<IActionResult> Registrar([FromBody] RegistroUsuarioDTO registroDto)
         {
             try
             {
@@ -60,10 +56,10 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 
                 var result = await _authService.Registrar(registroDto);
 
-                if (!result.Success)
-                    return BadRequest(result);
+                if (result.Success)
+                    return Ok(result);
 
-                return Ok(result);
+                return BadRequest(result);
             }
             catch (Exception ex)
             {

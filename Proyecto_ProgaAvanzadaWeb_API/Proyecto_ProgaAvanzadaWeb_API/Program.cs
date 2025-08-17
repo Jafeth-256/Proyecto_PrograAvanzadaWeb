@@ -48,14 +48,36 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// CORS configuration
+// CORS configuration mejorado - ACTUALIZADO
 builder.Services.AddCors(options =>
 {
+    // Política para desarrollo (permite todo)
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader();
+    });
+
+    // Política específica para la aplicación MVC - NUEVA
+    options.AddPolicy("AllowMvcApp", policy =>
+    {
+        policy.WithOrigins(
+                "https://localhost:7273", "http://localhost:7273",  // MVC HTTPS y HTTP
+                "https://localhost:7001", "http://localhost:5001"   // Por si API y MVC están en mismo puerto
+              )
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();// Importante para autenticación
+    });
+
+    // Política para producción - NUEVA
+    options.AddPolicy("Production", policy =>
+    {
+        policy.WithOrigins("https://tu-dominio-produccion.com") // Cambiar por tu dominio real
+              .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+              .WithHeaders("Content-Type", "Authorization")
+              .AllowCredentials();
     });
 });
 
@@ -110,13 +132,19 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicoTours API v1");
         c.RoutePrefix = string.Empty; // Para que Swagger sea la página principal
     });
+
+    // Usar política permisiva en desarrollo - ACTUALIZADO
+    app.UseCors("AllowMvcApp");
+}
+else
+{
+    // En producción usar política restrictiva - NUEVO
+    app.UseCors("Production");
 }
 
 app.UseHttpsRedirection();
 
 // Importante: El orden de los middlewares es crucial
-app.UseCors("AllowAll");
-
 app.UseAuthentication(); // Debe ir antes de UseAuthorization
 app.UseAuthorization();
 

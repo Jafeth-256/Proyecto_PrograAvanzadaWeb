@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Proyecto_PrograAvanzadaWeb.Models.Usuario
+@{
     ViewData["Title"] = "Login";
     Layout = "_LayoutExterno";
 }
@@ -18,22 +19,43 @@
                     <div class="card-body px-5 pb-5 pt-0">
                         <h4 class="text-dark mb-4 text-center">Iniciar sesión con nosotros!</h4>
 
+                        @if (TempData["Exito"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <i class="mdi mdi-check-circle me-2"></i>
+                                @TempData["Exito"]
+                            </div>
+                        }
+
                         @if (!string.IsNullOrEmpty(ViewBag.Error))
                         {
                             <div class="alert alert-danger" role="alert">
+                                <i class="mdi mdi-alert-circle me-2"></i>
                                 @ViewBag.Error
                             </div>
                         }
 
-                        <form method="post" action="@Url.Action("Index", "Home")">
+                        <!-- FORMULARIO CORREGIDO -->
+                        <form method="post" action="@Url.Action("Login", "Home")" id="loginForm">
                             <div class="row">
                                 <div class="form-group col-md-12 mb-3">
-                                    <input type="email" class="form-control input-lg" name="email" id="email"
-                                           placeholder="Correo" required>
+                                    <input type="email"
+                                           class="form-control input-lg"
+                                           name="Correo"
+                                           id="Correo"
+                                           value="@Model?.Correo"
+                                           placeholder="Correo electrónico"
+                                           required>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="form-group col-md-12 mb-3">
-                                    <input type="password" class="form-control input-lg" name="password"
-                                           id="password" placeholder="Contraseña" required>
+                                    <input type="password"
+                                           class="form-control input-lg"
+                                           name="Contrasenna"
+                                           id="Contrasenna"
+                                           placeholder="Contraseña"
+                                           required>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-between mb-3">
@@ -43,11 +65,17 @@
                                         </div>
                                         <a class="text-muted font-weight-medium" href="#">¿Olvidaste tu contraseña?</a>
                                     </div>
-                                    <button type="submit" class="btn btn-pill mb-3" style="background-color: #6c757d; color: white; width: 100%;">
-                                        Iniciar sesión
+                                    <button type="submit"
+                                            class="btn btn-pill mb-3"
+                                            style="background-color: #6c757d; color: white; width: 100%;"
+                                            id="loginBtn">
+                                        <span id="loginText">Iniciar sesión</span>
+                                        <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
                                     </button>
                                     <div class="text-center">
-                                        <a href="@Url.Action("Registro", "Home")" class="text-muted font-weight-medium">¿No tienes cuenta? Regístrate aquí</a>
+                                        <a href="@Url.Action("Register", "Home")" class="text-muted font-weight-medium">
+                                            ¿No tienes cuenta? Regístrate aquí
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -58,3 +86,33 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginText = document.getElementById('loginText');
+        const loginSpinner = document.getElementById('loginSpinner');
+
+        form.addEventListener('submit', function(e) {
+            // Mostrar loading
+            loginBtn.disabled = true;
+            loginText.classList.add('d-none');
+            loginSpinner.classList.remove('d-none');
+
+            // Validación básica antes de enviar
+            const correo = document.getElementById('Correo');
+            const contrasenna = document.getElementById('Contrasenna');
+
+            if (!correo.value || !contrasenna.value) {
+                e.preventDefault();
+                alert('Por favor complete todos los campos');
+
+                // Ocultar loading
+                loginBtn.disabled = false;
+                loginText.classList.remove('d-none');
+                loginSpinner.classList.add('d-none');
+            }
+        });
+    });
+</script>

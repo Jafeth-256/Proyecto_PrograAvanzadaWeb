@@ -11,4 +11,12 @@ namespace Proyecto_PrograAvanzadaWeb.Models
         public int IdRol { get; set; }
         public string NombreRol { get; set; }
     }
+
+    public class RegistroUsuario
+    {
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+        public string Contrasenna { get; set; }
+    }
 }
