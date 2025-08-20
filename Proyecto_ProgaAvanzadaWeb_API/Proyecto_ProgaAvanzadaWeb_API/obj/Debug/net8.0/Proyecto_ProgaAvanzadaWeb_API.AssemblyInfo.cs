@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Proyecto_ProgaAvanzadaWeb_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9f79f00dd0cc1b7c5746dc2b0e2c0f698f83f37")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea78d7448d69483020d07b15e15013e37bcf9b0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Proyecto_ProgaAvanzadaWeb_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Proyecto_ProgaAvanzadaWeb_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

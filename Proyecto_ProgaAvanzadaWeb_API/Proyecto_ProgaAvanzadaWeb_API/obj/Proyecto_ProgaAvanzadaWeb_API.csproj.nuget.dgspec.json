@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj": {}
+    "C:\\Users\\jafet\\Universidad\\Programacion Avanzada Web\\Proyecto\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj": {
+    "C:\\Users\\jafet\\Universidad\\Programacion Avanzada Web\\Proyecto\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj",
+        "projectUniqueName": "C:\\Users\\jafet\\Universidad\\Programacion Avanzada Web\\Proyecto\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj",
         "projectName": "Proyecto_ProgaAvanzadaWeb_API",
-        "projectPath": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj",
-        "packagesPath": "C:\\Users\\Wstov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Wstov\\Desktop\\Programacion Avanzada\\Proyecto_Final\\Proyecto_PrograAvanzadaWeb\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\obj\\",
+        "projectPath": "C:\\Users\\jafet\\Universidad\\Programacion Avanzada Web\\Proyecto\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API.csproj",
+        "packagesPath": "C:\\Users\\jafet\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jafet\\Universidad\\Programacion Avanzada Web\\Proyecto\\Proyecto_ProgaAvanzadaWeb_API\\Proyecto_ProgaAvanzadaWeb_API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Wstov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jafet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -23,8 +27,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.github.com/JoseBrenesUni/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -41,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -97,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
