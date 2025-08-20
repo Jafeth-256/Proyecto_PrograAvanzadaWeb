@@ -1,8 +1,8 @@
-// Archivo: Models/PerfilModels.cs
-namespace Proyecto_PrograAvanzadaWeb.Models
+ï»¿using Microsoft.AspNetCore.Mvc;
+
+namespace Proyecto_ProgaAvanzadaWeb_API.Models.DTOs
 {
-    // Modelo para mostrar perfil completo en la vista
-    public class PerfilUsuarioCompleto
+    public class PerfilCompletoDTO
     {
         public long IdUsuario { get; set; }
         public string Nombre { get; set; }
@@ -19,32 +19,33 @@ namespace Proyecto_PrograAvanzadaWeb.Models
         public DateTime FechaActualizacion { get; set; }
     }
 
-    // Modelo para editar información básica
-    public class ActualizarPerfilBasicoModel
+    public class ActualizarPerfilBasicoDTO
     {
-        public long IdUsuario { get; set; }
         public string Nombre { get; set; }
         public string Correo { get; set; }
         public string Identificacion { get; set; }
     }
 
-    // Modelo para editar información adicional
-    public class InformacionAdicionalModel
+    public class ActualizarInformacionAdicionalDTO
     {
-        public long IdUsuario { get; set; }
         public string? Telefono { get; set; }
         public string? Direccion { get; set; }
         public DateTime? FechaNacimiento { get; set; }
-        public string? FotoPath { get; set; }
-        public IFormFile? Foto { get; set; } // Para subir archivo
     }
 
-    // Modelo para cambiar contraseña
-    public class CambiarContrasenaModel
+    public class CambiarContrasenaPerfilDTO
     {
-        public long IdUsuario { get; set; }
         public string ContrasenaActual { get; set; }
         public string ContrasenaNueva { get; set; }
-        public string ConfirmarContrasena { get; set; }
+    }
+
+    public class SubirFotoPerfilDTO
+    {
+        public IFormFile Foto { get; set; }
+    }
+
+    public class FotoPerfilDTO
+    {
+        public string FotoPath { get; set; }
     }
 }

@@ -1,93 +1,103 @@
 ﻿using Proyecto_PrograAvanzadaWeb.Models;
-using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using System.Security.Cryptography;
-using System.Text;
+using Proyecto_PrograAvanzadaWeb.Services;
 
 namespace Proyecto_PrograAvanzadaWeb.Controllers
 {
     public class PerfilController : Controller
     {
-        private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _environment;
+        private readonly ApiService _apiService;
 
-        public PerfilController(IConfiguration configuration, IWebHostEnvironment environment)
+        public PerfilController(ApiService apiService)
         {
-            _configuration = configuration;
-            _environment = environment;
+            _apiService = apiService;
         }
 
         #region Ver Perfil
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            long idUsuario = Convert.ToInt64(HttpContext.Session.GetString("IdUsuario"));
-
-            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:Connection").Value))
+            try
             {
-                var perfil = context.QueryFirstOrDefault<PerfilUsuario>(
-                    "ObtenerPerfilUsuario",
-                    new { IdUsuario = idUsuario },
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
+                var response = await _apiService.ObtenerPerfilCompleto();
 
-                if (perfil != null)
+                if (!response.Success || response.Data == null)
                 {
-                    return View(perfil);
+                    ViewBag.Error = response.Message ?? "Error al cargar el perfil";
+                    return View(new PerfilUsuarioCompleto());
                 }
-                else
+
+                // Mapear DTO a modelo de vista existente
+                var perfil = new PerfilUsuarioCompleto
                 {
-                    return RedirectToAction("Index", "Home");
-                }
+                    IdUsuario = response.Data.IdUsuario,
+                    Nombre = response.Data.Nombre,
+                    Correo = response.Data.Correo,
+                    Identificacion = response.Data.Identificacion,
+                    Telefono = response.Data.Telefono,
+                    Direccion = response.Data.Direccion,
+                    FechaNacimiento = response.Data.FechaNacimiento,
+                    FotoPath = response.Data.FotoPath,
+                    Estado = response.Data.Estado,
+                    IdRol = response.Data.IdRol,
+                    NombreRol = response.Data.NombreRol,
+                    FechaRegistro = response.Data.FechaRegistro,
+                    FechaActualizacion = response.Data.FechaActualizacion
+                };
+
+                return View(perfil);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = $"Error de conexión: {ex.Message}";
+                return View(new PerfilUsuarioCompleto());
             }
         }
         #endregion
 
         #region Editar Información Básica
         [HttpGet]
-        public IActionResult EditarBasico()
+        public async Task<IActionResult> EditarBasico()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            long idUsuario = Convert.ToInt64(HttpContext.Session.GetString("IdUsuario"));
-
-            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:Connection").Value))
+            try
             {
-                var perfil = context.QueryFirstOrDefault<PerfilUsuario>(
-                    "ObtenerPerfilUsuario",
-                    new { IdUsuario = idUsuario },
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
+                var response = await _apiService.ObtenerPerfilCompleto();
 
-                if (perfil != null)
+                if (!response.Success || response.Data == null)
                 {
-                    var model = new ActualizarPerfilBasico
-                    {
-                        IdUsuario = perfil.IdUsuario,
-                        Nombre = perfil.Nombre,
-                        Correo = perfil.Correo,
-                        Identificacion = perfil.Identificacion
-                    };
-                    return View(model);
+                    TempData["Error"] = response.Message ?? "Error al cargar el perfil";
+                    return RedirectToAction("Index");
                 }
-                else
+
+                var model = new ActualizarPerfilBasicoModel
                 {
-                    return RedirectToAction("Index", "Home");
-                }
+                    IdUsuario = response.Data.IdUsuario,
+                    Nombre = response.Data.Nombre,
+                    Correo = response.Data.Correo,
+                    Identificacion = response.Data.Identificacion
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
+                return RedirectToAction("Index");
             }
         }
 
         [HttpPost]
-        public IActionResult EditarBasico(ActualizarPerfilBasico model)
+        public async Task<IActionResult> EditarBasico(ActualizarPerfilBasicoModel model)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
@@ -101,144 +111,149 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return View(model);
             }
 
-            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:Connection").Value))
+            try
             {
-                var resultado = context.QueryFirstOrDefault<dynamic>(
-                    "ActualizarPerfilBasico",
-                    new
-                    {
-                        IdUsuario = model.IdUsuario,
-                        Nombre = model.Nombre,
-                        Correo = model.Correo,
-                        Identificacion = model.Identificacion
-                    },
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
+                var dto = new ActualizarPerfilBasicoDto
+                {
+                    Nombre = model.Nombre,
+                    Correo = model.Correo,
+                    Identificacion = model.Identificacion
+                };
 
-                if (resultado.Resultado > 0)
+                var response = await _apiService.ActualizarPerfilBasico(dto);
+
+                if (response.Success)
                 {
                     // Actualizar datos de sesión
                     HttpContext.Session.SetString("Nombre", model.Nombre);
                     HttpContext.Session.SetString("Correo", model.Correo);
 
-                    ViewBag.Exito = "Perfil actualizado exitosamente";
+                    ViewBag.Exito = response.Message ?? "Perfil actualizado exitosamente";
                     return View(model);
                 }
                 else
                 {
-                    ViewBag.Error = resultado.Mensaje;
+                    ViewBag.Error = response.Message ?? "Error al actualizar el perfil";
                     return View(model);
                 }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = $"Error de conexión: {ex.Message}";
+                return View(model);
             }
         }
         #endregion
 
         #region Editar Información Adicional
         [HttpGet]
-        public IActionResult EditarAdicional()
+        public async Task<IActionResult> EditarAdicional()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            long idUsuario = Convert.ToInt64(HttpContext.Session.GetString("IdUsuario"));
-
-            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:Connection").Value))
+            try
             {
-                var perfil = context.QueryFirstOrDefault<PerfilUsuario>(
-                    "ObtenerPerfilUsuario",
-                    new { IdUsuario = idUsuario },
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
+                var response = await _apiService.ObtenerPerfilCompleto();
 
-                if (perfil != null)
+                if (!response.Success || response.Data == null)
                 {
-                    var model = new InformacionAdicional
-                    {
-                        IdUsuario = perfil.IdUsuario,
-                        Telefono = perfil.Telefono,
-                        Direccion = perfil.Direccion,
-                        FechaNacimiento = perfil.FechaNacimiento,
-                        FotoPath = perfil.FotoPath
-                    };
-                    return View(model);
+                    TempData["Error"] = response.Message ?? "Error al cargar el perfil";
+                    return RedirectToAction("Index");
                 }
-                else
+
+                var model = new InformacionAdicionalModel
                 {
-                    return RedirectToAction("Index", "Home");
-                }
+                    IdUsuario = response.Data.IdUsuario,
+                    Telefono = response.Data.Telefono,
+                    Direccion = response.Data.Direccion,
+                    FechaNacimiento = response.Data.FechaNacimiento,
+                    FotoPath = response.Data.FotoPath
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
+                return RedirectToAction("Index");
             }
         }
 
         [HttpPost]
-        public IActionResult EditarAdicional(InformacionAdicional model, IFormFile foto)
+        public async Task<IActionResult> EditarAdicional(InformacionAdicionalModel model, IFormFile foto)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            string fotoPath = model.FotoPath;
-
-            // Manejar subida de foto
-            if (foto != null && foto.Length > 0)
+            try
             {
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                var extension = Path.GetExtension(foto.FileName).ToLowerInvariant();
+                string fotoPath = model.FotoPath;
 
-                if (!allowedExtensions.Contains(extension))
+                // Manejar subida de foto si se proporciona
+                if (foto != null && foto.Length > 0)
                 {
-                    ViewBag.Error = "Solo se permiten archivos de imagen (jpg, jpeg, png, gif)";
-                    return View(model);
-                }
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var extension = Path.GetExtension(foto.FileName).ToLowerInvariant();
 
-                if (foto.Length > 5 * 1024 * 1024) // 5MB
-                {
-                    ViewBag.Error = "El archivo no puede superar los 5MB";
-                    return View(model);
-                }
-
-                var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "profiles");
-                Directory.CreateDirectory(uploadsFolder);
-
-                var uniqueFileName = $"{model.IdUsuario}_{Guid.NewGuid()}{extension}";
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    foto.CopyTo(fileStream);
-                }
-
-                fotoPath = $"/uploads/profiles/{uniqueFileName}";
-            }
-
-            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:Connection").Value))
-            {
-                var resultado = context.QueryFirstOrDefault<dynamic>(
-                    "ActualizarInformacionAdicional",
-                    new
+                    if (!allowedExtensions.Contains(extension))
                     {
-                        IdUsuario = model.IdUsuario,
-                        Telefono = model.Telefono,
-                        Direccion = model.Direccion,
-                        FechaNacimiento = model.FechaNacimiento,
-                        FotoPath = fotoPath
-                    },
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
+                        ViewBag.Error = "Solo se permiten archivos de imagen (jpg, jpeg, png, gif)";
+                        return View(model);
+                    }
 
-                if (resultado.Resultado > 0)
+                    if (foto.Length > 5 * 1024 * 1024) // 5MB
+                    {
+                        ViewBag.Error = "El archivo no puede superar los 5MB";
+                        return View(model);
+                    }
+
+                    // Subir foto a través de la API
+                    var fotoResponse = await _apiService.SubirFotoPerfil(foto);
+
+                    if (fotoResponse.Success && fotoResponse.Data != null)
+                    {
+                        fotoPath = fotoResponse.Data.FotoPath;
+                        model.FotoPath = fotoPath;
+                        ViewBag.Exito = "Foto de perfil actualizada exitosamente";
+                        return View(model);
+                    }
+                    else
+                    {
+                        ViewBag.Error = fotoResponse.Message ?? "Error al subir la foto";
+                        return View(model);
+                    }
+                }
+
+                // Actualizar información adicional (sin foto)
+                var dto = new ActualizarInformacionAdicionalDto
                 {
-                    ViewBag.Exito = "Información adicional actualizada exitosamente";
-                    model.FotoPath = fotoPath;
+                    Telefono = model.Telefono,
+                    Direccion = model.Direccion,
+                    FechaNacimiento = model.FechaNacimiento
+                };
+
+                var response = await _apiService.ActualizarInformacionAdicional(dto);
+
+                if (response.Success)
+                {
+                    ViewBag.Exito = response.Message ?? "Información adicional actualizada exitosamente";
                     return View(model);
                 }
                 else
                 {
-                    ViewBag.Error = "Error al actualizar la información";
+                    ViewBag.Error = response.Message ?? "Error al actualizar la información";
                     return View(model);
                 }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = $"Error de conexión: {ex.Message}";
+                return View(model);
             }
         }
         #endregion
@@ -252,7 +267,7 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var model = new CambiarContrasena
+            var model = new CambiarContrasenaModel
             {
                 IdUsuario = Convert.ToInt64(HttpContext.Session.GetString("IdUsuario"))
             };
@@ -261,7 +276,7 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult CambiarContrasena(CambiarContrasena model)
+        public async Task<IActionResult> CambiarContrasena(CambiarContrasenaModel model)
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
@@ -287,44 +302,31 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return View(model);
             }
 
-            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:Connection").Value))
+            try
             {
-                string contrasenaActualEncriptada = EncriptarContrasena(model.ContrasenaActual);
-                string contrasenaNuevaEncriptada = EncriptarContrasena(model.ContrasenaNueva);
-
-                var resultado = context.QueryFirstOrDefault<dynamic>(
-                    "CambiarContrasena",
-                    new
-                    {
-                        IdUsuario = model.IdUsuario,
-                        ContrasenaActual = contrasenaActualEncriptada,
-                        ContrasenaNueva = contrasenaNuevaEncriptada
-                    },
-                    commandType: System.Data.CommandType.StoredProcedure
-                );
-
-                if (resultado.Resultado > 0)
+                var dto = new CambiarContrasenaPerfilDto
                 {
-                    ViewBag.Exito = "Contraseña actualizada exitosamente";
-                    return View(new CambiarContrasena { IdUsuario = model.IdUsuario });
+                    ContrasenaActual = model.ContrasenaActual,
+                    ContrasenaNueva = model.ContrasenaNueva
+                };
+
+                var response = await _apiService.CambiarContrasena(dto);
+
+                if (response.Success)
+                {
+                    ViewBag.Exito = response.Message ?? "Contraseña actualizada exitosamente";
+                    return View(new CambiarContrasenaModel { IdUsuario = model.IdUsuario });
                 }
                 else
                 {
-                    ViewBag.Error = resultado.Mensaje;
+                    ViewBag.Error = response.Message ?? "Error al cambiar la contraseña";
                     return View(model);
                 }
             }
-        }
-        #endregion
-
-        #region Métodos Privados
-        private string EncriptarContrasena(string contrasena)
-        {
-            using (var md5 = MD5.Create())
+            catch (Exception ex)
             {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(contrasena);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-                return Convert.ToBase64String(hashBytes);
+                ViewBag.Error = $"Error de conexión: {ex.Message}";
+                return View(model);
             }
         }
         #endregion

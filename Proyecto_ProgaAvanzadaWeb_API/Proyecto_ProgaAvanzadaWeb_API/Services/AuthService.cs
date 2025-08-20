@@ -96,19 +96,39 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     commandType: CommandType.StoredProcedure
                 );
 
+                // CORREGIDO: Convertir decimal a long explícitamente
+                long resultadoId = 0;
+                if (resultado.Resultado is decimal decimalResult)
+                {
+                    resultadoId = (long)decimalResult;
+                }
+                else if (resultado.Resultado is int intResult)
+                {
+                    resultadoId = intResult;
+                }
+                else if (resultado.Resultado is long longResult)
+                {
+                    resultadoId = longResult;
+                }
+
+                bool esExitoso = resultadoId > 0;
+                string mensaje = resultado.Mensaje?.ToString() ?? "Sin mensaje";
+
                 return new ResponseDTO<UsuarioDTO>
                 {
-                    Success = resultado.Resultado > 0,
-                    Message = resultado.Mensaje,
-                    Data = resultado.Resultado > 0 ? new UsuarioDTO
+                    Success = esExitoso,
+                    Message = mensaje,
+                    Data = esExitoso ? new UsuarioDTO
                     {
-                        IdUsuario = resultado.Resultado,
+                        IdUsuario = resultadoId,
                         Nombre = registroDto.Nombre,
                         Correo = registroDto.Correo,
                         Identificacion = registroDto.Identificacion,
                         Estado = true,
                         IdRol = 1,
-                        NombreRol = "Usuario Regular"
+                        NombreRol = "Usuario Regular",
+                        FechaRegistro = DateTime.Now,
+                        FechaActualizacion = DateTime.Now
                     } : null
                 };
             }

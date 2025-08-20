@@ -1,82 +1,216 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Proyecto_ProgaAvanzadaWeb_API.Models.DTOs;
+using Proyecto_ProgaAvanzadaWeb_API.Services;
+using System.Security.Claims;
 
 namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 {
-    public class PerfilController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PerfilController : ControllerBase
     {
-        // GET: PerfilController
-        public ActionResult Index()
+        private readonly IPerfilService _perfilService;
+
+        public PerfilController(IPerfilService perfilService)
         {
-            return View();
+            _perfilService = perfilService;
         }
 
-        // GET: PerfilController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: PerfilController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PerfilController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        /// <summary>
+        /// Obtiene el perfil completo del usuario autenticado
+        /// </summary>
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ObtenerPerfil()
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim) || !long.TryParse(idUsuarioClaim, out long idUsuario))
+                {
+                    return BadRequest(new ResponseDTO<object>
+                    {
+                        Success = false,
+                        Message = "Token inválido o usuario no encontrado"
+                    });
+                }
+
+                var result = await _perfilService.ObtenerPerfilCompleto(idUsuario);
+
+                if (result.Success)
+                    return Ok(result);
+
+                return NotFound(result);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return StatusCode(500, new ResponseDTO<object>
+                {
+                    Success = false,
+                    Message = $"Error interno del servidor: {ex.Message}"
+                });
             }
         }
 
-        // GET: PerfilController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: PerfilController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: PerfilController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: PerfilController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        /// <summary>
+        /// Actualiza la información básica del perfil del usuario autenticado
+        /// </summary>
+        [HttpPut("basico")]
+        [Authorize]
+        public async Task<IActionResult> ActualizarPerfilBasico([FromBody] ActualizarPerfilBasicoDTO dto)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim) || !long.TryParse(idUsuarioClaim, out long idUsuario))
+                {
+                    return BadRequest(new ResponseDTO<object>
+                    {
+                        Success = false,
+                        Message = "Token inválido o usuario no encontrado"
+                    });
+                }
+
+                var result = await _perfilService.ActualizarPerfilBasico(idUsuario, dto);
+
+                if (result.Success)
+                    return Ok(result);
+
+                return BadRequest(result);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return StatusCode(500, new ResponseDTO<object>
+                {
+                    Success = false,
+                    Message = $"Error interno del servidor: {ex.Message}"
+                });
+            }
+        }
+
+        /// <summary>
+        /// Actualiza la información adicional del perfil del usuario autenticado
+        /// </summary>
+        [HttpPut("adicional")]
+        [Authorize]
+        public async Task<IActionResult> ActualizarInformacionAdicional([FromBody] ActualizarInformacionAdicionalDTO dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim) || !long.TryParse(idUsuarioClaim, out long idUsuario))
+                {
+                    return BadRequest(new ResponseDTO<object>
+                    {
+                        Success = false,
+                        Message = "Token inválido o usuario no encontrado"
+                    });
+                }
+
+                var result = await _perfilService.ActualizarInformacionAdicional(idUsuario, dto);
+
+                if (result.Success)
+                    return Ok(result);
+
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO<object>
+                {
+                    Success = false,
+                    Message = $"Error interno del servidor: {ex.Message}"
+                });
+            }
+        }
+
+        /// <summary>
+        /// Cambia la contraseña del usuario autenticado
+        /// </summary>
+        [HttpPost("cambiar-contrasena")]
+        [Authorize]
+        public async Task<IActionResult> CambiarContrasena([FromBody] CambiarContrasenaPerfilDTO dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim) || !long.TryParse(idUsuarioClaim, out long idUsuario))
+                {
+                    return BadRequest(new ResponseDTO<object>
+                    {
+                        Success = false,
+                        Message = "Token inválido o usuario no encontrado"
+                    });
+                }
+
+                var result = await _perfilService.CambiarContrasena(idUsuario, dto);
+
+                if (result.Success)
+                    return Ok(result);
+
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO<object>
+                {
+                    Success = false,
+                    Message = $"Error interno del servidor: {ex.Message}"
+                });
+            }
+        }
+
+        /// <summary>
+        /// Sube una foto de perfil para el usuario autenticado
+        /// </summary>
+        [HttpPost("subir-foto")]
+        [Authorize]
+        public async Task<IActionResult> SubirFotoPerfil([FromForm] SubirFotoPerfilDTO dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim) || !long.TryParse(idUsuarioClaim, out long idUsuario))
+                {
+                    return BadRequest(new ResponseDTO<object>
+                    {
+                        Success = false,
+                        Message = "Token inválido o usuario no encontrado"
+                    });
+                }
+
+                var result = await _perfilService.SubirFotoPerfil(idUsuario, dto.Foto);
+
+                if (result.Success)
+                    return Ok(result);
+
+                return BadRequest(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO<object>
+                {
+                    Success = false,
+                    Message = $"Error interno del servidor: {ex.Message}"
+                });
             }
         }
     }

@@ -63,7 +63,7 @@
                                             <input type="checkbox" class="custom-control-input" id="customCheck2">
                                             <label class="custom-control-label" for="customCheck2">Recuérdame</label>
                                         </div>
-                                        <a class="text-muted font-weight-medium" href="#">¿Olvidaste tu contraseña?</a>
+                                        <a class="text-muted font-weight-medium" href="@Url.Action("RecuperarContrasena", "Home")">¿Olvidaste tu contraseña?</a>
                                     </div>
                                     <button type="submit"
                                             class="btn btn-pill mb-3"
@@ -73,7 +73,8 @@
                                         <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
                                     </button>
                                     <div class="text-center">
-                                        <a href="@Url.Action("Register", "Home")" class="text-muted font-weight-medium">
+                                        <!-- FIXED: Changed from "Register" to "Registro" -->
+                                        <a href="@Url.Action("Registro", "Home")" class="text-muted font-weight-medium">
                                             ¿No tienes cuenta? Regístrate aquí
                                         </a>
                                     </div>

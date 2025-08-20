@@ -70,15 +70,6 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowCredentials();// Importante para autenticación
     });
-
-    // Política para producción - NUEVA
-    options.AddPolicy("Production", policy =>
-    {
-        policy.WithOrigins("https://tu-dominio-produccion.com") // Cambiar por tu dominio real
-              .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-              .WithHeaders("Content-Type", "Authorization")
-              .AllowCredentials();
-    });
 });
 
 // Database Context
@@ -90,6 +81,7 @@ builder.Services.AddScoped<JwtHelper>();
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IPerfilService, PerfilService>();
 
 // JWT Authentication configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace Proyecto_PrograAvanzadaWeb.Services
@@ -8,6 +9,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly JsonSerializerOptions _jsonOptions;
 
         public ApiService(HttpClient httpClient, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
@@ -21,6 +23,13 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             {
                 _httpClient.BaseAddress = new Uri(apiBaseUrl);
             }
+
+            // Configurar opciones de JSON
+            _jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
         }
 
         // Configurar headers con token de autenticación
@@ -46,10 +55,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return JsonSerializer.Deserialize<ApiResponse<List<UsuarioDto>>>(content, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    return JsonSerializer.Deserialize<ApiResponse<List<UsuarioDto>>>(content, _jsonOptions);
                 }
 
                 return new ApiResponse<List<UsuarioDto>>
@@ -80,10 +86,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return JsonSerializer.Deserialize<ApiResponse<UsuarioDto>>(content, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    return JsonSerializer.Deserialize<ApiResponse<UsuarioDto>>(content, _jsonOptions);
                 }
 
                 return new ApiResponse<UsuarioDto>
@@ -110,7 +113,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             {
                 ConfigureAuthHeaders();
                 var data = new { Estado = nuevoEstado };
-                var json = JsonSerializer.Serialize(data);
+                var json = JsonSerializer.Serialize(data, _jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PutAsync($"api/usuarios/{id}/estado", content);
@@ -118,10 +121,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
                 }
 
                 return new ApiResponse<bool>
@@ -147,7 +147,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             try
             {
                 ConfigureAuthHeaders();
-                var json = JsonSerializer.Serialize(dto);
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PutAsync($"api/usuarios/{id}", content);
@@ -155,10 +155,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
                 }
 
                 return new ApiResponse<bool>
@@ -189,10 +186,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return JsonSerializer.Deserialize<ApiResponse<EstadisticasUsuariosDto>>(content, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    return JsonSerializer.Deserialize<ApiResponse<EstadisticasUsuariosDto>>(content, _jsonOptions);
                 }
 
                 return new ApiResponse<EstadisticasUsuariosDto>
@@ -215,33 +209,230 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
         #endregion
 
+        #region Métodos de Perfil
+
+        /// <summary>
+        /// Obtiene el perfil completo del usuario autenticado
+        /// </summary>
+        public async Task<ApiResponse<PerfilCompletoDto>> ObtenerPerfilCompleto()
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.GetAsync("api/perfil");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonSerializer.Deserialize<ApiResponse<PerfilCompletoDto>>(content, _jsonOptions);
+                }
+
+                var errorResponse = JsonSerializer.Deserialize<ApiResponse<PerfilCompletoDto>>(content, _jsonOptions);
+                return errorResponse ?? new ApiResponse<PerfilCompletoDto>
+                {
+                    Success = false,
+                    Message = "Error al obtener el perfil"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<PerfilCompletoDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Actualiza la información básica del perfil
+        /// </summary>
+        public async Task<ApiResponse<bool>> ActualizarPerfilBasico(ActualizarPerfilBasicoDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync("api/perfil/basico", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                }
+
+                var errorResponse = JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                return errorResponse ?? new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = "Error al actualizar el perfil básico"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Actualiza la información adicional del perfil
+        /// </summary>
+        public async Task<ApiResponse<bool>> ActualizarInformacionAdicional(ActualizarInformacionAdicionalDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync("api/perfil/adicional", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                }
+
+                var errorResponse = JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                return errorResponse ?? new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = "Error al actualizar la información adicional"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Cambia la contraseña del usuario
+        /// </summary>
+        public async Task<ApiResponse<bool>> CambiarContrasena(CambiarContrasenaPerfilDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/perfil/cambiar-contrasena", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                }
+
+                var errorResponse = JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                return errorResponse ?? new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = "Error al cambiar la contraseña"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Sube una foto de perfil
+        /// </summary>
+        public async Task<ApiResponse<FotoPerfilDto>> SubirFotoPerfil(IFormFile foto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+
+                using var content = new MultipartFormDataContent();
+                using var streamContent = new StreamContent(foto.OpenReadStream());
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue(foto.ContentType);
+                content.Add(streamContent, "foto", foto.FileName);
+
+                var response = await _httpClient.PostAsync("api/perfil/subir-foto", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonSerializer.Deserialize<ApiResponse<FotoPerfilDto>>(responseContent, _jsonOptions);
+                }
+
+                var errorResponse = JsonSerializer.Deserialize<ApiResponse<FotoPerfilDto>>(responseContent, _jsonOptions);
+                return errorResponse ?? new ApiResponse<FotoPerfilDto>
+                {
+                    Success = false,
+                    Message = "Error al subir la foto de perfil"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<FotoPerfilDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        #endregion
+
         #region Métodos de Autenticación
 
         public async Task<LoginResponse> Login(LoginDto loginDto)
         {
             try
             {
-                var json = JsonSerializer.Serialize(loginDto);
+                var json = JsonSerializer.Serialize(loginDto, _jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync("api/auth/login", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                if (response.IsSuccessStatusCode)
+                // Intentar deserializar siempre
+                try
                 {
-                    return JsonSerializer.Deserialize<LoginResponse>(responseContent, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    return JsonSerializer.Deserialize<LoginResponse>(responseContent, _jsonOptions);
                 }
-
-                return new LoginResponse
+                catch
                 {
-                    Success = false,
-                    Message = $"Error: {response.StatusCode}",
-                    Token = null,
-                    Usuario = null
-                };
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return new LoginResponse
+                        {
+                            Success = true,
+                            Message = "Login exitoso",
+                            Token = null,
+                            Usuario = null
+                        };
+                    }
+                    else
+                    {
+                        return new LoginResponse
+                        {
+                            Success = false,
+                            Message = "Error en el login",
+                            Token = null,
+                            Usuario = null
+                        };
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -255,34 +446,48 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             }
         }
 
-        public async Task<ApiResponse<UsuarioDto>> Registrar(RegistroUsuarioDto registroDto)
+        public async Task<ResponseDto<object>> Registrar(RegistroUsuarioDto registroDto)
         {
             try
             {
-                var json = JsonSerializer.Serialize(registroDto);
+                var json = JsonSerializer.Serialize(registroDto, _jsonOptions);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync("api/auth/registrar", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                if (response.IsSuccessStatusCode)
+                // Siempre intentar deserializar la respuesta, sea exitosa o no
+                try
                 {
-                    return JsonSerializer.Deserialize<ApiResponse<UsuarioDto>>(responseContent, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    var apiResponse = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                    return apiResponse;
                 }
-
-                return new ApiResponse<UsuarioDto>
+                catch
                 {
-                    Success = false,
-                    Message = $"Error: {response.StatusCode}",
-                    Data = null
-                };
+                    // Si no se puede deserializar, crear una respuesta basada en el status code
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return new ResponseDto<object>
+                        {
+                            Success = true,
+                            Message = "Usuario registrado exitosamente",
+                            Data = null
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseDto<object>
+                        {
+                            Success = false,
+                            Message = "Error al registrar usuario",
+                            Data = null
+                        };
+                    }
+                }
             }
             catch (Exception ex)
             {
-                return new ApiResponse<UsuarioDto>
+                return new ResponseDto<object>
                 {
                     Success = false,
                     Message = $"Error de conexión: {ex.Message}",
@@ -297,6 +502,14 @@ namespace Proyecto_PrograAvanzadaWeb.Services
     #region DTOs para la API
 
     public class ApiResponse<T>
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
+    }
+
+    // ResponseDto para coincidir con la API
+    public class ResponseDto<T>
     {
         public bool Success { get; set; }
         public string Message { get; set; }
@@ -365,6 +578,53 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         public int IdRol { get; set; }
         public string NombreRol { get; set; }
     }
+
+    #region DTOs de Perfil
+
+    // DTOs para el módulo de perfil
+    public class PerfilCompletoDto
+    {
+        public long IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+        public string FotoPath { get; set; }
+        public bool Estado { get; set; }
+        public int IdRol { get; set; }
+        public string NombreRol { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaActualizacion { get; set; }
+    }
+
+    public class ActualizarPerfilBasicoDto
+    {
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+    }
+
+    public class ActualizarInformacionAdicionalDto
+    {
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+    }
+
+    public class CambiarContrasenaPerfilDto
+    {
+        public string ContrasenaActual { get; set; }
+        public string ContrasenaNueva { get; set; }
+    }
+
+    public class FotoPerfilDto
+    {
+        public string FotoPath { get; set; }
+    }
+
+    #endregion
 
     #endregion
 }
