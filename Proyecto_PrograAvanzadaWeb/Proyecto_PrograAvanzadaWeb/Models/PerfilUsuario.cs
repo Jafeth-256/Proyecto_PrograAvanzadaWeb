@@ -1,7 +1,5 @@
-// Archivo: Models/PerfilModels.cs
 namespace Proyecto_PrograAvanzadaWeb.Models
 {
-    // Modelo para mostrar perfil completo en la vista
     public class PerfilUsuarioCompleto
     {
         public long IdUsuario { get; set; }
@@ -19,7 +17,6 @@ namespace Proyecto_PrograAvanzadaWeb.Models
         public DateTime FechaActualizacion { get; set; }
     }
 
-    // Modelo para editar información básica
     public class ActualizarPerfilBasicoModel
     {
         public long IdUsuario { get; set; }
@@ -28,7 +25,6 @@ namespace Proyecto_PrograAvanzadaWeb.Models
         public string Identificacion { get; set; }
     }
 
-    // Modelo para editar información adicional
     public class InformacionAdicionalModel
     {
         public long IdUsuario { get; set; }
@@ -36,10 +32,9 @@ namespace Proyecto_PrograAvanzadaWeb.Models
         public string? Direccion { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public string? FotoPath { get; set; }
-        public IFormFile? Foto { get; set; } // Para subir archivo
+        public IFormFile? Foto { get; set; }
     }
 
-    // Modelo para cambiar contraseña
     public class CambiarContrasenaModel
     {
         public long IdUsuario { get; set; }

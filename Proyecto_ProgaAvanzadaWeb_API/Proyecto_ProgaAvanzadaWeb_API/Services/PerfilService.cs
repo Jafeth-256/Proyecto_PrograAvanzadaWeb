@@ -123,7 +123,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                         Telefono = dto.Telefono,
                         Direccion = dto.Direccion,
                         FechaNacimiento = dto.FechaNacimiento,
-                        FotoPath = (string?)null // No actualizamos foto aquí
+                        FotoPath = (string?)null
                     },
                     commandType: CommandType.StoredProcedure
                 );
@@ -197,7 +197,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     };
                 }
 
-                // Validar extensiones permitidas
                 var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
                 var extension = Path.GetExtension(foto.FileName).ToLowerInvariant();
 
@@ -210,7 +209,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     };
                 }
 
-                // Validar tamaño (5MB máximo)
                 if (foto.Length > 5 * 1024 * 1024)
                 {
                     return new ResponseDTO<FotoPerfilDTO>
@@ -220,15 +218,12 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     };
                 }
 
-                // Crear directorio si no existe
                 var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "profiles");
                 Directory.CreateDirectory(uploadsFolder);
 
-                // Generar nombre único para el archivo
                 var uniqueFileName = $"{idUsuario}_{Guid.NewGuid()}{extension}";
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                // Guardar archivo
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await foto.CopyToAsync(fileStream);
@@ -236,7 +231,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
 
                 var fotoPath = $"/uploads/profiles/{uniqueFileName}";
 
-                // Actualizar ruta en base de datos
                 using var connection = _context.CreateConnection();
 
                 var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
@@ -263,7 +257,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 }
                 else
                 {
-                    // Si falla la actualización, eliminar el archivo
                     if (File.Exists(filePath))
                     {
                         File.Delete(filePath);

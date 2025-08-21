@@ -32,7 +32,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     return View(new PerfilUsuarioCompleto());
                 }
 
-                // Mapear DTO a modelo de vista existente
                 var perfil = new PerfilUsuarioCompleto
                 {
                     IdUsuario = response.Data.IdUsuario,
@@ -124,7 +123,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
 
                 if (response.Success)
                 {
-                    // Actualizar datos de sesión
                     HttpContext.Session.SetString("Nombre", model.Nombre);
                     HttpContext.Session.SetString("Correo", model.Correo);
 
@@ -194,7 +192,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             {
                 string fotoPath = model.FotoPath;
 
-                // Manejar subida de foto si se proporciona
                 if (foto != null && foto.Length > 0)
                 {
                     var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
@@ -206,13 +203,12 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                         return View(model);
                     }
 
-                    if (foto.Length > 5 * 1024 * 1024) // 5MB
+                    if (foto.Length > 5 * 1024 * 1024)
                     {
                         ViewBag.Error = "El archivo no puede superar los 5MB";
                         return View(model);
                     }
 
-                    // Subir foto a través de la API
                     var fotoResponse = await _apiService.SubirFotoPerfil(foto);
 
                     if (fotoResponse.Success && fotoResponse.Data != null)
@@ -229,7 +225,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     }
                 }
 
-                // Actualizar información adicional (sin foto)
                 var dto = new ActualizarInformacionAdicionalDto
                 {
                     Telefono = model.Telefono,

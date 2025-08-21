@@ -17,9 +17,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             _usuarioService = usuarioService;
         }
 
-        /// <summary>
-        /// Obtiene todos los usuarios - Solo para administradores
-        /// </summary>
         [HttpGet]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> ObtenerTodos()
@@ -43,9 +40,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtiene un usuario por ID - Solo para administradores
-        /// </summary>
         [HttpGet("{id}")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> ObtenerPorId(long id)
@@ -69,9 +63,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtiene el perfil del usuario autenticado
-        /// </summary>
         [HttpGet("perfil")]
         [Authorize]
         public async Task<IActionResult> ObtenerPerfil()
@@ -106,9 +97,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Actualiza el perfil del usuario autenticado
-        /// </summary>
         [HttpPut("perfil")]
         [Authorize]
         public async Task<IActionResult> ActualizarPerfil([FromBody] ActualizarPerfilDTO dto)
@@ -146,9 +134,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Cambia la contraseña del usuario autenticado
-        /// </summary>
         [HttpPost("cambiar-contrasena")]
         [Authorize]
         public async Task<IActionResult> CambiarContrasena([FromBody] CambiarContrasenaDTO dto)
@@ -186,9 +171,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Cambia el estado de un usuario - Solo para administradores
-        /// </summary>
         [HttpPut("{id}/estado")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> CambiarEstado(long id, [FromBody] CambiarEstadoUsuarioDTO dto)
@@ -215,9 +197,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Actualiza un usuario completo - Solo para administradores
-        /// </summary>
         [HttpPut("{id}")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> ActualizarUsuario(long id, [FromBody] ActualizarUsuarioCompletoDTO dto)
@@ -244,9 +223,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtiene estadísticas de usuarios - Solo para administradores
-        /// </summary>
         [HttpGet("estadisticas")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> ObtenerEstadisticas()

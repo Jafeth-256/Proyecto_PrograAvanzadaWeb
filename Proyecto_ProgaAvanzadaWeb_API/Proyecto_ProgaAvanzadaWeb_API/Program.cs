@@ -8,11 +8,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Configurar Swagger con soporte para JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -22,7 +20,6 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API para gestión de tours y usuarios"
     });
 
-    // Configurar autenticación JWT en Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -48,10 +45,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// CORS configuration mejorado - ACTUALIZADO
 builder.Services.AddCors(options =>
 {
-    // Política para desarrollo (permite todo)
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyOrigin()
@@ -59,31 +54,26 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 
-    // Política específica para la aplicación MVC - NUEVA
     options.AddPolicy("AllowMvcApp", policy =>
     {
         policy.WithOrigins(
-                "https://localhost:7273", "http://localhost:7273",  // MVC HTTPS y HTTP
-                "https://localhost:7001", "http://localhost:5001"   // Por si API y MVC están en mismo puerto
+                "https://localhost:7273", "http://localhost:7273",  
+                "https://localhost:7001", "http://localhost:5001"   
               )
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials();// Importante para autenticación
+              .AllowCredentials();
     });
 });
 
-// Database Context
 builder.Services.AddSingleton<DataContext>();
 
-// Helpers
 builder.Services.AddScoped<JwtHelper>();
 
-// Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IPerfilService, PerfilService>();
 
-// JWT Authentication configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
 
@@ -110,34 +100,29 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Authorization
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "TicoTours API v1");
-        c.RoutePrefix = string.Empty; // Para que Swagger sea la página principal
+        c.RoutePrefix = string.Empty;
     });
 
-    // Usar política permisiva en desarrollo - ACTUALIZADO
     app.UseCors("AllowMvcApp");
 }
 else
 {
-    // En producción usar política restrictiva - NUEVO
     app.UseCors("Production");
 }
 
 app.UseHttpsRedirection();
 
-// Importante: El orden de los middlewares es crucial
-app.UseAuthentication(); // Debe ir antes de UseAuthorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

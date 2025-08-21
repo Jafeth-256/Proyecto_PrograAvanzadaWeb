@@ -17,14 +17,12 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
 
-            // Configurar la base URL de la API
             var apiBaseUrl = _configuration["ApiSettings:BaseUrl"];
             if (!string.IsNullOrEmpty(apiBaseUrl))
             {
                 _httpClient.BaseAddress = new Uri(apiBaseUrl);
             }
 
-            // Configurar opciones de JSON
             _jsonOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
@@ -32,7 +30,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             };
         }
 
-        // Configurar headers con token de autenticación
         private void ConfigureAuthHeaders()
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
@@ -211,9 +208,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
         #region Métodos de Perfil
 
-        /// <summary>
-        /// Obtiene el perfil completo del usuario autenticado
-        /// </summary>
         public async Task<ApiResponse<PerfilCompletoDto>> ObtenerPerfilCompleto()
         {
             try
@@ -244,9 +238,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             }
         }
 
-        /// <summary>
-        /// Actualiza la información básica del perfil
-        /// </summary>
         public async Task<ApiResponse<bool>> ActualizarPerfilBasico(ActualizarPerfilBasicoDto dto)
         {
             try
@@ -280,9 +271,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             }
         }
 
-        /// <summary>
-        /// Actualiza la información adicional del perfil
-        /// </summary>
         public async Task<ApiResponse<bool>> ActualizarInformacionAdicional(ActualizarInformacionAdicionalDto dto)
         {
             try
@@ -316,9 +304,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             }
         }
 
-        /// <summary>
-        /// Cambia la contraseña del usuario
-        /// </summary>
         public async Task<ApiResponse<bool>> CambiarContrasena(CambiarContrasenaPerfilDto dto)
         {
             try
@@ -352,9 +337,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
             }
         }
 
-        /// <summary>
-        /// Sube una foto de perfil
-        /// </summary>
         public async Task<ApiResponse<FotoPerfilDto>> SubirFotoPerfil(IFormFile foto)
         {
             try
@@ -405,7 +387,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
                 var response = await _httpClient.PostAsync("api/auth/login", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                // Intentar deserializar siempre
                 try
                 {
                     return JsonSerializer.Deserialize<LoginResponse>(responseContent, _jsonOptions);
@@ -456,7 +437,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
                 var response = await _httpClient.PostAsync("api/auth/registrar", content);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                // Siempre intentar deserializar la respuesta, sea exitosa o no
                 try
                 {
                     var apiResponse = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
@@ -464,7 +444,7 @@ namespace Proyecto_PrograAvanzadaWeb.Services
                 }
                 catch
                 {
-                    // Si no se puede deserializar, crear una respuesta basada en el status code
+
                     if (response.IsSuccessStatusCode)
                     {
                         return new ResponseDto<object>
@@ -508,7 +488,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         public T Data { get; set; }
     }
 
-    // ResponseDto para coincidir con la API
     public class ResponseDto<T>
     {
         public bool Success { get; set; }

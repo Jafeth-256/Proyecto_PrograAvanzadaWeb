@@ -18,13 +18,12 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
 
         public IActionResult Index()
         {
-            // Si ya está logueado, redirigir a Inicio
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Inicio");
             }
 
-            return View(new Usuario()); // Pasar modelo vacío para el login
+            return View(new Usuario());
         }
 
         #region Login
@@ -33,7 +32,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         {
             try
             {
-                // Log para debug
                 _logger.LogInformation($"Intento de login para: {modelo?.Correo}");
 
                 if (string.IsNullOrEmpty(modelo?.Correo) || string.IsNullOrEmpty(modelo?.Contrasenna))
@@ -56,7 +54,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
 
                 if (response.Success && response.Usuario != null)
                 {
-                    // Guardar datos en sesión
                     HttpContext.Session.SetString("IdUsuario", response.Usuario.IdUsuario.ToString());
                     HttpContext.Session.SetString("Nombre", response.Usuario.Nombre);
                     HttpContext.Session.SetString("Correo", response.Usuario.Correo);
@@ -87,7 +84,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            // Si ya está logueado, redirigir a Inicio
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Inicio");
@@ -110,7 +106,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     return View(modelo);
                 }
 
-                // CORREGIDO: Usar el mismo DTO que espera la API
                 var registroDto = new RegistroUsuarioDto
                 {
                     Nombre = modelo.Nombre.Trim(),
@@ -146,11 +141,10 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         }
         #endregion
 
-        #region Registro (Spanish version)
+        #region Registro
         [HttpGet]
         public IActionResult Registro()
         {
-            // Si ya está logueado, redirigir a Inicio
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Inicio");
@@ -173,7 +167,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     return View(modelo);
                 }
 
-                // Validaciones adicionales
                 if (modelo.Contrasenna.Length < 6)
                 {
                     ViewBag.Error = "La contraseña debe tener al menos 6 caracteres";
@@ -198,7 +191,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     return View(modelo);
                 }
 
-                // CORREGIDO: Usar el mismo DTO que espera la API
                 var registroDto = new RegistroUsuarioDto
                 {
                     Nombre = modelo.Nombre.Trim(),
@@ -238,7 +230,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         [HttpGet]
         public IActionResult RecuperarContrasena()
         {
-            // Si ya está logueado, redirigir a Inicio
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Inicio");
@@ -258,10 +249,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     return View();
                 }
 
-                // Aquí llamarías a tu API para enviar el email de recuperación
-                // var response = await _apiService.RecuperarContrasena(correo);
-
-                // Por ahora mostrar mensaje de éxito genérico
                 ViewBag.Exito = "Si el correo existe en nuestro sistema, recibirás instrucciones para restablecer tu contraseña.";
                 return View();
             }
@@ -278,7 +265,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         [HttpGet]
         public IActionResult RestablecerContrasena(string token)
         {
-            // Si ya está logueado, redirigir a Inicio
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Inicio");
@@ -291,9 +277,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             }
 
             ViewBag.Token = token;
-            // Aquí podrías validar el token y obtener el email asociado
-            // var emailFromToken = await _apiService.ValidarToken(token);
-            // ViewBag.Correo = emailFromToken;
 
             return View();
         }
@@ -324,8 +307,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                     return View();
                 }
 
-                // Aquí llamarías a tu API para restablecer la contraseña
-                // var response = await _apiService.RestablecerContrasena(token, nuevaContrasena);
 
                 TempData["Exito"] = "Tu contraseña ha sido restablecida exitosamente. Ya puedes iniciar sesión.";
                 return RedirectToAction("Index");
@@ -340,16 +321,14 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         }
         #endregion
 
-        #region Inicio (Página principal después del login)
+        #region Inicio
         public IActionResult Inicio()
         {
-            // Verificar que esté logueado
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
             {
                 return RedirectToAction("Index");
             }
 
-            // Pasar datos del usuario a la vista
             ViewBag.NombreUsuario = HttpContext.Session.GetString("Nombre");
             ViewBag.NombreRol = HttpContext.Session.GetString("NombreRol");
             ViewBag.IdUsuario = HttpContext.Session.GetString("IdUsuario");

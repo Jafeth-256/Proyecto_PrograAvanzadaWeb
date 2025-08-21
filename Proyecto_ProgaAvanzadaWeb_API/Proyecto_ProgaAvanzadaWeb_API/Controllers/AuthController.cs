@@ -15,9 +15,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             _authService = authService;
         }
 
-        /// <summary>
-        /// Iniciar sesión
-        /// </summary>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
         {
@@ -43,9 +40,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Registrar nuevo usuario
-        /// </summary>
         [HttpPost("registrar")]
         public async Task<IActionResult> Registrar([FromBody] RegistroUsuarioDTO registroDto)
         {

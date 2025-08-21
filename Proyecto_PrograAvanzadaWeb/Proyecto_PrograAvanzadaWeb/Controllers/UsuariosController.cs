@@ -13,7 +13,7 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             _apiService = apiService;
         }
 
-        #region Index - Lista de Usuarios
+        #region Lista de Usuarios
         public async Task<IActionResult> Index()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
@@ -21,7 +21,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Verificar que sea administrador
             var nombreRol = HttpContext.Session.GetString("NombreRol");
             if (nombreRol != "Usuario Administrador")
             {
@@ -40,7 +39,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return View(new List<UsuarioViewModel>());
             }
 
-            // Mapear DTOs a ViewModels
             var usuarios = response.Data.Select(u => new UsuarioViewModel
             {
                 IdUsuario = u.IdUsuario,
@@ -71,7 +69,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Verificar que sea administrador
             var nombreRol = HttpContext.Session.GetString("NombreRol");
             if (nombreRol != "Usuario Administrador")
             {
@@ -90,7 +87,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Mapear DTO a ViewModel
             var usuario = new UsuarioViewModel
             {
                 IdUsuario = response.Data.IdUsuario,
@@ -108,7 +104,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 FechaActualizacion = response.Data.FechaActualizacion
             };
 
-            // Obtener roles para el dropdown (hardcoded porque no tenemos endpoint para roles)
             var roles = new List<RolViewModel>
             {
                 new RolViewModel { IdRol = 1, NombreRol = "Usuario Regular" },
@@ -128,7 +123,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Verificar que sea administrador
             var nombreRol = HttpContext.Session.GetString("NombreRol");
             if (nombreRol != "Usuario Administrador")
             {
@@ -144,7 +138,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             {
                 ViewBag.Error = "Todos los campos son obligatorios";
 
-                // Recargar roles para el dropdown
                 var roles = new List<RolViewModel>
                 {
                     new RolViewModel { IdRol = 1, NombreRol = "Usuario Regular" },
@@ -155,7 +148,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return View(modelo);
             }
 
-            // Mapear ViewModel a DTO
             var dto = new ActualizarUsuarioCompletoDto
             {
                 Nombre = modelo.Nombre,
@@ -176,7 +168,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             {
                 ViewBag.Error = response.Message;
 
-                // Recargar roles para el dropdown
                 var roles = new List<RolViewModel>
                 {
                     new RolViewModel { IdRol = 1, NombreRol = "Usuario Regular" },
@@ -189,7 +180,7 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         }
         #endregion
 
-        #region Cambiar Estado (AJAX)
+        #region Cambiar Estado
         [HttpPost]
         public async Task<IActionResult> CambiarEstado(long idUsuario, bool nuevoEstado)
         {
@@ -198,7 +189,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return Json(new { success = false, message = "Sesión expirada" });
             }
 
-            // Verificar que sea administrador
             var nombreRol = HttpContext.Session.GetString("NombreRol");
             if (nombreRol != "Usuario Administrador")
             {
@@ -226,7 +216,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Verificar que sea administrador
             var nombreRol = HttpContext.Session.GetString("NombreRol");
             if (nombreRol != "Usuario Administrador")
             {
@@ -245,7 +234,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Mapear DTO a ViewModel
             var usuario = new UsuarioViewModel
             {
                 IdUsuario = response.Data.IdUsuario,
@@ -267,7 +255,7 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
         }
         #endregion
 
-        #region Estadísticas (Nuevo)
+        #region Estadísticas
         public async Task<IActionResult> Estadisticas()
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("IdUsuario")))
@@ -275,7 +263,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            // Verificar que sea administrador
             var nombreRol = HttpContext.Session.GetString("NombreRol");
             if (nombreRol != "Usuario Administrador")
             {
@@ -297,7 +284,6 @@ namespace Proyecto_PrograAvanzadaWeb.Controllers
             return View(response.Data);
         }
 
-        // API endpoint para obtener estadísticas via AJAX
         [HttpGet]
         public async Task<IActionResult> ObtenerEstadisticasJson()
         {

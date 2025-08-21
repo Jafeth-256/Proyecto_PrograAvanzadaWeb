@@ -20,9 +20,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             _context = context;
         }
 
-        /// <summary>
-        /// Obtiene todos los tours disponibles - Acceso público
-        /// </summary>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ObtenerTodos()
@@ -65,9 +62,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Obtiene un tour por ID - Acceso público
-        /// </summary>
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> ObtenerPorId(long id)
@@ -120,9 +114,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Crea un nuevo tour - Solo administradores
-        /// </summary>
         [HttpPost]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> Crear([FromBody] CrearTourDTO dto)
@@ -176,9 +167,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Actualiza un tour existente - Solo administradores
-        /// </summary>
         [HttpPut("{id}")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> Actualizar(long id, [FromBody] CrearTourDTO dto)
@@ -221,9 +209,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Elimina un tour (eliminación lógica) - Solo administradores
-        /// </summary>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Usuario Administrador")]
         public async Task<IActionResult> Eliminar(long id)

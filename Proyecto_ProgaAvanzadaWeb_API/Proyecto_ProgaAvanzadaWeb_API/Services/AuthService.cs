@@ -96,7 +96,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                     commandType: CommandType.StoredProcedure
                 );
 
-                // CORREGIDO: Convertir decimal a long explícitamente
                 long resultadoId = 0;
                 if (resultado.Resultado is decimal decimalResult)
                 {

@@ -17,9 +17,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             _perfilService = perfilService;
         }
 
-        /// <summary>
-        /// Obtiene el perfil completo del usuario autenticado
-        /// </summary>
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> ObtenerPerfil()
@@ -54,9 +51,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Actualiza la información básica del perfil del usuario autenticado
-        /// </summary>
         [HttpPut("basico")]
         [Authorize]
         public async Task<IActionResult> ActualizarPerfilBasico([FromBody] ActualizarPerfilBasicoDTO dto)
@@ -94,9 +88,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Actualiza la información adicional del perfil del usuario autenticado
-        /// </summary>
         [HttpPut("adicional")]
         [Authorize]
         public async Task<IActionResult> ActualizarInformacionAdicional([FromBody] ActualizarInformacionAdicionalDTO dto)
@@ -134,9 +125,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Cambia la contraseña del usuario autenticado
-        /// </summary>
         [HttpPost("cambiar-contrasena")]
         [Authorize]
         public async Task<IActionResult> CambiarContrasena([FromBody] CambiarContrasenaPerfilDTO dto)
@@ -174,9 +162,6 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        /// <summary>
-        /// Sube una foto de perfil para el usuario autenticado
-        /// </summary>
         [HttpPost("subir-foto")]
         [Authorize]
         public async Task<IActionResult> SubirFotoPerfil([FromForm] SubirFotoPerfilDTO dto)
