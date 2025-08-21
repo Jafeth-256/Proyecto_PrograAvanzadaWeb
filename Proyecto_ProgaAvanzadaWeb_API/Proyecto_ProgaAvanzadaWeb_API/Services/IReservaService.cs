@@ -11,5 +11,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
         Task<ResponseDTO<IEnumerable<Reserva>>> ObtenerReservasUsuario(long idUsuario);
         Task<ResponseDTO<object>> CancelarReserva(long idReserva, long idUsuario);
         Task<ResponseDTO<EstadisticasReservasDTO>> ObtenerEstadisticas();
+        Task<ResponseDTO<IEnumerable<Reserva>>> ObtenerTodasLasReservas();
+        Task<ResponseDTO<object>> ActualizarEstadoReservaAdmin(long idReserva, string nuevoEstado);
     }
 }

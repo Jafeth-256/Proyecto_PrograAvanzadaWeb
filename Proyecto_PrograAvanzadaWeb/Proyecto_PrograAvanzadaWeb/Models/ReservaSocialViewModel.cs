@@ -1,11 +1,11 @@
 ﻿namespace Proyecto_PrograAvanzadaWeb.Models
 {
-    public class ReservaViewModel
+    public class ReservaSocialViewModel
     {
-        public long IdReserva { get; set; }
-        public long IdTour { get; set; }
-        public string NombreTour { get; set; } = string.Empty;
-        public string Destino { get; set; } = string.Empty;
+        public long IdReservaSocial { get; set; }
+        public long IdEventoSocial { get; set; }
+        public string NombreEvento { get; set; } = string.Empty;
+        public string Ubicacion { get; set; } = string.Empty;
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public int CantidadPersonas { get; set; }

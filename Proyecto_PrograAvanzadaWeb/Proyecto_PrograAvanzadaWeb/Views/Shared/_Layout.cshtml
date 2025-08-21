@@ -52,42 +52,35 @@
                         <li>
                             <a class="sidenav-item-link" href="/EventosSociales/Index">
                                 <i class="mdi mdi-account-multiple"></i>
-                                <span class="nav-text">Eventos Sociales</span>
+                                <span class="nav-text">Aministrar Eventos Sociales</span>
                             </a>
                         </li>
 
                         <li>
                             <a class="sidenav-item-link" href="/EventosSociales/Sociales">
                                 <i class="mdi mdi-account-multiple"></i>
-                                <span class="nav-text">Eventos Sociales</span>
+                                <span class="nav-text">Explorar Eventos Sociales</span>
                             </a>
                         </li>
 
                         <li>
                             <a class="sidenav-item-link" href="/EventosUniversitarios/Index">
                                 <i class="mdi mdi-school"></i>
-                                <span class="nav-text">Eventos Universitarios</span>
+                                <span class="nav-text">Administrar Eventos Universitarios</span>
                             </a>
                         </li>
 
                         <li>
                             <a class="sidenav-item-link" href="/EventosUniversitarios/Universitarios">
                                 <i class="mdi mdi-school"></i>
-                                <span class="nav-text">Eventos Universitarios</span>
+                                <span class="nav-text">Explorar Eventos Universitarios</span>
                             </a>
                         </li>
 
                         <li>
                             <a class="sidenav-item-link" href="/Tours/Index">
                                 <i class="mdi mdi-bus-double-decker"></i>
-                                <span class="nav-text">Crear tour</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="sidenav-item-link" href="/Calendario/Index">
-                                <i class="mdi mdi-calendar"></i>
-                                <span class="nav-text">Calendario</span>
+                                <span class="nav-text">Administrar Tours</span>
                             </a>
                         </li>
 
@@ -101,9 +94,10 @@
                         <li>
                             <a class="sidenav-item-link" href="/Usuarios/Index">
                                 <i class="mdi mdi-account-multiple-plus"></i>
-                                <span class="nav-text">Lista Usuarios</span>
+                                <span class="nav-text">Administrar Usuarios</span>
                             </a>
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -680,18 +674,15 @@
             }
 
         @@keyframes dropdownFadeIn {
-            from
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
 
-        {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .dropdown-item {

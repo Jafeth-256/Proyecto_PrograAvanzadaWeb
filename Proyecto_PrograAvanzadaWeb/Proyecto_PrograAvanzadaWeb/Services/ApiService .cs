@@ -1113,323 +1113,600 @@ namespace Proyecto_PrograAvanzadaWeb.Services
 
         #endregion
 
+        #region Métodos de Reservas Sociales
+
+        public async Task<ApiResponse<List<EventoSocialDisponibleDto>>> ObtenerEventosSocialesDisponibles()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/reservassociales/eventos-disponibles");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<EventoSocialDisponibleDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var eventosList = JsonSerializer.Deserialize<List<EventoSocialDisponibleDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<EventoSocialDisponibleDto>>
+                        {
+                            Success = true,
+                            Message = "Eventos sociales disponibles obtenidos exitosamente",
+                            Data = eventosList ?? new List<EventoSocialDisponibleDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<EventoSocialDisponibleDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener los eventos sociales disponibles",
+                    Data = new List<EventoSocialDisponibleDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<EventoSocialDisponibleDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<EventoSocialDisponibleDto>()
+                };
+            }
+        }
+
+        public async Task<ApiResponse<EventoSocialDisponibleDto>> ObtenerEventoSocialDisponiblePorId(long id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/reservassociales/eventos-disponibles/{id}");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<EventoSocialDisponibleDto>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var evento = JsonSerializer.Deserialize<EventoSocialDisponibleDto>(content, _jsonOptions);
+                        return new ApiResponse<EventoSocialDisponibleDto>
+                        {
+                            Success = true,
+                            Message = "Evento social obtenido exitosamente",
+                            Data = evento
+                        };
+                    }
+                }
+
+                return new ApiResponse<EventoSocialDisponibleDto>
+                {
+                    Success = false,
+                    Message = "Evento social no encontrado"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<EventoSocialDisponibleDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ApiResponse<bool>> CrearReservaSocial(CrearReservaSocialDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/reservassociales", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Reserva social creada exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al crear la reserva social",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al crear la reserva social",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        public async Task<ApiResponse<List<ReservaSocialDto>>> ObtenerMisReservasSociales()
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.GetAsync("api/reservassociales/mis-reservas");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<ReservaSocialDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var reservasList = JsonSerializer.Deserialize<List<ReservaSocialDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<ReservaSocialDto>>
+                        {
+                            Success = true,
+                            Message = "Reservas sociales obtenidas exitosamente",
+                            Data = reservasList ?? new List<ReservaSocialDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<ReservaSocialDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener las reservas sociales",
+                    Data = new List<ReservaSocialDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<ReservaSocialDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<ReservaSocialDto>()
+                };
+            }
+        }
+
+        public async Task<ApiResponse<bool>> CancelarReservaSocial(long idReserva)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.PostAsync($"api/reservassociales/{idReserva}/cancelar", null);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Reserva social cancelada exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al cancelar la reserva social",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al cancelar la reserva social",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        #endregion
+
         // Extensión del ApiService para agregar métodos de eventos
         // Agregar estas clases al final del archivo ApiService.cs
 
-            public async Task<ApiResponse<List<EventoSocialDto>>> ObtenerTodosLosEventosSociales()
+        public async Task<ApiResponse<List<EventoSocialDto>>> ObtenerTodosLosEventosSociales()
+        {
+            try
             {
-                try
-                {
-                    var response = await _httpClient.GetAsync("api/eventossociales");
-                    var content = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.GetAsync("api/eventossociales");
+                var content = await response.Content.ReadAsStringAsync();
 
-                    if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<EventoSocialDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var eventosList = JsonSerializer.Deserialize<List<EventoSocialDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<EventoSocialDto>>
+                        {
+                            Success = true,
+                            Message = "Eventos sociales obtenidos exitosamente",
+                            Data = eventosList ?? new List<EventoSocialDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<EventoSocialDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener los eventos sociales",
+                    Data = new List<EventoSocialDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<EventoSocialDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<EventoSocialDto>()
+                };
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un evento social por su ID
+        /// </summary>
+        public async Task<ApiResponse<EventoSocialDto>> ObtenerEventoSocialPorId(long id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/eventossociales/{id}");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<EventoSocialDto>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var evento = JsonSerializer.Deserialize<EventoSocialDto>(content, _jsonOptions);
+                        return new ApiResponse<EventoSocialDto>
+                        {
+                            Success = true,
+                            Message = "Evento social obtenido exitosamente",
+                            Data = evento
+                        };
+                    }
+                }
+
+                return new ApiResponse<EventoSocialDto>
+                {
+                    Success = false,
+                    Message = "Evento social no encontrado"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<EventoSocialDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Crea un nuevo evento social - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> CrearEventoSocial(CrearEventoSocialDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/eventossociales", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
                     {
                         try
                         {
-                            return JsonSerializer.Deserialize<ApiResponse<List<EventoSocialDto>>>(content, _jsonOptions);
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
                         }
                         catch (JsonException)
                         {
-                            var eventosList = JsonSerializer.Deserialize<List<EventoSocialDto>>(content, _jsonOptions);
-                            return new ApiResponse<List<EventoSocialDto>>
+                            return new ApiResponse<bool>
                             {
                                 Success = true,
-                                Message = "Eventos sociales obtenidos exitosamente",
-                                Data = eventosList ?? new List<EventoSocialDto>()
+                                Message = "Evento social creado exitosamente",
+                                Data = true
                             };
                         }
                     }
-
-                    return new ApiResponse<List<EventoSocialDto>>
-                    {
-                        Success = false,
-                        Message = "Error al obtener los eventos sociales",
-                        Data = new List<EventoSocialDto>()
-                    };
                 }
-                catch (Exception ex)
+                else
                 {
-                    return new ApiResponse<List<EventoSocialDto>>
+                    try
                     {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}",
-                        Data = new List<EventoSocialDto>()
-                    };
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al crear el evento social",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al crear el evento social",
+                            Data = false
+                        };
+                    }
                 }
             }
-
-            /// <summary>
-            /// Obtiene un evento social por su ID
-            /// </summary>
-            public async Task<ApiResponse<EventoSocialDto>> ObtenerEventoSocialPorId(long id)
+            catch (Exception ex)
             {
-                try
+                return new ApiResponse<bool>
                 {
-                    var response = await _httpClient.GetAsync($"api/eventossociales/{id}");
-                    var content = await response.Content.ReadAsStringAsync();
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
 
-                    if (response.IsSuccessStatusCode)
+        /// <summary>
+        /// Actualiza un evento social existente - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> ActualizarEventoSocial(long id, CrearEventoSocialDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/eventossociales/{id}", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
                     {
                         try
                         {
-                            return JsonSerializer.Deserialize<ApiResponse<EventoSocialDto>>(content, _jsonOptions);
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
                         }
                         catch (JsonException)
                         {
-                            var evento = JsonSerializer.Deserialize<EventoSocialDto>(content, _jsonOptions);
-                            return new ApiResponse<EventoSocialDto>
+                            return new ApiResponse<bool>
                             {
                                 Success = true,
-                                Message = "Evento social obtenido exitosamente",
-                                Data = evento
+                                Message = "Evento social actualizado exitosamente",
+                                Data = true
                             };
                         }
                     }
-
-                    return new ApiResponse<EventoSocialDto>
-                    {
-                        Success = false,
-                        Message = "Evento social no encontrado"
-                    };
                 }
-                catch (Exception ex)
+                else
                 {
-                    return new ApiResponse<EventoSocialDto>
+                    try
                     {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}"
-                    };
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al actualizar el evento social",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al actualizar el evento social",
+                            Data = false
+                        };
+                    }
                 }
             }
-
-            /// <summary>
-            /// Crea un nuevo evento social - Solo administradores
-            /// </summary>
-            public async Task<ApiResponse<bool>> CrearEventoSocial(CrearEventoSocialDto dto)
+            catch (Exception ex)
             {
-                try
+                return new ApiResponse<bool>
                 {
-                    ConfigureAuthHeaders();
-                    var json = JsonSerializer.Serialize(dto, _jsonOptions);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await _httpClient.PostAsync("api/eventossociales", content);
-                    var responseContent = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        try
-                        {
-                            return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
-                        }
-                        catch (JsonException)
-                        {
-                            try
-                            {
-                                var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                                return new ApiResponse<bool>
-                                {
-                                    Success = apiResult.Success,
-                                    Message = apiResult.Message,
-                                    Data = apiResult.Success
-                                };
-                            }
-                            catch (JsonException)
-                            {
-                                return new ApiResponse<bool>
-                                {
-                                    Success = true,
-                                    Message = "Evento social creado exitosamente",
-                                    Data = true
-                                };
-                            }
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                            return new ApiResponse<bool>
-                            {
-                                Success = false,
-                                Message = errorResult.Message ?? "Error al crear el evento social",
-                                Data = false
-                            };
-                        }
-                        catch (JsonException)
-                        {
-                            return new ApiResponse<bool>
-                            {
-                                Success = false,
-                                Message = "Error al crear el evento social",
-                                Data = false
-                            };
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return new ApiResponse<bool>
-                    {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}",
-                        Data = false
-                    };
-                }
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
             }
+        }
 
-            /// <summary>
-            /// Actualiza un evento social existente - Solo administradores
-            /// </summary>
-            public async Task<ApiResponse<bool>> ActualizarEventoSocial(long id, CrearEventoSocialDto dto)
+        /// <summary>
+        /// Elimina un evento social (eliminación lógica) - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> EliminarEventoSocial(long id)
+        {
+            try
             {
-                try
+                ConfigureAuthHeaders();
+                var response = await _httpClient.DeleteAsync($"api/eventossociales/{id}");
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
                 {
-                    ConfigureAuthHeaders();
-                    var json = JsonSerializer.Serialize(dto, _jsonOptions);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await _httpClient.PutAsync($"api/eventossociales/{id}", content);
-                    var responseContent = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
+                    try
                     {
-                        try
-                        {
-                            return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
-                        }
-                        catch (JsonException)
-                        {
-                            try
-                            {
-                                var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                                return new ApiResponse<bool>
-                                {
-                                    Success = apiResult.Success,
-                                    Message = apiResult.Message,
-                                    Data = apiResult.Success
-                                };
-                            }
-                            catch (JsonException)
-                            {
-                                return new ApiResponse<bool>
-                                {
-                                    Success = true,
-                                    Message = "Evento social actualizado exitosamente",
-                                    Data = true
-                                };
-                            }
-                        }
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
                     }
-                    else
+                    catch (JsonException)
                     {
                         try
                         {
-                            var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
                             return new ApiResponse<bool>
                             {
-                                Success = false,
-                                Message = errorResult.Message ?? "Error al actualizar el evento social",
-                                Data = false
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
                             };
                         }
                         catch (JsonException)
                         {
                             return new ApiResponse<bool>
                             {
-                                Success = false,
-                                Message = "Error al actualizar el evento social",
-                                Data = false
+                                Success = true,
+                                Message = "Evento social eliminado exitosamente",
+                                Data = true
                             };
                         }
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    return new ApiResponse<bool>
+                    try
                     {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}",
-                        Data = false
-                    };
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al eliminar el evento social",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al eliminar el evento social",
+                            Data = false
+                        };
+                    }
                 }
             }
-
-            /// <summary>
-            /// Elimina un evento social (eliminación lógica) - Solo administradores
-            /// </summary>
-            public async Task<ApiResponse<bool>> EliminarEventoSocial(long id)
+            catch (Exception ex)
             {
-                try
+                return new ApiResponse<bool>
                 {
-                    ConfigureAuthHeaders();
-                    var response = await _httpClient.DeleteAsync($"api/eventossociales/{id}");
-                    var responseContent = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        try
-                        {
-                            return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
-                        }
-                        catch (JsonException)
-                        {
-                            try
-                            {
-                                var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                                return new ApiResponse<bool>
-                                {
-                                    Success = apiResult.Success,
-                                    Message = apiResult.Message,
-                                    Data = apiResult.Success
-                                };
-                            }
-                            catch (JsonException)
-                            {
-                                return new ApiResponse<bool>
-                                {
-                                    Success = true,
-                                    Message = "Evento social eliminado exitosamente",
-                                    Data = true
-                                };
-                            }
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                            return new ApiResponse<bool>
-                            {
-                                Success = false,
-                                Message = errorResult.Message ?? "Error al eliminar el evento social",
-                                Data = false
-                            };
-                        }
-                        catch (JsonException)
-                        {
-                            return new ApiResponse<bool>
-                            {
-                                Success = false,
-                                Message = "Error al eliminar el evento social",
-                                Data = false
-                            };
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return new ApiResponse<bool>
-                    {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}",
-                        Data = false
-                    };
-                }
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
             }
+        }
 
         /// <summary>
         /// Obtiene un evento universitario por su ID
@@ -1633,382 +1910,420 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         /// Obtiene todos los eventos universitarios disponibles
         /// </summary>
         public async Task<ApiResponse<List<EventoUniversitarioDto>>> ObtenerTodosLosEventosUniversitarios()
+        {
+            try
             {
-                try
-                {
-                    var response = await _httpClient.GetAsync("api/eventosuniversitarios");
-                    var content = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.GetAsync("api/eventosuniversitarios");
+                var content = await response.Content.ReadAsStringAsync();
 
-                    if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<EventoUniversitarioDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var eventosList = JsonSerializer.Deserialize<List<EventoUniversitarioDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<EventoUniversitarioDto>>
+                        {
+                            Success = true,
+                            Message = "Eventos universitarios obtenidos exitosamente",
+                            Data = eventosList ?? new List<EventoUniversitarioDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<EventoUniversitarioDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener los eventos universitarios",
+                    Data = new List<EventoUniversitarioDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<EventoUniversitarioDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<EventoUniversitarioDto>()
+                };
+            }
+        }
+
+        /// <summary>
+        /// Crea un nuevo evento universitario - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> CrearEventoUniversitario(CrearEventoUniversitarioDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/eventosuniversitarios", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
                     {
                         try
                         {
-                            return JsonSerializer.Deserialize<ApiResponse<List<EventoUniversitarioDto>>>(content, _jsonOptions);
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
                         }
                         catch (JsonException)
                         {
-                            var eventosList = JsonSerializer.Deserialize<List<EventoUniversitarioDto>>(content, _jsonOptions);
-                            return new ApiResponse<List<EventoUniversitarioDto>>
+                            return new ApiResponse<bool>
                             {
                                 Success = true,
-                                Message = "Eventos universitarios obtenidos exitosamente",
-                                Data = eventosList ?? new List<EventoUniversitarioDto>()
+                                Message = "Evento universitario creado exitosamente",
+                                Data = true
                             };
                         }
                     }
-
-                    return new ApiResponse<List<EventoUniversitarioDto>>
-                    {
-                        Success = false,
-                        Message = "Error al obtener los eventos universitarios",
-                        Data = new List<EventoUniversitarioDto>()
-                    };
                 }
-                catch (Exception ex)
+                else
                 {
-                    return new ApiResponse<List<EventoUniversitarioDto>>
+                    try
                     {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}",
-                        Data = new List<EventoUniversitarioDto>()
-                    };
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al crear el evento universitario",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al crear el evento universitario",
+                            Data = false
+                        };
+                    }
                 }
             }
-
-            /// <summary>
-            /// Crea un nuevo evento universitario - Solo administradores
-            /// </summary>
-            public async Task<ApiResponse<bool>> CrearEventoUniversitario(CrearEventoUniversitarioDto dto)
+            catch (Exception ex)
             {
-                try
+                return new ApiResponse<bool>
                 {
-                    ConfigureAuthHeaders();
-                    var json = JsonSerializer.Serialize(dto, _jsonOptions);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    var response = await _httpClient.PostAsync("api/eventosuniversitarios", content);
-                    var responseContent = await response.Content.ReadAsStringAsync();
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        try
-                        {
-                            return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
-                        }
-                        catch (JsonException)
-                        {
-                            try
-                            {
-                                var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                                return new ApiResponse<bool>
-                                {
-                                    Success = apiResult.Success,
-                                    Message = apiResult.Message,
-                                    Data = apiResult.Success
-                                };
-                            }
-                            catch (JsonException)
-                            {
-                                return new ApiResponse<bool>
-                                {
-                                    Success = true,
-                                    Message = "Evento universitario creado exitosamente",
-                                    Data = true
-                                };
-                            }
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
-                            return new ApiResponse<bool>
-                            {
-                                Success = false,
-                                Message = errorResult.Message ?? "Error al crear el evento universitario",
-                                Data = false
-                            };
-                        }
-                        catch (JsonException)
-                        {
-                            return new ApiResponse<bool>
-                            {
-                                Success = false,
-                                Message = "Error al crear el evento universitario",
-                                Data = false
-                            };
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return new ApiResponse<bool>
-                    {
-                        Success = false,
-                        Message = $"Error de conexión: {ex.Message}",
-                        Data = false
-                    };
-                }
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
             }
-
-            #endregion
-        }
-
-        #region DTOs para la API
-
-        public class ApiResponse<T>
-        {
-            public bool Success { get; set; }
-            public string Message { get; set; }
-            public T Data { get; set; }
-        }
-
-        public class ResponseDto<T>
-        {
-            public bool Success { get; set; }
-            public string Message { get; set; }
-            public T Data { get; set; }
-        }
-
-        public class LoginResponse
-        {
-            public bool Success { get; set; }
-            public string Message { get; set; }
-            public string Token { get; set; }
-            public UsuarioDto Usuario { get; set; }
-        }
-
-        public class UsuarioDto
-        {
-            public long IdUsuario { get; set; }
-            public string Nombre { get; set; }
-            public string Correo { get; set; }
-            public string Identificacion { get; set; }
-            public bool Estado { get; set; }
-            public int IdRol { get; set; }
-            public string NombreRol { get; set; }
-            public string Telefono { get; set; }
-            public string Direccion { get; set; }
-            public DateTime? FechaNacimiento { get; set; }
-            public string FotoPath { get; set; }
-            public DateTime FechaRegistro { get; set; }
-            public DateTime FechaActualizacion { get; set; }
-        }
-
-        public class LoginDto
-        {
-            public string Correo { get; set; }
-            public string Contrasenna { get; set; }
-        }
-
-        public class RegistroUsuarioDto
-        {
-            public string Nombre { get; set; }
-            public string Correo { get; set; }
-            public string Identificacion { get; set; }
-            public string Contrasenna { get; set; }
-        }
-
-        public class ActualizarUsuarioCompletoDto
-        {
-            public string Nombre { get; set; }
-            public string Correo { get; set; }
-            public string Identificacion { get; set; }
-            public bool Estado { get; set; }
-            public int IdRol { get; set; }
-        }
-
-        public class EstadisticasUsuariosDto
-        {
-            public int TotalUsuarios { get; set; }
-            public int UsuariosActivos { get; set; }
-            public int UsuariosInactivos { get; set; }
-            public int UsuariosRegulares { get; set; }
-            public int UsuariosAdministradores { get; set; }
-        }
-
-        public class RolDto
-        {
-            public int IdRol { get; set; }
-            public string NombreRol { get; set; }
-        }
-
-        #region DTOs de Perfil
-
-        // DTOs para el módulo de perfil
-        public class PerfilCompletoDto
-        {
-            public long IdUsuario { get; set; }
-            public string Nombre { get; set; }
-            public string Correo { get; set; }
-            public string Identificacion { get; set; }
-            public string Telefono { get; set; }
-            public string Direccion { get; set; }
-            public DateTime? FechaNacimiento { get; set; }
-            public string FotoPath { get; set; }
-            public bool Estado { get; set; }
-            public int IdRol { get; set; }
-            public string NombreRol { get; set; }
-            public DateTime FechaRegistro { get; set; }
-            public DateTime FechaActualizacion { get; set; }
-        }
-
-        public class ActualizarPerfilBasicoDto
-        {
-            public string Nombre { get; set; }
-            public string Correo { get; set; }
-            public string Identificacion { get; set; }
-        }
-
-        public class ActualizarInformacionAdicionalDto
-        {
-            public string Telefono { get; set; }
-            public string Direccion { get; set; }
-            public DateTime? FechaNacimiento { get; set; }
-        }
-
-        public class CambiarContrasenaPerfilDto
-        {
-            public string ContrasenaActual { get; set; }
-            public string ContrasenaNueva { get; set; }
-        }
-
-        public class FotoPerfilDto
-        {
-            public string FotoPath { get; set; }
-        }
-
-        #endregion
-
-        #endregion
-        #region DTOs de Tours
-
-        public class TourDto
-        {
-            public long IdTour { get; set; }
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Destino { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-            public string NombreCreador { get; set; }
-        }
-
-        public class CrearTourDto
-        {
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Destino { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-        }
-
-        #endregion
-
-        public class TourDisponibleDto
-        {
-            public long IdTour { get; set; }
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Destino { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-            public string NombreCreador { get; set; }
-            public int PersonasReservadas { get; set; }
-            public int CuposDisponibles { get; set; }
-        }
-
-        public class CrearReservaDto
-        {
-            public long IdTour { get; set; }
-            public int CantidadPersonas { get; set; }
-            public string Comentarios { get; set; }
-        }
-
-        public class ReservaDto
-        {
-            public long IdReserva { get; set; }
-            public long IdTour { get; set; }
-            public string NombreTour { get; set; }
-            public string Destino { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-            public decimal PrecioTotal { get; set; }
-            public DateTime FechaReserva { get; set; }
-            public string EstadoReserva { get; set; }
-            public string Comentarios { get; set; }
-            public string NombreCreador { get; set; }
-        }
-
-        public class EstadisticasReservasDto
-        {
-            public int TotalReservas { get; set; }
-            public int ReservasPendientes { get; set; }
-            public int ReservasConfirmadas { get; set; }
-            public int ReservasCanceladas { get; set; }
-            public decimal IngresosTotales { get; set; }
-            public int PersonasTotales { get; set; }
-        }
-
-        #region DTOs para Eventos
-
-        public class EventoSocialDto
-        {
-            public long IdEventoSocial { get; set; }
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Ubicacion { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-            public string NombreCreador { get; set; }
-        }
-
-        public class CrearEventoSocialDto
-        {
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Ubicacion { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-        }
-
-        public class EventoUniversitarioDto
-        {
-            public long IdEventoUniversitario { get; set; }
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Ubicacion { get; set; }
-            public string Universidad { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
-            public string NombreCreador { get; set; }
-        }
-
-        public class CrearEventoUniversitarioDto
-        {
-            public string Nombre { get; set; }
-            public string Descripcion { get; set; }
-            public string Ubicacion { get; set; }
-            public string Universidad { get; set; }
-            public decimal Precio { get; set; }
-            public DateTime FechaInicio { get; set; }
-            public DateTime FechaFin { get; set; }
-            public int CantidadPersonas { get; set; }
         }
 
         #endregion
     }
+
+    #region DTOs para la API
+
+    public class ApiResponse<T>
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
+    }
+
+    public class ResponseDto<T>
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
+    }
+
+    public class LoginResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public string Token { get; set; }
+        public UsuarioDto Usuario { get; set; }
+    }
+
+    public class UsuarioDto
+    {
+        public long IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+        public bool Estado { get; set; }
+        public int IdRol { get; set; }
+        public string NombreRol { get; set; }
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+        public string FotoPath { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaActualizacion { get; set; }
+    }
+
+    public class LoginDto
+    {
+        public string Correo { get; set; }
+        public string Contrasenna { get; set; }
+    }
+
+    public class RegistroUsuarioDto
+    {
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+        public string Contrasenna { get; set; }
+    }
+
+    public class ActualizarUsuarioCompletoDto
+    {
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+        public bool Estado { get; set; }
+        public int IdRol { get; set; }
+    }
+
+    public class EstadisticasUsuariosDto
+    {
+        public int TotalUsuarios { get; set; }
+        public int UsuariosActivos { get; set; }
+        public int UsuariosInactivos { get; set; }
+        public int UsuariosRegulares { get; set; }
+        public int UsuariosAdministradores { get; set; }
+    }
+
+    public class RolDto
+    {
+        public int IdRol { get; set; }
+        public string NombreRol { get; set; }
+    }
+
+    #region DTOs de Perfil
+
+    // DTOs para el módulo de perfil
+    public class PerfilCompletoDto
+    {
+        public long IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+        public string FotoPath { get; set; }
+        public bool Estado { get; set; }
+        public int IdRol { get; set; }
+        public string NombreRol { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaActualizacion { get; set; }
+    }
+
+    public class ActualizarPerfilBasicoDto
+    {
+        public string Nombre { get; set; }
+        public string Correo { get; set; }
+        public string Identificacion { get; set; }
+    }
+
+    public class ActualizarInformacionAdicionalDto
+    {
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+        public DateTime? FechaNacimiento { get; set; }
+    }
+
+    public class CambiarContrasenaPerfilDto
+    {
+        public string ContrasenaActual { get; set; }
+        public string ContrasenaNueva { get; set; }
+    }
+
+    public class FotoPerfilDto
+    {
+        public string FotoPath { get; set; }
+    }
+
+    #endregion
+
+    #endregion
+    #region DTOs de Tours
+
+    public class TourDto
+    {
+        public long IdTour { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Destino { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    public class CrearTourDto
+    {
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Destino { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+    }
+
+    #endregion
+
+    public class TourDisponibleDto
+    {
+        public long IdTour { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Destino { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+        public int PersonasReservadas { get; set; }
+        public int CuposDisponibles { get; set; }
+    }
+
+    public class CrearReservaDto
+    {
+        public long IdTour { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string Comentarios { get; set; }
+    }
+
+    public class ReservaDto
+    {
+        public long IdReserva { get; set; }
+        public long IdTour { get; set; }
+        public string NombreTour { get; set; }
+        public string Destino { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public decimal PrecioTotal { get; set; }
+        public DateTime FechaReserva { get; set; }
+        public string EstadoReserva { get; set; }
+        public string Comentarios { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    public class EstadisticasReservasDto
+    {
+        public int TotalReservas { get; set; }
+        public int ReservasPendientes { get; set; }
+        public int ReservasConfirmadas { get; set; }
+        public int ReservasCanceladas { get; set; }
+        public decimal IngresosTotales { get; set; }
+        public int PersonasTotales { get; set; }
+    }
+
+    #region DTOs para Eventos
+
+    public class EventoSocialDto
+    {
+        public long IdEventoSocial { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Ubicacion { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    public class CrearEventoSocialDto
+    {
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Ubicacion { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+    }
+
+    public class EventoUniversitarioDto
+    {
+        public long IdEventoUniversitario { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Ubicacion { get; set; }
+        public string Universidad { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    public class CrearEventoUniversitarioDto
+    {
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Ubicacion { get; set; }
+        public string Universidad { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+    }
+
+    public class EventoSocialDisponibleDto
+    {
+        public long IdEventoSocial { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Ubicacion { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+        public int PersonasReservadas { get; set; }
+        public int CuposDisponibles { get; set; }
+    }
+
+    public class CrearReservaSocialDto
+    {
+        public long IdEventoSocial { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string Comentarios { get; set; }
+    }
+
+    public class ReservaSocialDto
+    {
+        public long IdReservaSocial { get; set; }
+        public long IdEventoSocial { get; set; }
+        public string NombreEvento { get; set; }
+        public string Ubicacion { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public decimal PrecioTotal { get; set; }
+        public DateTime FechaReserva { get; set; }
+        public string EstadoReserva { get; set; }
+        public string Comentarios { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    #endregion
+}

@@ -1,0 +1,266 @@
+﻿@model List<Proyecto_PrograAvanzadaWeb.Models.EventoSocialDisponibleViewModel>
+@{
+    ViewData["Title"] = "Explorar Eventos Sociales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="explorar-container">
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-information me-2"></i>
+            @ViewBag.Mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <span class="breadcrumb-current">
+                    <i class="mdi mdi-map-search"></i> Explorar Eventos Sociales
+                </span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-compass-outline me-2"></i>
+                Explorar Eventos Sociales Disponibles
+            </h1>
+            <p class="page-subtitle">Descubre increíbles eventos sociales en tu area</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-number">@(Model?.Count ?? 0)</span>
+                <span class="stat-label">Eventos Disponibles</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <div class="filters-card">
+            <div class="filters-content">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-magnify"></i>
+                        Buscar eventos
+                    </label>
+                    <input type="text" id="filtro-busqueda" class="form-control" placeholder="Buscar por nombre o ubicación...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-currency-usd"></i>
+                        Precio máximo
+                    </label>
+                    <input type="range" id="filtro-precio" class="price-range" min="0" max="500000" value="500000">
+                    <span class="price-display">₡<span id="precio-valor">500,000</span></span>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-account-group"></i>
+                        Cupos mínimos
+                    </label>
+                    <select id="filtro-cupos" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="1">1+ cupos</option>
+                        <option value="5">5+ cupos</option>
+                        <option value="10">10+ cupos</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button id="limpiar-filtros" class="btn-modern btn-outline">
+                        <i class="mdi mdi-filter-remove"></i>
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tours-content">
+        @if (Model != null && Model.Any())
+        {
+            <div class="tours-grid" id="tours-grid">
+                @foreach (var evento in Model)
+                {
+                    <div class="tour-card"
+                         data-nombre="@evento.Nombre.ToLower()"
+                         data-ubicacion="@evento.Ubicacion.ToLower()"
+                         data-precio="@evento.Precio"
+                         data-cupos="@evento.CuposDisponibles">
+                        <div class="tour-image">
+                            <div class="tour-badge">
+                                <i class="mdi mdi-calendar-star"></i>
+                            </div>
+                            <div class="availability-badge">
+                                <span class="cupos-disponibles">@evento.CuposDisponibles cupos</span>
+                            </div>
+                            <div class="price-tag">
+                                <span class="price-amount">@evento.PrecioFormateado</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                        </div>
+
+                        <div class="tour-content">
+                            <div class="tour-header">
+                                <h3 class="tour-title">@evento.Nombre</h3>
+                                <div class="tour-destination">
+                                    <i class="mdi mdi-map-marker-outline"></i>
+                                    @evento.Ubicacion
+                                </div>
+                            </div>
+
+                            <div class="tour-description">
+                                @evento.Descripcion
+                            </div>
+
+                            <div class="tour-details">
+                                <div class="detail-item">
+                                    <i class="mdi mdi-calendar-range"></i>
+                                    <span>@evento.FechaInicioFormateada - @evento.FechaFinFormateada</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-clock-outline"></i>
+                                    <span>@evento.DuracionEnDias día@(evento.DuracionEnDias != 1 ? "s" : "")</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-account-circle"></i>
+                                    <span>Organizado por @evento.NombreCreador</span>
+                                </div>
+                            </div>
+
+                            <div class="tour-progress">
+                                <div class="progress-info">
+                                    <span>Ocupación: @evento.PersonasReservadas/@evento.CantidadPersonas personas</span>
+                                    <span>@evento.PorcentajeOcupacion.ToString("F0")%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: @evento.PorcentajeOcupacion.ToString("F0")%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tour-actions">
+                            <a href="/ReservasSociales/Detalle/@evento.IdEventoSocial" class="btn-modern btn-secondary">
+                                <i class="mdi mdi-eye"></i>
+                                Ver Detalles
+                            </a>
+                            @if (evento.TieneCuposDisponibles)
+                            {
+                                <a href="/ReservasSociales/CrearReserva?idEvento=@evento.IdEventoSocial" class="btn-modern btn-primary">
+                                    <i class="mdi mdi-calendar-plus"></i>
+                                    Reservar Ahora
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn-modern btn-disabled" disabled>
+                                    <i class="mdi mdi-close-circle"></i>
+                                    Sin Cupos
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="mdi mdi-calendar-remove"></i>
+                </div>
+                <h4 class="empty-title">No hay eventos sociales disponibles</h4>
+                <p class="empty-subtitle">No se encontraron eventos sociales para reservar en este momento.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Styles are the same as in Explorar.cshtml for tours */
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtroBusqueda = document.getElementById('filtro-busqueda');
+        const filtroPrecio = document.getElementById('filtro-precio');
+        const precioValor = document.getElementById('precio-valor');
+        const filtroCupos = document.getElementById('filtro-cupos');
+        const limpiarFiltros = document.getElementById('limpiar-filtros');
+        const toursGrid = document.getElementById('tours-grid');
+
+        function aplicarFiltros() {
+            const busqueda = filtroBusqueda.value.toLowerCase();
+            const precioMax = parseInt(filtroPrecio.value);
+            const cuposMin = filtroCupos.value;
+
+            const cards = toursGrid.querySelectorAll('.tour-card');
+
+            cards.forEach(card => {
+                const nombre = card.dataset.nombre || '';
+                const ubicacion = card.dataset.ubicacion || '';
+                const precio = parseFloat(card.dataset.precio || '0');
+                const cupos = parseInt(card.dataset.cupos || '0');
+
+                const coincideBusqueda = busqueda === '' ||
+                                       nombre.includes(busqueda) ||
+                                       ubicacion.includes(busqueda);
+
+                const coincidePrecio = precio <= precioMax;
+                const coincideCupos = cuposMin === '' || cupos >= parseInt(cuposMin);
+
+                if (coincideBusqueda && coincidePrecio && coincideCupos) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function actualizarPrecio() {
+            const valor = parseInt(filtroPrecio.value);
+            precioValor.textContent = valor.toLocaleString();
+        }
+
+        if (filtroBusqueda) filtroBusqueda.addEventListener('input', aplicarFiltros);
+        if (filtroPrecio) {
+            filtroPrecio.addEventListener('input', function() {
+                actualizarPrecio();
+                aplicarFiltros();
+            });
+        }
+        if (filtroCupos) filtroCupos.addEventListener('change', aplicarFiltros);
+
+        if (limpiarFiltros) {
+            limpiarFiltros.addEventListener('click', function() {
+                filtroBusqueda.value = '';
+                filtroPrecio.value = 500000;
+                filtroCupos.value = '';
+                actualizarPrecio();
+                aplicarFiltros();
+            });
+        }
+
+        actualizarPrecio();
+
+        const tourCards = document.querySelectorAll('.tour-card');
+        tourCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>

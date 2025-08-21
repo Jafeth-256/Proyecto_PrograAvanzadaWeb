@@ -1097,3 +1097,203 @@ BEGIN
 	SELECT 1 AS Resultado, 'Evento universitario eliminado exitosamente' AS Mensaje
 END
 GO
+
+
+-- Crear tabla de reservas sociales
+CREATE TABLE [dbo].[TReservaSocial](
+	[IdReservaSocial] BIGINT IDENTITY(1,1) NOT NULL,
+	[IdEventoSocial] BIGINT NOT NULL,
+	[IdUsuario] BIGINT NOT NULL,
+	[CantidadPersonas] INT NOT NULL,
+	[PrecioTotal] DECIMAL(10,2) NOT NULL,
+	[FechaReserva] DATETIME NOT NULL DEFAULT GETDATE(),
+	[EstadoReserva] VARCHAR(20) NOT NULL DEFAULT 'Pendiente',
+	[Comentarios] VARCHAR(500) NULL,
+	[FechaCreacion] DATETIME NOT NULL DEFAULT GETDATE(),
+	[FechaActualizacion] DATETIME NOT NULL DEFAULT GETDATE(),
+ CONSTRAINT [PK_TReservaSocial] PRIMARY KEY CLUSTERED ([IdReservaSocial] ASC)
+);
+GO
+
+-- Crear relaciones
+ALTER TABLE [dbo].[TReservaSocial]  WITH CHECK ADD  
+CONSTRAINT [FK_TReservaSocial_TEventoSocial] 
+FOREIGN KEY([IdEventoSocial]) REFERENCES [dbo].[TEventoSocial] ([IdEventoSocial]);
+GO
+
+ALTER TABLE [dbo].[TReservaSocial]  WITH CHECK ADD  
+CONSTRAINT [FK_TReservaSocial_TUsuario] 
+FOREIGN KEY([IdUsuario]) REFERENCES [dbo].[TUsuario] ([IdUsuario]);
+GO
+
+ALTER TABLE [dbo].[TReservaSocial] CHECK CONSTRAINT [FK_TReservaSocial_TEventoSocial];
+GO
+ALTER TABLE [dbo].[TReservaSocial] CHECK CONSTRAINT [FK_TReservaSocial_TUsuario];
+GO
+
+-- Procedimiento para consultar eventos sociales disponibles para reserva
+CREATE PROCEDURE [dbo].[ConsultarEventosSocialesDisponibles]
+AS
+BEGIN
+	SELECT	ES.IdEventoSocial,
+			ES.Nombre,
+			CAST(ES.Descripcion AS VARCHAR(MAX)) AS Descripcion,
+			ES.Ubicacion,
+			ES.Precio,
+			ES.FechaInicio,
+			ES.FechaFin,
+			ES.CantidadPersonas,
+			ES.FechaCreacion,
+			U.Nombre AS NombreCreador,
+			ISNULL(SUM(RS.CantidadPersonas), 0) AS PersonasReservadas,
+			(ES.CantidadPersonas - ISNULL(SUM(RS.CantidadPersonas), 0)) AS CuposDisponibles
+	FROM	dbo.TEventoSocial ES
+	INNER JOIN dbo.TUsuario U ON ES.IdUsuarioCreador = U.IdUsuario
+	LEFT JOIN dbo.TReservaSocial RS ON ES.IdEventoSocial = RS.IdEventoSocial AND RS.EstadoReserva IN ('Pendiente', 'Confirmada')
+	WHERE	ES.Estado = 1
+		AND ES.FechaInicio > GETDATE()
+	GROUP BY ES.IdEventoSocial, ES.Nombre, CAST(ES.Descripcion AS VARCHAR(MAX)), ES.Ubicacion, ES.Precio, 
+			 ES.FechaInicio, ES.FechaFin, ES.CantidadPersonas, ES.FechaCreacion, U.Nombre
+	HAVING (ES.CantidadPersonas - ISNULL(SUM(RS.CantidadPersonas), 0)) > 0
+	ORDER BY ES.FechaInicio ASC;
+END;
+GO
+
+-- Procedimiento para consultar un evento social específico con disponibilidad
+CREATE PROCEDURE [dbo].[ConsultarEventoSocialDisponiblePorId]
+	@IdEventoSocial BIGINT
+AS
+BEGIN
+	SELECT	ES.IdEventoSocial,
+			ES.Nombre,
+			CAST(ES.Descripcion AS VARCHAR(MAX)) AS Descripcion,
+			ES.Ubicacion,
+			ES.Precio,
+			ES.FechaInicio,
+			ES.FechaFin,
+			ES.CantidadPersonas,
+			ES.FechaCreacion,
+			U.Nombre AS NombreCreador,
+			ISNULL(SUM(RS.CantidadPersonas), 0) AS PersonasReservadas,
+			(ES.CantidadPersonas - ISNULL(SUM(RS.CantidadPersonas), 0)) AS CuposDisponibles
+	FROM	dbo.TEventoSocial ES
+	INNER JOIN dbo.TUsuario U ON ES.IdUsuarioCreador = U.IdUsuario
+	LEFT JOIN dbo.TReservaSocial RS ON ES.IdEventoSocial = RS.IdEventoSocial AND RS.EstadoReserva IN ('Pendiente', 'Confirmada')
+	WHERE	ES.IdEventoSocial = @IdEventoSocial
+		AND ES.Estado = 1
+		AND ES.FechaInicio > GETDATE()
+	GROUP BY ES.IdEventoSocial, ES.Nombre, CAST(ES.Descripcion AS VARCHAR(MAX)), ES.Ubicacion, ES.Precio, 
+			 ES.FechaInicio, ES.FechaFin, ES.CantidadPersonas, ES.FechaCreacion, U.Nombre;
+END;
+GO
+
+-- Procedimiento para crear una reserva de evento social
+CREATE PROCEDURE [dbo].[CrearReservaEventoSocial]
+	@IdEventoSocial BIGINT,
+	@IdUsuario BIGINT,
+	@CantidadPersonas INT,
+	@Comentarios VARCHAR(500) = NULL
+AS
+BEGIN
+	BEGIN TRANSACTION;
+	
+	DECLARE @PrecioUnitario DECIMAL(10,2);
+	DECLARE @CuposDisponibles INT;
+	DECLARE @EventoValido BIT = 0;
+	
+	-- Verificar si el evento existe y está disponible
+	SELECT @PrecioUnitario = ES.Precio,
+		   @CuposDisponibles = (ES.CantidadPersonas - ISNULL(SUM(RS.CantidadPersonas), 0)),
+		   @EventoValido = 1
+	FROM dbo.TEventoSocial ES
+	LEFT JOIN dbo.TReservaSocial RS ON ES.IdEventoSocial = RS.IdEventoSocial AND RS.EstadoReserva IN ('Pendiente', 'Confirmada')
+	WHERE ES.IdEventoSocial = @IdEventoSocial 
+		AND ES.Estado = 1 
+		AND ES.FechaInicio > GETDATE()
+	GROUP BY ES.IdEventoSocial, ES.Precio, ES.CantidadPersonas;
+	
+	IF @EventoValido = 0
+	BEGIN
+		ROLLBACK TRANSACTION;
+		SELECT -1 AS Resultado, 'El evento no existe o no está disponible para reserva' AS Mensaje;
+		RETURN;
+	END
+	
+	-- Verificar disponibilidad de cupos
+	IF @CuposDisponibles < @CantidadPersonas
+	BEGIN
+		ROLLBACK TRANSACTION;
+		SELECT -2 AS Resultado, 'No hay suficientes cupos disponibles. Cupos disponibles: ' + CAST(@CuposDisponibles AS VARCHAR(10)) AS Mensaje;
+		RETURN;
+	END
+	
+	-- Verificar que el usuario no tenga una reserva pendiente o confirmada para el mismo evento
+	IF EXISTS (SELECT 1 FROM dbo.TReservaSocial WHERE IdEventoSocial = @IdEventoSocial AND IdUsuario = @IdUsuario AND EstadoReserva IN ('Pendiente', 'Confirmada'))
+	BEGIN
+		ROLLBACK TRANSACTION;
+		SELECT -3 AS Resultado, 'Ya tienes una reserva activa para este evento' AS Mensaje;
+		RETURN;
+	END
+	
+	-- Calcular precio total
+	DECLARE @PrecioTotal DECIMAL(10,2) = @PrecioUnitario * @CantidadPersonas;
+	
+	-- Crear la reserva
+	INSERT INTO dbo.TReservaSocial (IdEventoSocial, IdUsuario, CantidadPersonas, PrecioTotal, EstadoReserva, Comentarios)
+	VALUES (@IdEventoSocial, @IdUsuario, @CantidadPersonas, @PrecioTotal, 'Pendiente', @Comentarios);
+	
+	DECLARE @IdReservaSocial BIGINT = SCOPE_IDENTITY();
+	
+	COMMIT TRANSACTION;
+	
+	SELECT @IdReservaSocial AS Resultado, 'Reserva de evento social creada exitosamente' AS Mensaje;
+END;
+GO
+
+-- Procedimiento para consultar reservas de eventos sociales de un usuario
+CREATE PROCEDURE [dbo].[ConsultarReservasEventoSocialUsuario]
+	@IdUsuario BIGINT
+AS
+BEGIN
+	SELECT	RS.IdReservaSocial,
+			RS.IdEventoSocial,
+			ES.Nombre AS NombreEvento,
+			ES.Ubicacion,
+			ES.FechaInicio,
+			ES.FechaFin,
+			RS.CantidadPersonas,
+			RS.PrecioTotal,
+			RS.FechaReserva,
+			RS.EstadoReserva,
+			RS.Comentarios,
+			U.Nombre AS NombreCreador
+	FROM	dbo.TReservaSocial RS
+	INNER JOIN dbo.TEventoSocial ES ON RS.IdEventoSocial = ES.IdEventoSocial
+	INNER JOIN dbo.TUsuario U ON ES.IdUsuarioCreador = U.IdUsuario
+	WHERE	RS.IdUsuario = @IdUsuario
+	ORDER BY RS.FechaReserva DESC;
+END;
+GO
+
+-- Procedimiento para cancelar una reserva de evento social
+CREATE PROCEDURE [dbo].[CancelarReservaEventoSocial]
+	@IdReservaSocial BIGINT,
+	@IdUsuario BIGINT
+AS
+BEGIN
+	-- Verificar que la reserva pertenece al usuario y se puede cancelar
+	IF NOT EXISTS (SELECT 1 FROM dbo.TReservaSocial WHERE IdReservaSocial = @IdReservaSocial AND IdUsuario = @IdUsuario AND EstadoReserva IN ('Pendiente', 'Confirmada'))
+	BEGIN
+		SELECT -1 AS Resultado, 'No se puede cancelar esta reserva' AS Mensaje;
+		RETURN;
+	END
+	
+	-- Actualizar estado de la reserva
+	UPDATE dbo.TReservaSocial 
+	SET EstadoReserva = 'Cancelada',
+		FechaActualizacion = GETDATE()
+	WHERE IdReservaSocial = @IdReservaSocial AND IdUsuario = @IdUsuario;
+	
+	SELECT 1 AS Resultado, 'Reserva de evento social cancelada exitosamente' AS Mensaje;
+END;
+GO

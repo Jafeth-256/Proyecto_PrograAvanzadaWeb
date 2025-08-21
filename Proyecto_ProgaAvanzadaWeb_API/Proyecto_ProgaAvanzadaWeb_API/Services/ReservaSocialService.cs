@@ -6,92 +6,92 @@ using System.Data;
 
 namespace Proyecto_ProgaAvanzadaWeb_API.Services
 {
-    public class ReservaService : IReservaService
+    public class ReservaSocialService : IReservaSocialService
     {
         private readonly DataContext _context;
 
-        public ReservaService(DataContext context)
+        public ReservaSocialService(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<ResponseDTO<IEnumerable<TourDisponible>>> ObtenerToursDisponibles()
+        public async Task<ResponseDTO<IEnumerable<EventoSocialDisponibleDTO>>> ObtenerEventosSocialesDisponibles()
         {
             try
             {
                 using var connection = _context.CreateConnection();
-                var tours = await connection.QueryAsync<TourDisponible>(
-                    "ConsultarToursDisponibles",
+                var eventos = await connection.QueryAsync<EventoSocialDisponibleDTO>(
+                    "ConsultarEventosSocialesDisponibles",
                     commandType: CommandType.StoredProcedure
                 );
 
-                return new ResponseDTO<IEnumerable<TourDisponible>>
+                return new ResponseDTO<IEnumerable<EventoSocialDisponibleDTO>>
                 {
                     Success = true,
-                    Message = "Tours disponibles obtenidos exitosamente",
-                    Data = tours
+                    Message = "Eventos sociales disponibles obtenidos exitosamente",
+                    Data = eventos
                 };
             }
             catch (Exception ex)
             {
-                return new ResponseDTO<IEnumerable<TourDisponible>>
+                return new ResponseDTO<IEnumerable<EventoSocialDisponibleDTO>>
                 {
                     Success = false,
-                    Message = $"Error al obtener tours disponibles: {ex.Message}",
-                    Data = new List<TourDisponible>()
+                    Message = $"Error al obtener eventos sociales disponibles: {ex.Message}",
+                    Data = new List<EventoSocialDisponibleDTO>()
                 };
             }
         }
 
-        public async Task<ResponseDTO<TourDisponible>> ObtenerTourDisponiblePorId(long idTour)
+        public async Task<ResponseDTO<EventoSocialDisponibleDTO>> ObtenerEventoSocialDisponiblePorId(long idEventoSocial)
         {
             try
             {
                 using var connection = _context.CreateConnection();
-                var tour = await connection.QueryFirstOrDefaultAsync<TourDisponible>(
-                    "ConsultarTourDisponiblePorId",
-                    new { IdTour = idTour },
+                var evento = await connection.QueryFirstOrDefaultAsync<EventoSocialDisponibleDTO>(
+                    "ConsultarEventoSocialDisponiblePorId",
+                    new { IdEventoSocial = idEventoSocial },
                     commandType: CommandType.StoredProcedure
                 );
 
-                if (tour == null)
+                if (evento == null)
                 {
-                    return new ResponseDTO<TourDisponible>
+                    return new ResponseDTO<EventoSocialDisponibleDTO>
                     {
                         Success = false,
-                        Message = "Tour no encontrado o no disponible",
+                        Message = "Evento social no encontrado o no disponible",
                         Data = null
                     };
                 }
 
-                return new ResponseDTO<TourDisponible>
+                return new ResponseDTO<EventoSocialDisponibleDTO>
                 {
                     Success = true,
-                    Message = "Tour obtenido exitosamente",
-                    Data = tour
+                    Message = "Evento social obtenido exitosamente",
+                    Data = evento
                 };
             }
             catch (Exception ex)
             {
-                return new ResponseDTO<TourDisponible>
+                return new ResponseDTO<EventoSocialDisponibleDTO>
                 {
                     Success = false,
-                    Message = $"Error al obtener tour: {ex.Message}",
+                    Message = $"Error al obtener evento social: {ex.Message}",
                     Data = null
                 };
             }
         }
 
-        public async Task<ResponseDTO<object>> CrearReserva(long idUsuario, CrearReservaDTO dto)
+        public async Task<ResponseDTO<object>> CrearReservaSocial(long idUsuario, CrearReservaSocialDTO dto)
         {
             try
             {
                 using var connection = _context.CreateConnection();
                 var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
-                    "CrearReserva",
+                    "CrearReservaEventoSocial",
                     new
                     {
-                        IdTour = dto.IdTour,
+                        IdEventoSocial = dto.IdEventoSocial,
                         IdUsuario = idUsuario,
                         CantidadPersonas = dto.CantidadPersonas,
                         Comentarios = dto.Comentarios
@@ -103,7 +103,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 {
                     Success = resultado.Resultado > 0,
                     Message = resultado.Mensaje,
-                    Data = resultado.Resultado > 0 ? new { IdReserva = resultado.Resultado } : null
+                    Data = resultado.Resultado > 0 ? new { IdReservaSocial = resultado.Resultado } : null
                 };
             }
             catch (Exception ex)
@@ -111,49 +111,49 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<object>
                 {
                     Success = false,
-                    Message = $"Error al crear reserva: {ex.Message}",
+                    Message = $"Error al crear reserva social: {ex.Message}",
                     Data = null
                 };
             }
         }
 
-        public async Task<ResponseDTO<IEnumerable<Reserva>>> ObtenerReservasUsuario(long idUsuario)
+        public async Task<ResponseDTO<IEnumerable<ReservaSocial>>> ObtenerReservasSocialesUsuario(long idUsuario)
         {
             try
             {
                 using var connection = _context.CreateConnection();
-                var reservas = await connection.QueryAsync<Reserva>(
-                    "ConsultarReservasUsuario",
+                var reservas = await connection.QueryAsync<ReservaSocial>(
+                    "ConsultarReservasEventoSocialUsuario",
                     new { IdUsuario = idUsuario },
                     commandType: CommandType.StoredProcedure
                 );
 
-                return new ResponseDTO<IEnumerable<Reserva>>
+                return new ResponseDTO<IEnumerable<ReservaSocial>>
                 {
                     Success = true,
-                    Message = "Reservas obtenidas exitosamente",
+                    Message = "Reservas sociales obtenidas exitosamente",
                     Data = reservas
                 };
             }
             catch (Exception ex)
             {
-                return new ResponseDTO<IEnumerable<Reserva>>
+                return new ResponseDTO<IEnumerable<ReservaSocial>>
                 {
                     Success = false,
-                    Message = $"Error al obtener reservas: {ex.Message}",
-                    Data = new List<Reserva>()
+                    Message = $"Error al obtener reservas sociales: {ex.Message}",
+                    Data = new List<ReservaSocial>()
                 };
             }
         }
 
-        public async Task<ResponseDTO<object>> CancelarReserva(long idReserva, long idUsuario)
+        public async Task<ResponseDTO<object>> CancelarReservaSocial(long idReservaSocial, long idUsuario)
         {
             try
             {
                 using var connection = _context.CreateConnection();
                 var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
-                    "CancelarReserva",
-                    new { IdReserva = idReserva, IdUsuario = idUsuario },
+                    "CancelarReservaEventoSocial",
+                    new { IdReservaSocial = idReservaSocial, IdUsuario = idUsuario },
                     commandType: CommandType.StoredProcedure
                 );
 
@@ -168,75 +168,47 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<object>
                 {
                     Success = false,
-                    Message = $"Error al cancelar reserva: {ex.Message}"
+                    Message = $"Error al cancelar reserva social: {ex.Message}"
                 };
             }
         }
 
-        public async Task<ResponseDTO<EstadisticasReservasDTO>> ObtenerEstadisticas()
+        public async Task<ResponseDTO<IEnumerable<ReservaSocial>>> ObtenerTodasLasReservasSociales()
         {
             try
             {
                 using var connection = _context.CreateConnection();
-                var estadisticas = await connection.QueryFirstOrDefaultAsync<EstadisticasReservasDTO>(
-                    "ObtenerEstadisticasReservas",
+                var reservas = await connection.QueryAsync<ReservaSocial>(
+                    "ConsultarTodasLasReservasSociales",
                     commandType: CommandType.StoredProcedure
                 );
 
-                return new ResponseDTO<EstadisticasReservasDTO>
+                return new ResponseDTO<IEnumerable<ReservaSocial>>
                 {
                     Success = true,
-                    Message = "Estadísticas obtenidas exitosamente",
-                    Data = estadisticas ?? new EstadisticasReservasDTO()
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ResponseDTO<EstadisticasReservasDTO>
-                {
-                    Success = false,
-                    Message = $"Error al obtener estadísticas: {ex.Message}",
-                    Data = new EstadisticasReservasDTO()
-                };
-            }
-        }
-
-        public async Task<ResponseDTO<IEnumerable<Reserva>>> ObtenerTodasLasReservas()
-        {
-            try
-            {
-                using var connection = _context.CreateConnection();
-                var reservas = await connection.QueryAsync<Reserva>(
-                    "ConsultarTodasLasReservas",
-                    commandType: CommandType.StoredProcedure
-                );
-
-                return new ResponseDTO<IEnumerable<Reserva>>
-                {
-                    Success = true,
-                    Message = "Reservas obtenidas exitosamente",
+                    Message = "Reservas de eventos sociales obtenidas exitosamente",
                     Data = reservas
                 };
             }
             catch (Exception ex)
             {
-                return new ResponseDTO<IEnumerable<Reserva>>
+                return new ResponseDTO<IEnumerable<ReservaSocial>>
                 {
                     Success = false,
-                    Message = $"Error al obtener las reservas: {ex.Message}",
-                    Data = new List<Reserva>()
+                    Message = $"Error al obtener las reservas de eventos sociales: {ex.Message}",
+                    Data = new List<ReservaSocial>()
                 };
             }
         }
 
-        public async Task<ResponseDTO<object>> ActualizarEstadoReservaAdmin(long idReserva, string nuevoEstado)
+        public async Task<ResponseDTO<object>> ActualizarEstadoReservaSocialAdmin(long idReservaSocial, string nuevoEstado)
         {
             try
             {
                 using var connection = _context.CreateConnection();
                 var resultado = await connection.QueryFirstOrDefaultAsync<dynamic>(
-                    "ActualizarEstadoReservaAdmin",
-                    new { IdReserva = idReserva, NuevoEstado = nuevoEstado },
+                    "ActualizarEstadoReservaSocialAdmin",
+                    new { IdReservaSocial = idReservaSocial, NuevoEstado = nuevoEstado },
                     commandType: CommandType.StoredProcedure
                 );
 
@@ -251,7 +223,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Services
                 return new ResponseDTO<object>
                 {
                     Success = false,
-                    Message = $"Error al actualizar el estado de la reserva: {ex.Message}"
+                    Message = $"Error al actualizar el estado de la reserva social: {ex.Message}"
                 };
             }
         }

@@ -1,0 +1,284 @@
+﻿@model List<Proyecto_PrograAvanzadaWeb.Models.ReservaSocialViewModel>
+@{
+    ViewData["Title"] = "Mis Reservas de Eventos Sociales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="reservas-container">
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-circle me-2"></i>
+            @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <a href="/ReservasSociales/Explorar" class="breadcrumb-link">
+                    <i class="mdi mdi-calendar-star"></i> Explorar Eventos
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Mis Reservas</span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-bookmark-multiple me-2"></i>
+                Mis Reservas de Eventos Sociales
+            </h1>
+            <p class="page-subtitle">Gestiona todas tus reservas de eventos sociales</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-number">@(Model?.Count ?? 0)</span>
+                <span class="stat-label">Reservas Totales</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <div class="filters-card">
+            <div class="filters-content">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-magnify"></i>
+                        Buscar reservas
+                    </label>
+                    <input type="text" id="filtro-busqueda" class="form-control" placeholder="Buscar por evento o ubicación...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-toggle-switch"></i>
+                        Estado
+                    </label>
+                    <select id="filtro-estado" class="form-control">
+                        <option value="">Todos los estados</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button id="limpiar-filtros" class="btn-modern btn-outline">
+                        <i class="mdi mdi-filter-remove"></i>
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reservas-content">
+        @if (Model != null && Model.Any())
+        {
+            <div class="reservas-grid" id="reservas-grid">
+                @foreach (var reserva in Model)
+                {
+                    <div class="reserva-card"
+                         data-evento="@reserva.NombreEvento.ToLower()"
+                         data-ubicacion="@reserva.Ubicacion.ToLower()"
+                         data-estado="@reserva.EstadoReserva">
+                        <div class="reserva-header">
+                            <div class="reserva-badge">
+                                <i class="mdi mdi-ticket"></i>
+                            </div>
+                            <div class="reserva-status">
+                                <span class="status-badge status-@reserva.EstadoReserva.ToLower()">
+                                    <i class="mdi @(reserva.EstadoReserva == "Pendiente" ? "mdi-clock-outline" :
+                                                                                                                                 reserva.EstadoReserva == "Confirmada" ? "mdi-check-circle" : "mdi-close-circle")"></i>
+                            @reserva.EstadoTexto
+                        </span>
+                    </div>
+                </div>
+
+                        <div class="reserva-content">
+                            <div class="tour-info">
+                                <h3 class="tour-title">@reserva.NombreEvento</h3>
+                                <div class="tour-destination">
+                                    <i class="mdi mdi-map-marker-outline"></i>
+                                    @reserva.Ubicacion
+                                </div>
+                            </div>
+
+                            <div class="reserva-details">
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <i class="mdi mdi-calendar-range"></i>
+                                        <div class="detail-content">
+                                            <span class="detail-label">Fechas del Evento</span>
+                                            <span class="detail-value">@reserva.FechaInicioFormateada - @reserva.FechaFinFormateada</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="mdi mdi-clock-outline"></i>
+                                        <div class="detail-content">
+                                            <span class="detail-label">Duración</span>
+                                            <span class="detail-value">@reserva.DuracionEnDias día@(reserva.DuracionEnDias != 1 ? "s" : "")</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="mdi mdi-account-group"></i>
+                                        <div class="detail-content">
+                                            <span class="detail-label">Personas</span>
+                                            <span class="detail-value">@reserva.CantidadPersonas persona@(reserva.CantidadPersonas != 1 ? "s" : "")</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="mdi mdi-calendar-plus"></i>
+                                        <div class="detail-content">
+                                            <span class="detail-label">Fecha de Reserva</span>
+                                            <span class="detail-value">@reserva.FechaReservaFormateada</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        @if (!string.IsNullOrEmpty(reserva.Comentarios))
+                                {
+                                    <div class="comentarios-section">
+                                        <h5><i class="mdi mdi-message-text"></i> Comentarios:</h5>
+                                        <p>@reserva.Comentarios</p>
+                                    </div>
+                                }
+
+                                <div class="organizador-info">
+                                    <i class="mdi mdi-account-circle"></i>
+                                    <span>Organizado por <strong>@reserva.NombreCreador</strong></span>
+                                </div>
+                            </div>
+
+                            <div class="precio-section">
+                                <div class="precio-info">
+                                    <span class="precio-label">Total Pagado:</span>
+                                    <span class="precio-amount">@reserva.PrecioFormateado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reserva-actions">
+                            <a href="/ReservasSociales/Detalle/@reserva.IdEventoSocial" class="btn-action btn-view">
+                                <i class="mdi mdi-eye"></i>
+                                Ver Evento
+                            </a>
+                            @if (reserva.PuedeCancelar)
+                            {
+                                <button class="btn-action btn-cancel" onclick="cancelarReserva(@reserva.IdReservaSocial)">
+                                    <i class="mdi mdi-close"></i>
+                                    Cancelar
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="mdi mdi-bookmark-off"></i>
+                </div>
+                <h4 class="empty-title">No tienes reservas de eventos sociales aún</h4>
+                <p class="empty-subtitle">¡Explora nuestros increíbles eventos y haz tu primera reserva!</p>
+                <a href="/ReservasSociales/Explorar" class="btn-modern btn-primary">
+                    <i class="mdi mdi-calendar-star"></i>
+                    Explorar Eventos
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Styles are the same as in MisReservas.cshtml for tours */
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtroBusqueda = document.getElementById('filtro-busqueda');
+        const filtroEstado = document.getElementById('filtro-estado');
+        const limpiarFiltros = document.getElementById('limpiar-filtros');
+        const reservasGrid = document.getElementById('reservas-grid');
+
+        function aplicarFiltros() {
+            const busqueda = filtroBusqueda.value.toLowerCase();
+            const estado = filtroEstado.value;
+
+            const cards = reservasGrid.querySelectorAll('.reserva-card');
+
+            cards.forEach(card => {
+                const evento = card.dataset.evento || '';
+                const ubicacion = card.dataset.ubicacion || '';
+                const estadoCard = card.dataset.estado || '';
+
+                const coincideBusqueda = busqueda === '' ||
+                                       evento.includes(busqueda) ||
+                                       ubicacion.includes(busqueda);
+
+                const coincideEstado = estado === '' || estadoCard === estado;
+
+                if (coincideBusqueda && coincideEstado) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        if (filtroBusqueda) filtroBusqueda.addEventListener('input', aplicarFiltros);
+        if (filtroEstado) filtroEstado.addEventListener('change', aplicarFiltros);
+
+        if (limpiarFiltros) {
+            limpiarFiltros.addEventListener('click', function() {
+                filtroBusqueda.value = '';
+                filtroEstado.value = '';
+                aplicarFiltros();
+            });
+        }
+
+        const reservaCards = document.querySelectorAll('.reserva-card');
+        reservaCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+
+    function cancelarReserva(idReserva) {
+        if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
+            fetch('/ReservasSociales/CancelarReserva', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `idReserva=${idReserva}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al cancelar la reserva');
+            });
+        }
+    }
+</script>

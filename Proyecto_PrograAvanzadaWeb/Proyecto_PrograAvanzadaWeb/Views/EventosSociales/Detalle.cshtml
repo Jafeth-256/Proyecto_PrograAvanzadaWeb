@@ -160,10 +160,11 @@
                         <div class="booking-actions">
                             @if (!Model.EsEventoEnCurso)
                             {
-                                <button class="btn-modern btn-primary btn-book" onclick="reservarEvento(@Model.IdEventoSocial)">
-                                    <i class="mdi mdi-calendar-check"></i>
-                                    Reservar Lugar
-                                </button>
+                                <a href="/ReservasSociales/CrearReserva?idEvento=@Model.IdEventoSocial" class="btn-modern btn-primary btn-large">
+                                <i class="mdi mdi-calendar-plus"></i>
+                                Reservar Ahora
+                            </a>
+
                             }
                             else
                             {

@@ -8,22 +8,22 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReservasController : ControllerBase
+    public class ReservasSocialesController : ControllerBase
     {
-        private readonly IReservaService _reservaService;
+        private readonly IReservaSocialService _reservaSocialService;
 
-        public ReservasController(IReservaService reservaService)
+        public ReservasSocialesController(IReservaSocialService reservaSocialService)
         {
-            _reservaService = reservaService;
+            _reservaSocialService = reservaSocialService;
         }
 
-        [HttpGet("tours-disponibles")]
+        [HttpGet("eventos-disponibles")]
         [AllowAnonymous]
-        public async Task<IActionResult> ObtenerToursDisponibles()
+        public async Task<IActionResult> ObtenerEventosSocialesDisponibles()
         {
             try
             {
-                var result = await _reservaService.ObtenerToursDisponibles();
+                var result = await _reservaSocialService.ObtenerEventosSocialesDisponibles();
 
                 if (result.Success)
                     return Ok(result);
@@ -40,13 +40,13 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
             }
         }
 
-        [HttpGet("tours-disponibles/{id}")]
+        [HttpGet("eventos-disponibles/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> ObtenerTourDisponiblePorId(long id)
+        public async Task<IActionResult> ObtenerEventoSocialDisponiblePorId(long id)
         {
             try
             {
-                var result = await _reservaService.ObtenerTourDisponiblePorId(id);
+                var result = await _reservaSocialService.ObtenerEventoSocialDisponiblePorId(id);
 
                 if (result.Success)
                     return Ok(result);
@@ -65,7 +65,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CrearReserva([FromBody] CrearReservaDTO dto)
+        public async Task<IActionResult> CrearReservaSocial([FromBody] CrearReservaSocialDTO dto)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
                     });
                 }
 
-                var result = await _reservaService.CrearReserva(idUsuario, dto);
+                var result = await _reservaSocialService.CrearReservaSocial(idUsuario, dto);
 
                 if (result.Success)
                     return Ok(result);
@@ -102,7 +102,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 
         [HttpGet("mis-reservas")]
         [Authorize]
-        public async Task<IActionResult> ObtenerMisReservas()
+        public async Task<IActionResult> ObtenerMisReservasSociales()
         {
             try
             {
@@ -117,7 +117,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
                     });
                 }
 
-                var result = await _reservaService.ObtenerReservasUsuario(idUsuario);
+                var result = await _reservaSocialService.ObtenerReservasSocialesUsuario(idUsuario);
 
                 if (result.Success)
                     return Ok(result);
@@ -136,7 +136,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
 
         [HttpPost("{id}/cancelar")]
         [Authorize]
-        public async Task<IActionResult> CancelarReserva(long id)
+        public async Task<IActionResult> CancelarReservaSocial(long id)
         {
             try
             {
@@ -151,30 +151,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
                     });
                 }
 
-                var result = await _reservaService.CancelarReserva(id, idUsuario);
-
-                if (result.Success)
-                    return Ok(result);
-
-                return BadRequest(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ResponseDTO<object>
-                {
-                    Success = false,
-                    Message = $"Error interno del servidor: {ex.Message}"
-                });
-            }
-        }
-
-        [HttpGet("estadisticas")]
-        [Authorize(Roles = "Usuario Administrador")]
-        public async Task<IActionResult> ObtenerEstadisticas()
-        {
-            try
-            {
-                var result = await _reservaService.ObtenerEstadisticas();
+                var result = await _reservaSocialService.CancelarReservaSocial(id, idUsuario);
 
                 if (result.Success)
                     return Ok(result);
@@ -197,7 +174,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
         {
             try
             {
-                var result = await _reservaService.ObtenerTodasLasReservas();
+                var result = await _reservaSocialService.ObtenerTodasLasReservasSociales();
 
                 if (result.Success)
                     return Ok(result);
@@ -220,7 +197,7 @@ namespace Proyecto_ProgaAvanzadaWeb_API.Controllers
         {
             try
             {
-                var result = await _reservaService.ActualizarEstadoReservaAdmin(id, nuevoEstado);
+                var result = await _reservaSocialService.ActualizarEstadoReservaSocialAdmin(id, nuevoEstado);
 
                 if (result.Success)
                     return Ok(result);

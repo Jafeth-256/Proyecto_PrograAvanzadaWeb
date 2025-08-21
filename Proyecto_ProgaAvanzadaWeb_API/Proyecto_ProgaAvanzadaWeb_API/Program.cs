@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+ï»¿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Proyecto_ProgaAvanzadaWeb_API.Helpers;
@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "TicoTours API",
         Version = "v1",
-        Description = "API para gestión de tours y usuarios"
+        Description = "API para gestiï¿½n de tours y usuarios"
     });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -57,8 +57,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowMvcApp", policy =>
     {
         policy.WithOrigins(
-                "https://localhost:7273", "http://localhost:7273",  
-                "https://localhost:7001", "http://localhost:5001"   
+                "https://localhost:7273", "http://localhost:7273",
+                "https://localhost:7001", "http://localhost:5001"
               )
               .AllowAnyMethod()
               .AllowAnyHeader()
@@ -74,6 +74,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IPerfilService, PerfilService>();
 builder.Services.AddScoped<IReservaService, ReservaService>();
+builder.Services.AddScoped<IReservaSocialService, ReservaSocialService>();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
