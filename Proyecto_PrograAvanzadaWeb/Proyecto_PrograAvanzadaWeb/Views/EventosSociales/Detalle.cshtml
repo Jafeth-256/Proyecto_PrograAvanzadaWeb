@@ -1,0 +1,878 @@
+﻿@model Proyecto_PrograAvanzadaWeb.Models.EventoSocialViewModel
+@{
+    ViewData["Title"] = "Detalle del Evento Social";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="detalle-container">
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-information me-2"></i>
+            @ViewBag.Mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Header del evento -->
+    <div class="evento-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="hero-pattern"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="breadcrumb-nav">
+                <a href="/EventosSociales/Sociales" class="breadcrumb-link">
+                    <i class="mdi mdi-account-multiple"></i> Eventos Sociales
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">@Model.Nombre</span>
+            </div>
+
+            <div class="evento-status-hero">
+                <span class="status-badge-hero status-@(Model.EventoTerminado ? "finished" : Model.EsEventoEnCurso ? "active" : "upcoming")">
+                    <i class="mdi @(Model.EventoTerminado ? "mdi-check-circle" : Model.EsEventoEnCurso ? "mdi-play-circle" : "mdi-clock-outline")"></i>
+                    @Model.EstadoEvento
+                </span>
+            </div>
+
+            <h1 class="evento-title-hero">@Model.Nombre</h1>
+
+            <div class="evento-ubicacion-hero">
+                <i class="mdi mdi-map-marker-outline"></i>
+                @Model.Ubicacion
+            </div>
+
+            <div class="evento-meta-hero">
+                <div class="meta-item">
+                    <i class="mdi mdi-calendar-start"></i>
+                    <span>@Model.FechaInicioFormateada</span>
+                </div>
+                <div class="meta-item">
+                    <i class="mdi mdi-account-group"></i>
+                    <span>@Model.CantidadPersonas personas</span>
+                </div>
+                <div class="meta-item">
+                    <i class="mdi mdi-account-circle"></i>
+                    <span>@Model.NombreCreador</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="detalle-content">
+        <div class="content-grid">
+            <!-- Información principal -->
+            <div class="main-info">
+                <div class="info-card">
+                    <div class="card-header">
+                        <h3><i class="mdi mdi-information-outline"></i> Descripción del Evento</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="evento-description-detail">@Model.Descripcion</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <h3><i class="mdi mdi-calendar-clock"></i> Información de Fechas</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="dates-grid">
+                            <div class="date-item">
+                                <div class="date-icon">
+                                    <i class="mdi mdi-calendar-start"></i>
+                                </div>
+                                <div class="date-info">
+                                    <span class="date-label">Fecha de Inicio</span>
+                                    <span class="date-value">@Model.FechaInicioFormateada</span>
+                                </div>
+                            </div>
+                            <div class="date-item">
+                                <div class="date-icon">
+                                    <i class="mdi mdi-calendar-end"></i>
+                                </div>
+                                <div class="date-info">
+                                    <span class="date-label">Fecha de Finalización</span>
+                                    <span class="date-value">@Model.FechaFinFormateada</span>
+                                </div>
+                            </div>
+                            <div class="date-item">
+                                <div class="date-icon">
+                                    <i class="mdi mdi-clock-outline"></i>
+                                </div>
+                                <div class="date-info">
+                                    <span class="date-label">Duración</span>
+                                    <span class="date-value">@Model.DuracionEnHoras hora@(Model.DuracionEnHoras != 1 ? "s" : "")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <h3><i class="mdi mdi-account-details"></i> Detalles del Organizador</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="organizer-info">
+                            <div class="organizer-avatar">
+                                <i class="mdi mdi-account-circle"></i>
+                            </div>
+                            <div class="organizer-details">
+                                <h4>@Model.NombreCreador</h4>
+                                <p class="organizer-role">Organizador del Evento</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel lateral -->
+            <div class="sidebar-info">
+                <!-- Precio y reserva -->
+                <div class="price-card">
+                    <div class="price-header">
+                        <div class="price-amount">@Model.PrecioFormateado</div>
+                        <div class="price-label">por persona</div>
+                    </div>
+
+                    <div class="capacity-info">
+                        <div class="capacity-item">
+                            <i class="mdi mdi-account-group"></i>
+                            <span>Capacidad: @Model.CantidadPersonas personas</span>
+                        </div>
+                    </div>
+
+                    @if (!Model.EventoTerminado)
+                    {
+                        <div class="booking-actions">
+                            @if (!Model.EsEventoEnCurso)
+                            {
+                                <button class="btn-modern btn-primary btn-book" onclick="reservarEvento(@Model.IdEventoSocial)">
+                                    <i class="mdi mdi-calendar-check"></i>
+                                    Reservar Lugar
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn-modern btn-info" disabled>
+                                    <i class="mdi mdi-play-circle"></i>
+                                    Evento en Curso
+                                </button>
+                            }
+
+                            <button class="btn-modern btn-outline" onclick="compartirEvento()">
+                                <i class="mdi mdi-share-variant"></i>
+                                Compartir
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="booking-actions">
+                            <button class="btn-modern btn-secondary" disabled>
+                                <i class="mdi mdi-check-circle"></i>
+                                Evento Finalizado
+                            </button>
+                        </div>
+                    }
+                </div>
+
+                <!-- Información adicional -->
+                <div class="additional-info">
+                    <div class="info-header">
+                        <h4><i class="mdi mdi-information-variant"></i> Información Adicional</h4>
+                    </div>
+                    <div class="info-list">
+                        <div class="info-list-item">
+                            <i class="mdi mdi-map-marker-radius"></i>
+                            <div class="info-text">
+                                <span class="info-title">Ubicación</span>
+                                <span class="info-description">@Model.Ubicacion</span>
+                            </div>
+                        </div>
+                        <div class="info-list-item">
+                            <i class="mdi mdi-calendar-today"></i>
+                            <div class="info-text">
+                                <span class="info-title">Estado</span>
+                                <span class="info-description">@Model.EstadoEvento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navegación -->
+                <div class="navigation-card">
+                    <a href="/EventosSociales/Sociales" class="btn-modern btn-secondary btn-full">
+                        <i class="mdi mdi-arrow-left"></i>
+                        Volver a Eventos
+                    </a>
+
+                    @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                    {
+                        <div class="admin-actions">
+                            <a href="/EventosSociales/EditarEvento/@Model.IdEventoSocial" class="btn-modern btn-warning">
+                                <i class="mdi mdi-pencil"></i>
+                                Editar
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .detalle-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Hero Section */
+    .evento-hero {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        color: white;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 40px;
+        width: 100%;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .breadcrumb-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.3s ease;
+    }
+
+        .breadcrumb-link:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    .breadcrumb-separator {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .evento-status-hero {
+        margin-bottom: 15px;
+    }
+
+    .status-badge-hero {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+        .status-badge-hero.status-upcoming {
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+        }
+
+        .status-badge-hero.status-active {
+            background: rgba(34, 197, 94, 0.8);
+            color: white;
+        }
+
+        .status-badge-hero.status-finished {
+            background: rgba(107, 114, 128, 0.8);
+            color: white;
+        }
+
+    .evento-title-hero {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 15px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        line-height: 1.2;
+    }
+
+    .evento-ubicacion-hero {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0.9;
+    }
+
+        .evento-ubicacion-hero i {
+            font-size: 1.3rem;
+        }
+
+    .evento-meta-hero {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+
+        .meta-item i {
+            font-size: 1.1rem;
+        }
+
+    /* Content Grid */
+    .detalle-content {
+        padding: 0 20px;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 40px;
+    }
+
+    /* Main Info Cards */
+    .info-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .card-header h3 i {
+                color: #f59e0b;
+            }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .evento-description-detail {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #374151;
+        margin: 0;
+    }
+
+    /* Dates Grid */
+    .dates-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    .date-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background: #f9fafb;
+        border-radius: 12px;
+        border-left: 4px solid #f59e0b;
+    }
+
+    .date-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+    }
+
+    .date-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .date-label {
+        font-size: 0.85rem;
+        color: #6b7280;
+        font-weight: 500;
+        margin-bottom: 2px;
+    }
+
+    .date-value {
+        font-size: 1rem;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    /* Organizer Info */
+    .organizer-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .organizer-avatar {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .organizer-details h4 {
+        margin: 0 0 5px 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .organizer-role {
+        margin: 0;
+        color: #6b7280;
+        font-size: 0.9rem;
+    }
+
+    /* Sidebar */
+    .price-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+        position: sticky;
+        top: 20px;
+    }
+
+    .price-header {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #fbbf24;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .price-amount {
+        font-size: 2.2rem;
+        color: #92400e;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .price-label {
+        font-size: 0.9rem;
+        color: #b45309;
+        font-weight: 500;
+    }
+
+    .capacity-info {
+        padding: 20px 25px;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .capacity-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+        .capacity-item i {
+            color: #f59e0b;
+            font-size: 1.1rem;
+        }
+
+    .booking-actions {
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* Additional Info */
+    .additional-info {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+    }
+
+    .info-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .info-header h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .info-header h4 i {
+                color: #f59e0b;
+            }
+
+    .info-list {
+        padding: 20px 25px;
+    }
+
+    .info-list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+        .info-list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-list-item i {
+            color: #f59e0b;
+            font-size: 1.2rem;
+            margin-top: 2px;
+            width: 20px;
+        }
+
+    .info-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-title {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+
+    .info-description {
+        color: #6b7280;
+        font-size: 0.85rem;
+    }
+
+    /* Navigation Card */
+    .navigation-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+        padding: 25px;
+    }
+
+    .admin-actions {
+        margin-top: 15px;
+    }
+
+    /* Buttons */
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        text-align: center;
+        justify-content: center;
+        font-family: inherit;
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-info {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-modern.btn-full {
+            width: 100%;
+        }
+
+        .btn-modern.btn-book {
+            font-size: 1rem;
+            padding: 15px 25px;
+        }
+
+        .btn-modern:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-modern.btn-outline:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-modern:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+    /* Alerts */
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-info {
+        background: #eff6ff;
+        border-color: #bfdbfe;
+        color: #1e40af;
+    }
+
+    /* Responsive */
+    @@media only screen and (max-width: 968px) {
+        .content-grid
+
+    {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .price-card {
+        position: static;
+    }
+
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .detalle-container
+
+    {
+        padding: 10px;
+    }
+
+    .evento-title-hero {
+        font-size: 2rem;
+    }
+
+    .evento-meta-hero {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-content {
+        padding: 30px 20px;
+    }
+
+    .detalle-content {
+        padding: 0 10px;
+    }
+
+    .dates-grid {
+        gap: 15px;
+    }
+
+    .date-item {
+        padding: 15px;
+    }
+
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .evento-title-hero
+
+    {
+        font-size: 1.8rem;
+    }
+
+    .price-amount {
+        font-size: 1.8rem;
+    }
+
+    .organizer-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animaciones de entrada
+        const cards = document.querySelectorAll('.info-card, .price-card, .additional-info, .navigation-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+
+        // Auto-hide alerts
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.style.transition = 'opacity 0.3s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                }
+            }, 5000);
+        });
+    });
+
+    function reservarEvento(eventoId) {
+        if (confirm('¿Deseas reservar un lugar en este evento social?')) {
+            // Aquí iría la lógica para reservar el evento
+            // Por ejemplo, redirigir a una página de reserva o hacer una llamada AJAX
+            window.location.href = `/EventosSociales/Reservar/${eventoId}`;
+        }
+    }
+
+    function compartirEvento() {
+        if (navigator.share) {
+            navigator.share({
+                title: '@Model.Nombre',
+                text: 'Te invito a este increíble evento social: @Model.Nombre',
+                url: window.location.href
+            }).catch(console.error);
+        } else {
+            // Fallback: copiar URL al portapapeles
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('¡Enlace copiado al portapapeles!');
+            }).catch(() => {
+                alert('No se pudo copiar el enlace. URL: ' + window.location.href);
+            });
+        }
+    }
+</script>

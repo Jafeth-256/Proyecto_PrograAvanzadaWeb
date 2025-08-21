@@ -1,0 +1,570 @@
+﻿<!-- CrearEvento.cshtml para EventosSociales -->
+@model Proyecto_PrograAvanzadaWeb.Models.CrearEventoSocialViewModel
+@{
+    ViewData["Title"] = "Crear Evento Social";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-container">
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Exito))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-circle me-2"></i>
+            @ViewBag.Exito
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <a href="/EventosSociales/Index" class="breadcrumb-link">
+                    <i class="mdi mdi-account-multiple"></i> Eventos Sociales
+                </a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Crear Evento</span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-plus-circle me-2"></i>
+                Crear Nuevo Evento Social
+            </h1>
+            <p class="page-subtitle">Completa la información para crear un nuevo evento social</p>
+        </div>
+        <div class="header-icon">
+            <i class="mdi mdi-calendar-plus"></i>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <form method="post" action="/EventosSociales/CrearEvento" id="eventoForm">
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="mdi mdi-information"></i>
+                    Información General
+                </h3>
+
+                <div class="form-group">
+                    <label class="form-label" for="Nombre">
+                        <i class="mdi mdi-tag"></i>
+                        Nombre del Evento
+                    </label>
+                    <input type="text" id="Nombre" name="Nombre" class="form-control"
+                           value="@Model?.Nombre" placeholder="Ej: Festival de Música" required>
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="Ubicacion">
+                        <i class="mdi mdi-map-marker"></i>
+                        Ubicación
+                    </label>
+                    <input type="text" id="Ubicacion" name="Ubicacion" class="form-control"
+                           value="@Model?.Ubicacion" placeholder="Ej: Parque Central, San José" required>
+                    <span asp-validation-for="Ubicacion" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="Descripcion">
+                        <i class="mdi mdi-text"></i>
+                        Descripción
+                    </label>
+                    <textarea id="Descripcion" name="Descripcion" class="form-control form-textarea"
+                              placeholder="Describe el evento, actividades, incluye, etc." required>@Model?.Descripcion</textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="mdi mdi-cog"></i>
+                    Detalles del Evento
+                </h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="Precio">
+                            <i class="mdi mdi-currency-usd"></i>
+                            Precio (₡)
+                        </label>
+                        <input type="number" id="Precio" name="Precio" class="form-control"
+                               value="@Model?.Precio" placeholder="15000" min="0" step="0.01" required>
+                        <span asp-validation-for="Precio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="CantidadPersonas">
+                            <i class="mdi mdi-account-group"></i>
+                            Cantidad de Personas
+                        </label>
+                        <input type="number" id="CantidadPersonas" name="CantidadPersonas" class="form-control"
+                               value="@Model?.CantidadPersonas" placeholder="50" min="1" required>
+                        <span asp-validation-for="CantidadPersonas" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="FechaInicio">
+                            <i class="mdi mdi-calendar-start"></i>
+                            Fecha y Hora de Inicio
+                        </label>
+                        <input type="datetime-local" id="FechaInicio" name="FechaInicio" class="form-control"
+                               value="@Model?.FechaInicio.ToString("yyyy-MM-ddTHH:mm")" required>
+                        <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="FechaFin">
+                            <i class="mdi mdi-calendar-end"></i>
+                            Fecha y Hora de Fin
+                        </label>
+                        <input type="datetime-local" id="FechaFin" name="FechaFin" class="form-control"
+                               value="@Model?.FechaFin.ToString("yyyy-MM-ddTHH:mm")" required>
+                        <span asp-validation-for="FechaFin" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-modern btn-primary">
+                    <i class="mdi mdi-content-save"></i>
+                    Crear Evento Social
+                </button>
+                <a href="/EventosSociales/Index" class="btn-modern btn-secondary">
+                    <i class="mdi mdi-close"></i>
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #166534;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .breadcrumb-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.3s ease;
+    }
+
+        .breadcrumb-link:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    .breadcrumb-separator {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 300;
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    .header-icon {
+        z-index: 1;
+        position: relative;
+        font-size: 3rem;
+        opacity: 0.7;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        padding: 40px;
+    }
+
+    .form-section {
+        margin-bottom: 40px;
+    }
+
+        .form-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #f3f4f6;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .section-title i {
+            color: #f59e0b;
+            font-size: 1.4rem;
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.95rem;
+    }
+
+        .form-label i {
+            color: #f59e0b;
+            font-size: 1rem;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #374151;
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+
+    .text-danger {
+        color: #dc2626;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid #f3f4f6;
+    }
+
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        font-family: inherit;
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-secondary:hover {
+            background: #5b6570;
+            color: white;
+        }
+
+    @@media only screen and (max-width: 768px) {
+        .form-container
+
+    {
+        padding: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .form-card {
+        padding: 25px 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-modern {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const fechaInicio = document.getElementById('FechaInicio');
+        const fechaFin = document.getElementById('FechaFin');
+
+        // Establecer fecha mínima como mañana
+        const minDate = tomorrow.toISOString().slice(0, 16);
+        fechaInicio.min = minDate;
+        fechaFin.min = minDate;
+
+        // Validar que la fecha de fin sea posterior a la de inicio
+        fechaInicio.addEventListener('change', function() {
+            const fechaInicioValue = new Date(this.value);
+            const minFechaFin = new Date(fechaInicioValue);
+            minFechaFin.setHours(minFechaFin.getHours() + 1); // Mínimo 1 hora después
+
+            fechaFin.min = minFechaFin.toISOString().slice(0, 16);
+
+            // Si la fecha de fin ya está seleccionada y es menor, limpiarla
+            if (fechaFin.value && new Date(fechaFin.value) <= fechaInicioValue) {
+                fechaFin.value = '';
+            }
+        });
+
+        fechaFin.addEventListener('change', function() {
+            const fechaInicioValue = new Date(fechaInicio.value);
+            const fechaFinValue = new Date(this.value);
+
+            if (fechaInicioValue && fechaFinValue <= fechaInicioValue) {
+                showAlert('error', 'La fecha de fin debe ser posterior a la fecha de inicio');
+                this.value = '';
+            }
+        });
+
+        // Validación del formulario
+        document.getElementById('eventoForm').addEventListener('submit', function(e) {
+            const nombre = document.getElementById('Nombre').value.trim();
+            const ubicacion = document.getElementById('Ubicacion').value.trim();
+            const descripcion = document.getElementById('Descripcion').value.trim();
+            const precio = document.getElementById('Precio').value;
+            const cantidadPersonas = document.getElementById('CantidadPersonas').value;
+            const fechaInicioValue = fechaInicio.value;
+            const fechaFinValue = fechaFin.value;
+
+            if (!nombre || !ubicacion || !descripcion || !precio || !cantidadPersonas || !fechaInicioValue || !fechaFinValue) {
+                e.preventDefault();
+                showAlert('error', 'Por favor, completa todos los campos requeridos');
+                return;
+            }
+
+            if (parseFloat(precio) < 0) {
+                e.preventDefault();
+                showAlert('error', 'El precio debe ser mayor o igual a cero');
+                return;
+            }
+
+            if (parseInt(cantidadPersonas) <= 0) {
+                e.preventDefault();
+                showAlert('error', 'La cantidad de personas debe ser mayor a cero');
+                return;
+            }
+
+            if (new Date(fechaFinValue) <= new Date(fechaInicioValue)) {
+                e.preventDefault();
+                showAlert('error', 'La fecha de fin debe ser posterior a la fecha de inicio');
+                return;
+            }
+
+            // Verificar que las fechas sean futuras
+            if (new Date(fechaInicioValue) <= new Date()) {
+                e.preventDefault();
+                showAlert('error', 'La fecha de inicio debe ser futura');
+                return;
+            }
+        });
+
+        // Auto hide alerts after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
+        });
+    });
+
+    // Función para mostrar alertas
+    function showAlert(type, message) {
+        const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+        const icon = type === 'success' ? 'mdi-check-circle' : 'mdi-alert-circle';
+
+        const alertHtml = `
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                <i class="mdi ${icon} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+
+        const container = document.querySelector('.form-container');
+        const existingAlert = container.querySelector('.alert');
+
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+
+        container.insertAdjacentHTML('afterbegin', alertHtml);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            const alert = container.querySelector('.alert');
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+</script>

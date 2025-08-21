@@ -1,0 +1,705 @@
+﻿<!-- Sociales.cshtml - Vista pública de eventos sociales COMPLETA -->
+@model List<Proyecto_PrograAvanzadaWeb.Models.EventoSocialViewModel>
+@{
+    ViewData["Title"] = "Eventos Sociales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="eventos-container">
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-information me-2"></i>
+            @ViewBag.Mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <span class="breadcrumb-current">
+                    <i class="mdi mdi-account-multiple"></i> Eventos Sociales
+                </span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-account-multiple me-2"></i>
+                Eventos Sociales
+            </h1>
+            <p class="page-subtitle">Descubre increíbles eventos sociales y actividades comunitarias</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-number">@(Model?.Count ?? 0)</span>
+                <span class="stat-label">Eventos Disponibles</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <div class="filters-card">
+            <div class="filters-content">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-magnify"></i>
+                        Buscar eventos
+                    </label>
+                    <input type="text" id="filtro-busqueda" class="form-control" placeholder="Buscar por nombre o ubicación...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-currency-usd"></i>
+                        Precio máximo
+                    </label>
+                    <input type="range" id="filtro-precio" class="price-range" min="0" max="100000" value="100000">
+                    <span class="price-display">₡<span id="precio-valor">100,000</span></span>
+                </div>
+                <div class="filter-actions">
+                    <button id="limpiar-filtros" class="btn-modern btn-outline">
+                        <i class="mdi mdi-filter-remove"></i>
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="eventos-content">
+        @if (Model != null && Model.Any())
+        {
+            <div class="eventos-grid" id="eventos-grid">
+                @foreach (var evento in Model)
+                {
+                    <div class="evento-card"
+                         data-nombre="@evento.Nombre.ToLower()"
+                         data-ubicacion="@evento.Ubicacion.ToLower()"
+                         data-precio="@evento.Precio">
+                        <div class="evento-header">
+                            <div class="evento-badge">
+                                <i class="mdi mdi-account-multiple"></i>
+                            </div>
+                            <div class="evento-status">
+                                <span class="status-badge status-@(evento.EventoTerminado ? "finished" : evento.EsEventoEnCurso ? "active" : "upcoming")">
+                                    <i class="mdi @(evento.EventoTerminado ? "mdi-check-circle" : evento.EsEventoEnCurso ? "mdi-play-circle" : "mdi-clock-outline")"></i>
+                                    @evento.EstadoEvento
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="evento-content">
+                            <h3 class="evento-title">@evento.Nombre</h3>
+                            <div class="evento-ubicacion">
+                                <i class="mdi mdi-map-marker-outline"></i>
+                                @evento.Ubicacion
+                            </div>
+
+                            <div class="evento-description">
+                                @evento.Descripcion
+                            </div>
+
+                            <div class="evento-details">
+                                <div class="detail-item">
+                                    <i class="mdi mdi-calendar-start"></i>
+                                    <span>@evento.FechaInicioFormateada</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-calendar-end"></i>
+                                    <span>@evento.FechaFinFormateada</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-clock-outline"></i>
+                                    <span>@evento.DuracionEnHoras hora@(evento.DuracionEnHoras != 1 ? "s" : "")</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-account-group"></i>
+                                    <span>Hasta @evento.CantidadPersonas personas</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-account-circle"></i>
+                                    <span>Organizado por @evento.NombreCreador</span>
+                                </div>
+                            </div>
+
+                            <div class="evento-price">
+                                <span class="price-amount">@evento.PrecioFormateado</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                        </div>
+
+                        <div class="evento-actions">
+                            <a href="/EventosSociales/Detalle/@evento.IdEventoSocial" class="btn-modern btn-primary">
+                                <i class="mdi mdi-eye"></i>
+                                Ver Detalles
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="mdi mdi-account-multiple-outline"></i>
+                </div>
+                <h4 class="empty-title">No hay eventos sociales disponibles</h4>
+                <p class="empty-subtitle">No se encontraron eventos sociales próximos en este momento.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .eventos-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .evento-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+        .evento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+    .evento-header {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        padding: 20px 25px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .evento-badge {
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+        .status-badge.status-upcoming {
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+        }
+
+        .status-badge.status-active {
+            background: rgba(34, 197, 94, 0.8);
+            color: white;
+        }
+
+        .status-badge.status-finished {
+            background: rgba(107, 114, 128, 0.8);
+            color: white;
+        }
+
+    .eventos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 30px;
+    }
+
+    .evento-content {
+        padding: 25px;
+    }
+
+    .evento-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #374151;
+        margin: 0 0 8px 0;
+        line-height: 1.3;
+    }
+
+    .evento-ubicacion {
+        color: #6b7280;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+        .evento-ubicacion i {
+            color: #f59e0b;
+        }
+
+    .evento-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .evento-details {
+        margin-bottom: 20px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+        .detail-item i {
+            color: #f59e0b;
+            font-size: 1rem;
+            width: 16px;
+        }
+
+    .evento-price {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #fbbf24;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .price-amount {
+        font-size: 1.8rem;
+        color: #92400e;
+        font-weight: 700;
+        display: block;
+    }
+
+    .price-label {
+        font-size: 0.8rem;
+        color: #b45309;
+        font-weight: 500;
+    }
+
+    .evento-actions {
+        display: flex;
+        gap: 12px;
+        padding: 0 25px 25px 25px;
+    }
+
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+        flex: 1;
+        justify-content: center;
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-info {
+        background: #eff6ff;
+        border-color: #bfdbfe;
+        color: #1e40af;
+    }
+
+    .filters-section {
+        margin-bottom: 30px;
+    }
+
+    .filters-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        padding: 25px 30px;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .filters-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr auto;
+        gap: 25px;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #374151;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #374151;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+    .price-range {
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #e5e7eb;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+    }
+
+        .price-range:hover {
+            opacity: 1;
+        }
+
+        .price-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #f59e0b;
+            cursor: pointer;
+        }
+
+    .price-display {
+        font-weight: 600;
+        color: #f59e0b;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .header-stats {
+        z-index: 1;
+        position: relative;
+    }
+
+    .stat-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px 25px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        color: #d1d5db;
+        margin-bottom: 20px;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 10px;
+    }
+
+    .empty-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .eventos-container
+
+    {
+        padding: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .filters-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .filter-actions {
+        justify-self: stretch;
+    }
+
+    .eventos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .eventos-container
+
+    {
+        padding: 8px;
+    }
+
+    .page-header {
+        padding: 15px 10px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .filters-card {
+        padding: 20px 15px;
+    }
+
+    .evento-content {
+        padding: 20px;
+    }
+
+    .evento-actions {
+        padding: 0 20px 20px 20px;
+    }
+
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtroBusqueda = document.getElementById('filtro-busqueda');
+        const filtroPrecio = document.getElementById('filtro-precio');
+        const precioValor = document.getElementById('precio-valor');
+        const limpiarFiltros = document.getElementById('limpiar-filtros');
+        const eventosGrid = document.getElementById('eventos-grid');
+
+        function aplicarFiltros() {
+            const busqueda = filtroBusqueda.value.toLowerCase();
+            const precioMax = parseInt(filtroPrecio.value);
+
+            const cards = eventosGrid.querySelectorAll('.evento-card');
+
+            cards.forEach(card => {
+                const nombre = card.dataset.nombre || '';
+                const ubicacion = card.dataset.ubicacion || '';
+                const precio = parseFloat(card.dataset.precio || '0');
+
+                const coincideBusqueda = busqueda === '' ||
+                                       nombre.includes(busqueda) ||
+                                       ubicacion.includes(busqueda);
+
+                const coincidePrecio = precio <= precioMax;
+
+                if (coincideBusqueda && coincidePrecio) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function actualizarPrecio() {
+            const valor = parseInt(filtroPrecio.value);
+            precioValor.textContent = valor.toLocaleString();
+        }
+
+        if (filtroBusqueda) filtroBusqueda.addEventListener('input', aplicarFiltros);
+        if (filtroPrecio) {
+            filtroPrecio.addEventListener('input', function() {
+                actualizarPrecio();
+                aplicarFiltros();
+            });
+        }
+
+        if (limpiarFiltros) {
+            limpiarFiltros.addEventListener('click', function() {
+                filtroBusqueda.value = '';
+                filtroPrecio.value = 100000;
+                actualizarPrecio();
+                aplicarFiltros();
+            });
+        }
+
+        actualizarPrecio();
+
+        const eventoCards = document.querySelectorAll('.evento-card');
+        eventoCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>

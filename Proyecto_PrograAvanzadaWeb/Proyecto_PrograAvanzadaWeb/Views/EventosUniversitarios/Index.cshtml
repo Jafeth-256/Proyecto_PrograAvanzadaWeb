@@ -1,0 +1,779 @@
+﻿@model List<Proyecto_PrograAvanzadaWeb.Models.EventoUniversitarioViewModel>
+@{
+    ViewData["Title"] = "Gestión de Eventos Universitarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="eventos-container">
+    <!-- Mensajes de éxito/error -->
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-circle me-2"></i>
+            @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Header de la página -->
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <span class="breadcrumb-current">
+                    <i class="mdi mdi-school"></i> Eventos Universitarios
+                </span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-school me-2"></i>
+                Gestión de Eventos Universitarios
+            </h1>
+            <p class="page-subtitle">Administra y organiza eventos académicos y estudiantiles</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-number">@(Model?.Count ?? 0)</span>
+                <span class="stat-label">Eventos Totales</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Acciones principales - Solo mostrar si es administrador -->
+    @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+    {
+        <div class="actions-card">
+            <div class="card-header">
+                <h3><i class="mdi mdi-plus-circle"></i> Acciones Rápidas</h3>
+                <p>Crea y gestiona eventos universitarios únicos</p>
+            </div>
+            <div class="card-body">
+                <div class="actions-grid">
+                    <a href="/EventosUniversitarios/CrearEvento" class="btn-modern btn-primary">
+                        <i class="mdi mdi-plus"></i>
+                        Crear Nuevo Evento
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Lista de eventos -->
+    <div class="table-card">
+        <div class="card-header">
+            <h3><i class="mdi mdi-view-list"></i> Lista de Eventos Universitarios</h3>
+            <p>Información detallada de todos los eventos universitarios disponibles</p>
+        </div>
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="eventos-grid">
+                    @foreach (var evento in Model)
+                    {
+                        <div class="evento-card">
+                            <div class="evento-header">
+                                <div class="evento-badge">
+                                    <i class="mdi mdi-school"></i>
+                                </div>
+                                <div class="evento-title">@evento.Nombre</div>
+                                <div class="evento-universidad">
+                                    <i class="mdi mdi-bank"></i>
+                                    @evento.Universidad
+                                </div>
+                            </div>
+
+                            <div class="evento-content">
+                                <div class="evento-description">
+                                    @evento.Descripcion
+                                </div>
+
+                                <div class="evento-info-grid">
+                                    <div class="info-item">
+                                        <i class="mdi mdi-map-marker-outline"></i>
+                                        <div class="info-details">
+                                            <span class="info-label">Ubicación</span>
+                                            <span class="info-value">@evento.Ubicacion</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="mdi mdi-calendar-start"></i>
+                                        <div class="info-details">
+                                            <span class="info-label">Inicio</span>
+                                            <span class="info-value">@evento.FechaInicioFormateada</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="mdi mdi-calendar-end"></i>
+                                        <div class="info-details">
+                                            <span class="info-label">Fin</span>
+                                            <span class="info-value">@evento.FechaFinFormateada</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="mdi mdi-clock-outline"></i>
+                                        <div class="info-details">
+                                            <span class="info-label">Duración</span>
+                                            <span class="info-value">@evento.DuracionEnHoras horas</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="mdi mdi-account-group"></i>
+                                        <div class="info-details">
+                                            <span class="info-label">Capacidad</span>
+                                            <span class="info-value">@evento.CantidadPersonas personas</span>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="mdi mdi-account-circle"></i>
+                                        <div class="info-details">
+                                            <span class="info-label">Organizador</span>
+                                            <span class="info-value">@evento.NombreCreador</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="evento-price">
+                                    <span class="price-currency">₡</span>
+                                    <span class="price-amount">@evento.Precio.ToString("N0")</span>
+                                </div>
+
+                                <!-- Badge de estado -->
+                                <div class="evento-status">
+                                    <span class="status-badge status-@(evento.EventoTerminado ? "finished" : evento.EsEventoEnCurso ? "active" : "upcoming")">
+                                        <i class="mdi @(evento.EventoTerminado ? "mdi-check-circle" : evento.EsEventoEnCurso ? "mdi-play-circle" : "mdi-clock-outline")"></i>
+                                        @evento.EstadoEvento
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Acciones solo para administradores -->
+                            @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                            {
+                                <div class="evento-actions">
+                                    <a href="/EventosUniversitarios/EditarEvento/@evento.IdEventoUniversitario"
+                                       class="btn-action btn-edit"
+                                       title="Editar evento">
+                                        <i class="mdi mdi-pencil"></i>
+                                    </a>
+                                    <button onclick="eliminarEvento(@evento.IdEventoUniversitario)"
+                                            class="btn-action btn-delete"
+                                            title="Eliminar evento">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- Botón de ver detalles para usuarios regulares -->
+                                <div class="evento-actions">
+                                    <a href="/EventosUniversitarios/Detalle/@evento.IdEventoUniversitario"
+                                       class="btn-action btn-view"
+                                       title="Ver detalles">
+                                        <i class="mdi mdi-eye"></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="mdi mdi-school-outline"></i>
+                    </div>
+                    <h4 class="empty-title">No hay eventos universitarios disponibles</h4>
+                    <p class="empty-subtitle">
+                        @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                        {
+                            @:Comienza creando tu primer evento universitario y conecta a la comunidad estudiantil.
+                        }
+                        else
+                        {
+                            @:Pronto habrá increíbles eventos universitarios disponibles.
+                        }
+                    </p>
+                    @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                    {
+                        <a href="/EventosUniversitarios/CrearEvento" class="btn-modern btn-primary">
+                            <i class="mdi mdi-plus"></i>
+                            Crear Primer Evento
+                        </a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Contenedor principal */
+    .eventos-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Alerts */
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #166534;
+    }
+
+    /* Header con tema universitario (azul) */
+    .page-header {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    .header-stats {
+        z-index: 1;
+        position: relative;
+    }
+
+    .stat-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px 25px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    /* Cards */
+    .actions-card,
+    .table-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 25px 30px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .card-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    /* Acciones */
+    .actions-grid {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Botones modernos */
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+    /* Grid de eventos */
+    .eventos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+    }
+
+    /* Evento cards con tema universitario */
+    .evento-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+        .evento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+    .evento-header {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        padding: 25px;
+        color: white;
+        position: relative;
+        text-align: center;
+    }
+
+    .evento-badge {
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px auto;
+        font-size: 1.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .evento-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+
+    .evento-universidad {
+        opacity: 0.9;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 500;
+    }
+
+    .evento-content {
+        padding: 25px;
+    }
+
+    .evento-description {
+        color: #6b7280;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .evento-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #f9fafb;
+        border-radius: 12px;
+        border-left: 4px solid #3b82f6;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .info-item i {
+            color: #3b82f6;
+            font-size: 1.1rem;
+            width: 20px;
+        }
+
+    .info-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        font-weight: 500;
+    }
+
+    .info-value {
+        font-size: 0.9rem;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    .evento-price {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        border: 2px solid #93c5fd;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .price-currency {
+        font-size: 1.2rem;
+        color: #2563eb;
+        font-weight: 600;
+    }
+
+    .price-amount {
+        font-size: 1.8rem;
+        color: #1d4ed8;
+        font-weight: 700;
+        margin-left: 5px;
+    }
+
+    /* Status badges */
+    .evento-status {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+        .status-badge.status-upcoming {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-badge.status-active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-badge.status-finished {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+    .evento-actions {
+        display: flex;
+        gap: 10px;
+        padding: 0 25px 25px 25px;
+    }
+
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+        border: 2px solid transparent;
+        cursor: pointer;
+        flex: 1;
+    }
+
+        .btn-action.btn-edit {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .btn-action.btn-delete {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .btn-action.btn-view {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        .btn-action.btn-edit:hover,
+        .btn-action.btn-delete:hover,
+        .btn-action.btn-view:hover {
+            color: white;
+        }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        color: #d1d5db;
+        margin-bottom: 20px;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 10px;
+    }
+
+    .empty-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+
+    /* Responsive */
+    @@media only screen and (max-width: 1024px) {
+        .eventos-container {
+            padding: 15px;
+            max-width: 100%;
+        }
+
+        .page-header {
+            padding: 25px 20px;
+        }
+
+        .eventos-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .eventos-container {
+            padding: 10px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            padding: 20px 15px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+        }
+
+        .card-body {
+            padding: 20px 15px;
+        }
+
+        .eventos-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .evento-info-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .eventos-container {
+            padding: 8px;
+        }
+
+        .page-header {
+            padding: 15px 10px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .card-header {
+            padding: 20px 15px;
+        }
+
+        .card-body {
+            padding: 15px 10px;
+        }
+
+        .evento-content {
+            padding: 20px 15px;
+        }
+
+        .evento-actions {
+            padding: 0 15px 20px 15px;
+        }
+    }
+</style>
+
+<script>
+    function eliminarEvento(id) {
+        if (confirm('¿Estás seguro de que deseas eliminar este evento universitario?')) {
+            // Crear form para enviar POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/EventosUniversitarios/Eliminar';
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'id';
+            input.value = id;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    // Animaciones para las cards
+    document.addEventListener('DOMContentLoaded', function() {
+        const eventoCards = document.querySelectorAll('.evento-card');
+        eventoCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+
+        // Auto hide alerts after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
+        });
+    });
+</script>
