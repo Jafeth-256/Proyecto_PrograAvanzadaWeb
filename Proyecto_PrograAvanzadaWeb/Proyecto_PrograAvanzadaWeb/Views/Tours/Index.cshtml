@@ -1,4 +1,4 @@
-﻿@model List<Tour>
+﻿@model List<Proyecto_PrograAvanzadaWeb.Models.TourViewModel>
 @{
     ViewData["Title"] = "Gestión de Tours";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,6 +11,15 @@
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="mdi mdi-check-circle me-2"></i>
             @TempData["Exito"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @TempData["Error"]
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
@@ -46,21 +55,24 @@
         </div>
     </div>
 
-    <!-- Acciones principales -->
-    <div class="actions-card">
-        <div class="card-header">
-            <h3><i class="mdi mdi-plus-circle"></i> Acciones Rápidas</h3>
-            <p>Crea y gestiona experiencias turísticas únicas</p>
-        </div>
-        <div class="card-body">
-            <div class="actions-grid">
-                <a href="/Tours/CrearTour" class="btn-modern btn-primary">
-                    <i class="mdi mdi-plus"></i>
-                    Crear Nuevo Tour
-                </a>
+    <!-- Acciones principales - Solo mostrar si es administrador -->
+    @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+    {
+        <div class="actions-card">
+            <div class="card-header">
+                <h3><i class="mdi mdi-plus-circle"></i> Acciones Rápidas</h3>
+                <p>Crea y gestiona experiencias turísticas únicas</p>
+            </div>
+            <div class="card-body">
+                <div class="actions-grid">
+                    <a href="/Tours/CrearTour" class="btn-modern btn-primary">
+                        <i class="mdi mdi-plus"></i>
+                        Crear Nuevo Tour
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    }
 
     <!-- Lista de tours -->
     <div class="table-card">
@@ -96,14 +108,14 @@
                                         <i class="mdi mdi-calendar-start"></i>
                                         <div class="info-details">
                                             <span class="info-label">Inicio</span>
-                                            <span class="info-value">@tour.FechaInicio.ToString("dd/MM/yyyy")</span>
+                                            <span class="info-value">@tour.FechaInicioFormateada</span>
                                         </div>
                                     </div>
                                     <div class="info-item">
                                         <i class="mdi mdi-calendar-end"></i>
                                         <div class="info-details">
                                             <span class="info-label">Fin</span>
-                                            <span class="info-value">@tour.FechaFin.ToString("dd/MM/yyyy")</span>
+                                            <span class="info-value">@tour.FechaFinFormateada</span>
                                         </div>
                                     </div>
                                     <div class="info-item">
@@ -126,20 +138,43 @@
                                     <span class="price-currency">₡</span>
                                     <span class="price-amount">@tour.Precio.ToString("N0")</span>
                                 </div>
+
+                                <!-- Badge de estado -->
+                                <div class="tour-status">
+                                    <span class="status-badge status-@(tour.TourTerminado ? "finished" : tour.EsTourEnCurso ? "active" : "upcoming")">
+                                        <i class="mdi @(tour.TourTerminado ? "mdi-check-circle" : tour.EsTourEnCurso ? "mdi-play-circle" : "mdi-clock-outline")"></i>
+                                        @tour.EstadoTour
+                                    </span>
+                                </div>
                             </div>
 
-                            <div class="tour-actions">
-                                <a href="/Tours/EditarTour/@tour.IdTour"
-                                   class="btn-action btn-edit"
-                                   title="Editar tour">
-                                    <i class="mdi mdi-pencil"></i>
-                                </a>
-                                <button onclick="eliminarTour(@tour.IdTour)"
-                                        class="btn-action btn-delete"
-                                        title="Eliminar tour">
-                                    <i class="mdi mdi-delete"></i>
-                                </button>
-                            </div>
+                            <!-- Acciones solo para administradores -->
+                            @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                            {
+                                <div class="tour-actions">
+                                    <a href="/Tours/EditarTour/@tour.IdTour"
+                                       class="btn-action btn-edit"
+                                       title="Editar tour">
+                                        <i class="mdi mdi-pencil"></i>
+                                    </a>
+                                    <button onclick="eliminarTour(@tour.IdTour)"
+                                            class="btn-action btn-delete"
+                                            title="Eliminar tour">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- Botón de ver detalles para usuarios regulares -->
+                                <div class="tour-actions">
+                                    <a href="/Tours/Detalle/@tour.IdTour"
+                                       class="btn-action btn-view"
+                                       title="Ver detalles">
+                                        <i class="mdi mdi-eye"></i>
+                                    </a>
+                                </div>
+                            }
                         </div>
                     }
                 </div>
@@ -151,11 +186,23 @@
                         <i class="mdi mdi-map-search-outline"></i>
                     </div>
                     <h4 class="empty-title">No hay tours disponibles</h4>
-                    <p class="empty-subtitle">Comienza creando tu primer tour y comparte las maravillas de Costa Rica.</p>
-                    <a href="/Tours/CrearTour" class="btn-modern btn-primary">
-                        <i class="mdi mdi-plus"></i>
-                        Crear Primer Tour
-                    </a>
+                    <p class="empty-subtitle">
+                        @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                        {
+                            @:Comienza creando tu primer tour y comparte las maravillas de Costa Rica.
+                        }
+                        else
+                        {
+                            @:Pronto habrá increíbles experiencias turísticas disponibles.
+                        }
+                    </p>
+                    @if (Context.Session.GetString("NombreRol") == "Usuario Administrador")
+                    {
+                        <a href="/Tours/CrearTour" class="btn-modern btn-primary">
+                            <i class="mdi mdi-plus"></i>
+                            Crear Primer Tour
+                        </a>
+                    }
                 </div>
             }
         </div>
@@ -470,7 +517,7 @@
         border-radius: 15px;
         padding: 20px;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         position: relative;
     }
 
@@ -486,6 +533,38 @@
         font-weight: 700;
         margin-left: 5px;
     }
+
+    /* Status badges */
+    .tour-status {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+        .status-badge.status-upcoming {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .status-badge.status-active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-badge.status-finished {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
 
     .tour-actions {
         display: flex;
@@ -505,6 +584,7 @@
         font-size: 1.1rem;
         border: 2px solid transparent;
         cursor: pointer;
+        flex: 1;
     }
 
         .btn-action.btn-edit {
@@ -517,17 +597,20 @@
             color: white;
         }
 
+        .btn-action.btn-view {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
         .btn-action:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
             text-decoration: none;
         }
 
-        .btn-action.btn-edit:hover {
-            color: white;
-        }
-
-        .btn-action.btn-delete:hover {
+        .btn-action.btn-edit:hover,
+        .btn-action.btn-delete:hover,
+        .btn-action.btn-view:hover {
             color: white;
         }
 
@@ -647,54 +730,20 @@
 <script>
     function eliminarTour(id) {
         if (confirm('¿Estás seguro de que deseas eliminar este tour?')) {
-            fetch('/Tours/Eliminar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'id=' + id
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showAlert('success', data.message || 'Tour eliminado exitosamente');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1500);
-                } else {
-                    showAlert('error', data.message || 'Error al eliminar el tour');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showAlert('error', 'Error al eliminar el tour');
-            });
+            // Crear form para enviar POST
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/Tours/Eliminar';
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'id';
+            input.value = id;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
         }
-    }
-
-    // Función para mostrar alertas
-    function showAlert(type, message) {
-        const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
-        const icon = type === 'success' ? 'mdi-check-circle' : 'mdi-alert-circle';
-
-        const alertHtml = `
-            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
-                <i class="mdi ${icon} me-2"></i>
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
-
-        const container = document.querySelector('.tours-container');
-        container.insertAdjacentHTML('afterbegin', alertHtml);
-
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            const alert = container.querySelector('.alert');
-            if (alert) {
-                alert.remove();
-            }
-        }, 5000);
     }
 
     // Animaciones para las cards
@@ -709,6 +758,16 @@
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
             }, index * 100);
+        });
+
+        // Auto hide alerts after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
         });
     });
 </script>

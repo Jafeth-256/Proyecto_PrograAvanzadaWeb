@@ -477,6 +477,334 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         }
 
         #endregion
+        // Reemplazar los métodos de Tours en ApiService.cs con estos:
+
+        #region Métodos de Tours
+
+        /// <summary>
+        /// Obtiene todos los tours disponibles
+        /// </summary>
+        public async Task<ApiResponse<List<TourDto>>> ObtenerTodosLosTours()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/tours");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<TourDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException ex)
+                    {
+                        // Manejar respuesta en formato diferente
+                        var toursList = JsonSerializer.Deserialize<List<TourDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<TourDto>>
+                        {
+                            Success = true,
+                            Message = "Tours obtenidos exitosamente",
+                            Data = toursList ?? new List<TourDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<TourDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener los tours",
+                    Data = new List<TourDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<TourDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<TourDto>()
+                };
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un tour por su ID
+        /// </summary>
+        public async Task<ApiResponse<TourDto>> ObtenerTourPorId(long id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/tours/{id}");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<TourDto>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        // Manejar respuesta en formato diferente
+                        var tour = JsonSerializer.Deserialize<TourDto>(content, _jsonOptions);
+                        return new ApiResponse<TourDto>
+                        {
+                            Success = true,
+                            Message = "Tour obtenido exitosamente",
+                            Data = tour
+                        };
+                    }
+                }
+
+                return new ApiResponse<TourDto>
+                {
+                    Success = false,
+                    Message = "Tour no encontrado"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<TourDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        /// <summary>
+        /// Crea un nuevo tour - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> CrearTour(CrearTourDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/tours", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        // Intentar deserializar como ApiResponse<bool>
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            // Intentar deserializar como ResponseDTO<object> que devuelve la API
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            // Si todo falla, asumir éxito si el status code es exitoso
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Tour creado exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al crear el tour",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al crear el tour",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        /// <summary>
+        /// Actualiza un tour existente - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> ActualizarTour(long id, CrearTourDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/tours/{id}", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Tour actualizado exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al actualizar el tour",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al actualizar el tour",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        /// <summary>
+        /// Elimina un tour (eliminación lógica) - Solo administradores
+        /// </summary>
+        public async Task<ApiResponse<bool>> EliminarTour(long id)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.DeleteAsync($"api/tours/{id}");
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Tour eliminado exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al eliminar el tour",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al eliminar el tour",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        #endregion
     }
 
     #region DTOs para la API
@@ -604,6 +932,33 @@ namespace Proyecto_PrograAvanzadaWeb.Services
     }
 
     #endregion
+
+    #endregion
+    #region DTOs de Tours
+
+    public class TourDto
+    {
+        public long IdTour { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Destino { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    public class CrearTourDto
+    {
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Destino { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+    }
 
     #endregion
 }
