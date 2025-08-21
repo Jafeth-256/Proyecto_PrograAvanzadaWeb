@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Proyecto_ProgaAvanzadaWeb_API.Models.Entities
+﻿namespace Proyecto_ProgaAvanzadaWeb_API.Models.Entities
 {
-    public class Reserva : Controller
+    public class Reserva
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public long IdReserva { get; set; }
+        public long IdTour { get; set; }
+        public string NombreTour { get; set; }
+        public string Destino { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public decimal PrecioTotal { get; set; }
+        public DateTime FechaReserva { get; set; }
+        public string EstadoReserva { get; set; }
+        public string Comentarios { get; set; }
+        public string NombreCreador { get; set; }
     }
 }
