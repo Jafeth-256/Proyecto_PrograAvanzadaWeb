@@ -23,8 +23,14 @@
         </div>
     }
 
-    <div class="page-header">
-        <div class="header-content">
+    <!-- Header Hero -->
+    <div class="reservas-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <div class="hero-pattern"></div>
+        </div>
+
+        <div class="hero-content">
             <div class="breadcrumb-nav">
                 <a href="/ReservasSociales/Explorar" class="breadcrumb-link">
                     <i class="mdi mdi-calendar-star"></i> Explorar Eventos
@@ -32,52 +38,61 @@
                 <span class="breadcrumb-separator">/</span>
                 <span class="breadcrumb-current">Mis Reservas</span>
             </div>
-            <h1 class="page-title">
-                <i class="mdi mdi-bookmark-multiple me-2"></i>
+
+            <h1 class="page-title-hero">
+                <i class="mdi mdi-bookmark-multiple me-3"></i>
                 Mis Reservas de Eventos Sociales
             </h1>
-            <p class="page-subtitle">Gestiona todas tus reservas de eventos sociales</p>
-        </div>
-        <div class="header-stats">
-            <div class="stat-badge">
-                <span class="stat-number">@(Model?.Count ?? 0)</span>
-                <span class="stat-label">Reservas Totales</span>
+            <p class="page-subtitle-hero">Gestiona todas tus reservas de eventos sociales</p>
+
+            <div class="header-stats-hero">
+                <div class="stat-badge-hero">
+                    <div class="stat-number">@(Model?.Count ?? 0)</div>
+                    <div class="stat-label">Reservas Totales</div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Filters Section -->
     <div class="filters-section">
         <div class="filters-card">
-            <div class="filters-content">
-                <div class="filter-group">
-                    <label class="filter-label">
-                        <i class="mdi mdi-magnify"></i>
-                        Buscar reservas
-                    </label>
-                    <input type="text" id="filtro-busqueda" class="form-control" placeholder="Buscar por evento o ubicación...">
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">
-                        <i class="mdi mdi-toggle-switch"></i>
-                        Estado
-                    </label>
-                    <select id="filtro-estado" class="form-control">
-                        <option value="">Todos los estados</option>
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="Confirmada">Confirmada</option>
-                        <option value="Cancelada">Cancelada</option>
-                    </select>
-                </div>
-                <div class="filter-actions">
-                    <button id="limpiar-filtros" class="btn-modern btn-outline">
-                        <i class="mdi mdi-filter-remove"></i>
-                        Limpiar
-                    </button>
+            <div class="card-header">
+                <h3><i class="mdi mdi-filter-variant"></i> Filtrar Reservas</h3>
+            </div>
+            <div class="card-body">
+                <div class="filters-content">
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <i class="mdi mdi-magnify"></i>
+                            Buscar reservas
+                        </label>
+                        <input type="text" id="filtro-busqueda" class="form-control-modern" placeholder="Buscar por evento o ubicación...">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <i class="mdi mdi-toggle-switch"></i>
+                            Estado
+                        </label>
+                        <select id="filtro-estado" class="form-control-modern">
+                            <option value="">Todos los estados</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Confirmada">Confirmada</option>
+                            <option value="Cancelada">Cancelada</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button id="limpiar-filtros" class="btn-modern btn-outline">
+                            <i class="mdi mdi-filter-remove"></i>
+                            Limpiar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Reservas Content -->
     <div class="reservas-content">
         @if (Model != null && Model.Any())
         {
@@ -88,53 +103,62 @@
                          data-evento="@reserva.NombreEvento.ToLower()"
                          data-ubicacion="@reserva.Ubicacion.ToLower()"
                          data-estado="@reserva.EstadoReserva">
+
                         <div class="reserva-header">
                             <div class="reserva-badge">
                                 <i class="mdi mdi-ticket"></i>
                             </div>
                             <div class="reserva-status">
-                                <span class="status-badge status-@reserva.EstadoReserva.ToLower()">
+                                <span class="status-badge-card status-@reserva.EstadoReserva.ToLower()">
                                     <i class="mdi @(reserva.EstadoReserva == "Pendiente" ? "mdi-clock-outline" :
-                                                                                                                                 reserva.EstadoReserva == "Confirmada" ? "mdi-check-circle" : "mdi-close-circle")"></i>
+                                                                                          reserva.EstadoReserva == "Confirmada" ? "mdi-check-circle" : "mdi-close-circle")"></i>
                             @reserva.EstadoTexto
                         </span>
                     </div>
                 </div>
 
-                        <div class="reserva-content">
-                            <div class="tour-info">
-                                <h3 class="tour-title">@reserva.NombreEvento</h3>
-                                <div class="tour-destination">
+                        <div class="reserva-main">
+                            <div class="evento-info">
+                                <h3 class="evento-title">@reserva.NombreEvento</h3>
+                                <div class="evento-location">
                                     <i class="mdi mdi-map-marker-outline"></i>
                                     @reserva.Ubicacion
                                 </div>
                             </div>
 
                             <div class="reserva-details">
-                                <div class="detail-grid">
+                                <div class="details-grid">
                                     <div class="detail-item">
-                                        <i class="mdi mdi-calendar-range"></i>
+                                        <div class="detail-icon">
+                                            <i class="mdi mdi-calendar-range"></i>
+                                        </div>
                                         <div class="detail-content">
                                             <span class="detail-label">Fechas del Evento</span>
                                             <span class="detail-value">@reserva.FechaInicioFormateada - @reserva.FechaFinFormateada</span>
                                         </div>
                                     </div>
                                     <div class="detail-item">
-                                        <i class="mdi mdi-clock-outline"></i>
+                                        <div class="detail-icon">
+                                            <i class="mdi mdi-clock-outline"></i>
+                                        </div>
                                         <div class="detail-content">
                                             <span class="detail-label">Duración</span>
                                             <span class="detail-value">@reserva.DuracionEnDias día@(reserva.DuracionEnDias != 1 ? "s" : "")</span>
                                         </div>
                                     </div>
                                     <div class="detail-item">
-                                        <i class="mdi mdi-account-group"></i>
+                                        <div class="detail-icon">
+                                            <i class="mdi mdi-account-group"></i>
+                                        </div>
                                         <div class="detail-content">
                                             <span class="detail-label">Personas</span>
                                             <span class="detail-value">@reserva.CantidadPersonas persona@(reserva.CantidadPersonas != 1 ? "s" : "")</span>
                                         </div>
                                     </div>
                                     <div class="detail-item">
-                                        <i class="mdi mdi-calendar-plus"></i>
+                                        <div class="detail-icon">
+                                            <i class="mdi mdi-calendar-plus"></i>
+                                        </div>
                                         <div class="detail-content">
                                             <span class="detail-label">Fecha de Reserva</span>
                                             <span class="detail-value">@reserva.FechaReservaFormateada</span>
@@ -145,37 +169,47 @@
                         @if (!string.IsNullOrEmpty(reserva.Comentarios))
                                 {
                                     <div class="comentarios-section">
-                                        <h5><i class="mdi mdi-message-text"></i> Comentarios:</h5>
-                                        <p>@reserva.Comentarios</p>
+                                        <div class="comentarios-header">
+                                            <i class="mdi mdi-message-text"></i>
+                                            <span>Comentarios:</span>
+                                        </div>
+                                        <p class="comentarios-text">@reserva.Comentarios</p>
                                     </div>
                                 }
 
-                                <div class="organizador-info">
-                                    <i class="mdi mdi-account-circle"></i>
-                                    <span>Organizado por <strong>@reserva.NombreCreador</strong></span>
-                                </div>
-                            </div>
-
-                            <div class="precio-section">
-                                <div class="precio-info">
-                                    <span class="precio-label">Total Pagado:</span>
-                                    <span class="precio-amount">@reserva.PrecioFormateado</span>
+                                <div class="organizador-section">
+                                    <div class="organizador-info">
+                                        <div class="organizador-avatar">
+                                            <i class="mdi mdi-account-circle"></i>
+                                        </div>
+                                        <div class="organizador-details">
+                                            <span class="organizador-label">Organizado por</span>
+                                            <span class="organizador-name">@reserva.NombreCreador</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="reserva-actions">
-                            <a href="/ReservasSociales/Detalle/@reserva.IdEventoSocial" class="btn-action btn-view">
-                                <i class="mdi mdi-eye"></i>
-                                Ver Evento
-                            </a>
-                            @if (reserva.PuedeCancelar)
-                            {
-                                <button class="btn-action btn-cancel" onclick="cancelarReserva(@reserva.IdReservaSocial)">
-                                    <i class="mdi mdi-close"></i>
-                                    Cancelar
-                                </button>
-                            }
+                        <div class="reserva-footer">
+                            <div class="precio-section">
+                                <span class="precio-label">Total Pagado:</span>
+                                <span class="precio-amount">@reserva.PrecioFormateado</span>
+                            </div>
+
+                            <div class="reserva-actions">
+                                <a href="/ReservasSociales/Detalle/@reserva.IdEventoSocial" class="btn-modern btn-primary">
+                                    <i class="mdi mdi-eye"></i>
+                                    Ver Evento
+                                </a>
+                                @if (reserva.PuedeCancelar)
+                                {
+                                    <button class="btn-modern btn-danger" onclick="cancelarReserva(@reserva.IdReservaSocial)">
+                                        <i class="mdi mdi-close"></i>
+                                        Cancelar
+                                    </button>
+                                }
+                            </div>
                         </div>
                     </div>
                 }
@@ -189,7 +223,7 @@
                 </div>
                 <h4 class="empty-title">No tienes reservas de eventos sociales aún</h4>
                 <p class="empty-subtitle">¡Explora nuestros increíbles eventos y haz tu primera reserva!</p>
-                <a href="/ReservasSociales/Explorar" class="btn-modern btn-primary">
+                <a href="/ReservasSociales/Explorar" class="btn-modern btn-primary btn-large">
                     <i class="mdi mdi-calendar-star"></i>
                     Explorar Eventos
                 </a>
@@ -199,7 +233,662 @@
 </div>
 
 <style>
-    /* Styles are the same as in MisReservas.cshtml for tours */
+    .reservas-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Hero Section */
+    .reservas-hero {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        color: white;
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        padding: 40px;
+        width: 100%;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .breadcrumb-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 0.3s ease;
+    }
+
+        .breadcrumb-link:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+    .breadcrumb-separator {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title-hero {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 15px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle-hero {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+        opacity: 0.9;
+    }
+
+    .header-stats-hero {
+        display: flex;
+        gap: 20px;
+    }
+
+    .stat-badge-hero {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        padding: 20px 25px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    /* Filters Section */
+    .filters-section {
+        margin-bottom: 30px;
+    }
+
+    .filters-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .card-header h3 i {
+                color: #f59e0b;
+            }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .filters-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr auto;
+        gap: 20px;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-label {
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .filter-label i {
+            color: #f59e0b;
+            font-size: 1rem;
+        }
+
+    .form-control-modern {
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        background: white;
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+        .form-control-modern:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+    /* Reservas Grid */
+    .reservas-content {
+        padding: 0 20px;
+    }
+
+    .reservas-grid {
+        display: grid;
+        gap: 25px;
+    }
+
+    .reserva-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .reserva-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+    .reserva-header {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 20px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .reserva-badge {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .status-badge-card {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+        .status-badge-card.status-pendiente {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+
+        .status-badge-card.status-confirmada {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #22c55e;
+        }
+
+        .status-badge-card.status-cancelada {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+    .reserva-main {
+        padding: 25px;
+    }
+
+    .evento-info {
+        margin-bottom: 25px;
+    }
+
+    .evento-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #374151;
+        margin: 0 0 10px 0;
+    }
+
+    .evento-location {
+        color: #6b7280;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .evento-location i {
+            color: #f59e0b;
+            font-size: 1.1rem;
+        }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: #f9fafb;
+        border-radius: 12px;
+        border-left: 4px solid #f59e0b;
+    }
+
+    .detail-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .detail-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detail-label {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 500;
+        margin-bottom: 2px;
+    }
+
+    .detail-value {
+        font-size: 0.95rem;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    .comentarios-section {
+        background: #fffbeb;
+        border: 1px solid #fed7aa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .comentarios-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #92400e;
+        font-size: 0.95rem;
+    }
+
+        .comentarios-header i {
+            font-size: 1.1rem;
+        }
+
+    .comentarios-text {
+        margin: 0;
+        color: #78350f;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .organizador-section {
+        border-top: 1px solid #f3f4f6;
+        padding-top: 20px;
+    }
+
+    .organizador-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .organizador-avatar {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .organizador-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .organizador-label {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .organizador-name {
+        font-size: 0.95rem;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    .reserva-footer {
+        background: #f8fafc;
+        padding: 20px 25px;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .precio-section {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .precio-label {
+        font-size: 0.85rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .precio-amount {
+        font-size: 1.3rem;
+        color: #f59e0b;
+        font-weight: 700;
+    }
+
+    .reserva-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Buttons */
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        text-align: center;
+        justify-content: center;
+        font-family: inherit;
+    }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-modern.btn-large {
+            padding: 15px 25px;
+            font-size: 1rem;
+        }
+
+        .btn-modern:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-danger:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-outline:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .empty-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        color: white;
+        font-size: 2.5rem;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        color: #374151;
+        font-weight: 600;
+        margin: 0 0 15px 0;
+    }
+
+    .empty-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+        margin: 0 0 30px 0;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Alerts */
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .alert-success {
+        background: #f0fdf4;
+        border-color: #bbf7d0;
+        color: #166534;
+    }
+
+    /* Responsive */
+    @@media only screen and (max-width: 968px) {
+        .filters-content
+
+    {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .reserva-footer {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .reserva-actions {
+        justify-content: center;
+    }
+
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .reservas-container
+
+    {
+        padding: 10px;
+    }
+
+    .page-title-hero {
+        font-size: 2rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .hero-content {
+        padding: 30px 20px;
+    }
+
+    .reservas-content {
+        padding: 0 10px;
+    }
+
+    .detail-item {
+        padding: 12px;
+    }
+
+    .reserva-actions {
+        flex-direction: column;
+    }
+
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .page-title-hero
+
+    {
+        font-size: 1.8rem;
+    }
+
+    .evento-title {
+        font-size: 1.2rem;
+    }
+
+    .precio-amount {
+        font-size: 1.1rem;
+    }
+
+    }
 </style>
 
 <script>
@@ -245,7 +934,22 @@
             });
         }
 
+        // Animaciones de entrada
         const reservaCards = document.querySelectorAll('.reserva-card');
+        const filtersCard = document.querySelector('.filters-card');
+
+        // Animar filtros
+        if (filtersCard) {
+            filtersCard.style.opacity = '0';
+            filtersCard.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                filtersCard.style.transition = 'all 0.5s ease';
+                filtersCard.style.opacity = '1';
+                filtersCard.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Animar cards de reservas
         reservaCards.forEach((card, index) => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
@@ -254,12 +958,30 @@
                 card.style.transition = 'all 0.5s ease';
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
-            }, index * 100);
+            }, (index * 100) + 200);
+        });
+
+        // Auto-hide alerts
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.style.transition = 'opacity 0.3s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                }
+            }, 5000);
         });
     });
 
     function cancelarReserva(idReserva) {
         if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
+            // Mostrar loading en el botón
+            const button = event.target.closest('button');
+            const originalContent = button.innerHTML;
+            button.innerHTML = '<i class="mdi mdi-loading mdi-spin"></i> Cancelando...';
+            button.disabled = true;
+
             fetch('/ReservasSociales/CancelarReserva', {
                 method: 'POST',
                 headers: {
@@ -270,13 +992,24 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    location.reload();
+                    // Mostrar éxito y recargar
+                    button.innerHTML = '<i class="mdi mdi-check"></i> Cancelada';
+                    button.classList.remove('btn-danger');
+                    button.classList.add('btn-success');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 } else {
+                    // Restaurar botón y mostrar error
+                    button.innerHTML = originalContent;
+                    button.disabled = false;
                     alert('Error: ' + data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                button.innerHTML = originalContent;
+                button.disabled = false;
                 alert('Error al cancelar la reserva');
             });
         }
