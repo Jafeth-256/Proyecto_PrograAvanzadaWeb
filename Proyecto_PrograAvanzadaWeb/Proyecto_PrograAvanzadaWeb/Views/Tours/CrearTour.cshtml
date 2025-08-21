@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Proyecto_PrograAvanzadaWeb.Models.CrearTourViewModel
+@{
     ViewData["Title"] = "Crear Tour";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,6 +11,15 @@
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="mdi mdi-alert-circle me-2"></i>
             @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Exito))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-check-circle me-2"></i>
+            @ViewBag.Exito
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
@@ -45,30 +55,33 @@
                 </h3>
 
                 <div class="form-group">
-                    <label class="form-label" for="nombre">
+                    <label class="form-label" for="Nombre">
                         <i class="mdi mdi-tag"></i>
                         Nombre del Tour
                     </label>
-                    <input type="text" id="nombre" name="nombre" class="form-control"
-                           placeholder="Ej: Tour Volcán Arenal" required>
+                    <input type="text" id="Nombre" name="Nombre" class="form-control"
+                           value="@Model?.Nombre" placeholder="Ej: Tour Volcán Arenal" required>
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="destino">
+                    <label class="form-label" for="Destino">
                         <i class="mdi mdi-map-marker"></i>
                         Destino
                     </label>
-                    <input type="text" id="destino" name="destino" class="form-control"
-                           placeholder="Ej: La Fortuna, Alajuela" required>
+                    <input type="text" id="Destino" name="Destino" class="form-control"
+                           value="@Model?.Destino" placeholder="Ej: La Fortuna, Alajuela" required>
+                    <span asp-validation-for="Destino" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="descripcion">
+                    <label class="form-label" for="Descripcion">
                         <i class="mdi mdi-text"></i>
                         Descripción
                     </label>
-                    <textarea id="descripcion" name="descripcion" class="form-control form-textarea"
-                              placeholder="Describe las actividades, lugares a visitar, incluye, etc." required></textarea>
+                    <textarea id="Descripcion" name="Descripcion" class="form-control form-textarea"
+                              placeholder="Describe las actividades, lugares a visitar, incluye, etc." required>@Model?.Descripcion</textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
             </div>
 
@@ -80,39 +93,45 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="precio">
+                        <label class="form-label" for="Precio">
                             <i class="mdi mdi-currency-usd"></i>
                             Precio (₡)
                         </label>
-                        <input type="number" id="precio" name="precio" class="form-control"
-                               placeholder="50000" min="1" step="0.01" required>
+                        <input type="number" id="Precio" name="Precio" class="form-control"
+                               value="@Model?.Precio" placeholder="50000" min="1" step="0.01" required>
+                        <span asp-validation-for="Precio" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="cantidadPersonas">
+                        <label class="form-label" for="CantidadPersonas">
                             <i class="mdi mdi-account-group"></i>
                             Cantidad de Personas
                         </label>
-                        <input type="number" id="cantidadPersonas" name="cantidadPersonas" class="form-control"
-                               placeholder="10" min="1" required>
+                        <input type="number" id="CantidadPersonas" name="CantidadPersonas" class="form-control"
+                               value="@Model?.CantidadPersonas" placeholder="10" min="1" required>
+                        <span asp-validation-for="CantidadPersonas" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="fechaInicio">
+                        <label class="form-label" for="FechaInicio">
                             <i class="mdi mdi-calendar-start"></i>
                             Fecha de Inicio
                         </label>
-                        <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" required>
+                        <input type="date" id="FechaInicio" name="FechaInicio" class="form-control"
+                               value="@Model?.FechaInicio.ToString("yyyy-MM-dd")" required>
+                        <span asp-validation-for="FechaInicio" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="fechaFin">
+                        <label class="form-label" for="FechaFin">
                             <i class="mdi mdi-calendar-end"></i>
                             Fecha de Fin
                         </label>
-                        <input type="date" id="fechaFin" name="fechaFin" class="form-control" required>
+                        <input type="date" id="FechaFin" name="FechaFin" class="form-control"
+                               value="@Model?.FechaFin.ToString("yyyy-MM-dd")" required>
+                        <span asp-validation-for="FechaFin" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -337,6 +356,14 @@
         gap: 25px;
     }
 
+    /* Validation errors */
+    .text-danger {
+        color: #dc2626;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: block;
+    }
+
     /* Form actions */
     .form-actions {
         display: flex;
@@ -482,12 +509,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Establecer fecha mínima como hoy
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('fechaInicio').min = today;
-        document.getElementById('fechaFin').min = today;
+        const fechaInicio = document.getElementById('FechaInicio');
+        const fechaFin = document.getElementById('FechaFin');
+
+        fechaInicio.min = today;
+        fechaFin.min = today;
 
         // Validar que la fecha de fin sea posterior a la de inicio
-        document.getElementById('fechaInicio').addEventListener('change', function() {
-            const fechaFin = document.getElementById('fechaFin');
+        fechaInicio.addEventListener('change', function() {
             fechaFin.min = this.value;
 
             // Si la fecha de fin ya está seleccionada y es menor, limpiarla
@@ -496,9 +525,9 @@
             }
         });
 
-        document.getElementById('fechaFin').addEventListener('change', function() {
-            const fechaInicio = document.getElementById('fechaInicio').value;
-            if (fechaInicio && this.value <= fechaInicio) {
+        fechaFin.addEventListener('change', function() {
+            const fechaInicioValue = fechaInicio.value;
+            if (fechaInicioValue && this.value <= fechaInicioValue) {
                 showAlert('error', 'La fecha de fin debe ser posterior a la fecha de inicio');
                 this.value = '';
             }
@@ -506,15 +535,15 @@
 
         // Validación del formulario
         document.getElementById('tourForm').addEventListener('submit', function(e) {
-            const nombre = document.getElementById('nombre').value.trim();
-            const destino = document.getElementById('destino').value.trim();
-            const descripcion = document.getElementById('descripcion').value.trim();
-            const precio = document.getElementById('precio').value;
-            const cantidadPersonas = document.getElementById('cantidadPersonas').value;
-            const fechaInicio = document.getElementById('fechaInicio').value;
-            const fechaFin = document.getElementById('fechaFin').value;
+            const nombre = document.getElementById('Nombre').value.trim();
+            const destino = document.getElementById('Destino').value.trim();
+            const descripcion = document.getElementById('Descripcion').value.trim();
+            const precio = document.getElementById('Precio').value;
+            const cantidadPersonas = document.getElementById('CantidadPersonas').value;
+            const fechaInicioValue = fechaInicio.value;
+            const fechaFinValue = fechaFin.value;
 
-            if (!nombre || !destino || !descripcion || !precio || !cantidadPersonas || !fechaInicio || !fechaFin) {
+            if (!nombre || !destino || !descripcion || !precio || !cantidadPersonas || !fechaInicioValue || !fechaFinValue) {
                 e.preventDefault();
                 showAlert('error', 'Por favor, completa todos los campos requeridos');
                 return;
@@ -532,11 +561,21 @@
                 return;
             }
 
-            if (fechaFin <= fechaInicio) {
+            if (fechaFinValue <= fechaInicioValue) {
                 e.preventDefault();
                 showAlert('error', 'La fecha de fin debe ser posterior a la fecha de inicio');
                 return;
             }
+        });
+
+        // Auto hide alerts after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
         });
     });
 
