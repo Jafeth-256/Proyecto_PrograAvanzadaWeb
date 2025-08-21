@@ -477,7 +477,6 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         }
 
         #endregion
-        // Reemplazar los métodos de Tours en ApiService.cs con estos:
 
         #region Métodos de Tours
 
@@ -805,6 +804,315 @@ namespace Proyecto_PrograAvanzadaWeb.Services
         }
 
         #endregion
+
+        #region Métodos de Reservas
+
+        public async Task<ApiResponse<List<TourDisponibleDto>>> ObtenerToursDisponibles()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/reservas/tours-disponibles");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<TourDisponibleDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var toursList = JsonSerializer.Deserialize<List<TourDisponibleDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<TourDisponibleDto>>
+                        {
+                            Success = true,
+                            Message = "Tours disponibles obtenidos exitosamente",
+                            Data = toursList ?? new List<TourDisponibleDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<TourDisponibleDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener los tours disponibles",
+                    Data = new List<TourDisponibleDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<TourDisponibleDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<TourDisponibleDto>()
+                };
+            }
+        }
+
+        public async Task<ApiResponse<TourDisponibleDto>> ObtenerTourDisponiblePorId(long id)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"api/reservas/tours-disponibles/{id}");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<TourDisponibleDto>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var tour = JsonSerializer.Deserialize<TourDisponibleDto>(content, _jsonOptions);
+                        return new ApiResponse<TourDisponibleDto>
+                        {
+                            Success = true,
+                            Message = "Tour obtenido exitosamente",
+                            Data = tour
+                        };
+                    }
+                }
+
+                return new ApiResponse<TourDisponibleDto>
+                {
+                    Success = false,
+                    Message = "Tour no encontrado"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<TourDisponibleDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ApiResponse<bool>> CrearReserva(CrearReservaDto dto)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var json = JsonSerializer.Serialize(dto, _jsonOptions);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("api/reservas", content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Reserva creada exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al crear la reserva",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al crear la reserva",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        public async Task<ApiResponse<List<ReservaDto>>> ObtenerMisReservas()
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.GetAsync("api/reservas/mis-reservas");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<List<ReservaDto>>>(content, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        var reservasList = JsonSerializer.Deserialize<List<ReservaDto>>(content, _jsonOptions);
+                        return new ApiResponse<List<ReservaDto>>
+                        {
+                            Success = true,
+                            Message = "Reservas obtenidas exitosamente",
+                            Data = reservasList ?? new List<ReservaDto>()
+                        };
+                    }
+                }
+
+                return new ApiResponse<List<ReservaDto>>
+                {
+                    Success = false,
+                    Message = "Error al obtener las reservas",
+                    Data = new List<ReservaDto>()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<ReservaDto>>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = new List<ReservaDto>()
+                };
+            }
+        }
+
+        public async Task<ApiResponse<bool>> CancelarReserva(long idReserva)
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.PostAsync($"api/reservas/{idReserva}/cancelar", null);
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        return JsonSerializer.Deserialize<ApiResponse<bool>>(responseContent, _jsonOptions);
+                    }
+                    catch (JsonException)
+                    {
+                        try
+                        {
+                            var apiResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                            return new ApiResponse<bool>
+                            {
+                                Success = apiResult.Success,
+                                Message = apiResult.Message,
+                                Data = apiResult.Success
+                            };
+                        }
+                        catch (JsonException)
+                        {
+                            return new ApiResponse<bool>
+                            {
+                                Success = true,
+                                Message = "Reserva cancelada exitosamente",
+                                Data = true
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var errorResult = JsonSerializer.Deserialize<ResponseDto<object>>(responseContent, _jsonOptions);
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = errorResult.Message ?? "Error al cancelar la reserva",
+                            Data = false
+                        };
+                    }
+                    catch (JsonException)
+                    {
+                        return new ApiResponse<bool>
+                        {
+                            Success = false,
+                            Message = "Error al cancelar la reserva",
+                            Data = false
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = false
+                };
+            }
+        }
+
+        public async Task<ApiResponse<EstadisticasReservasDto>> ObtenerEstadisticasReservas()
+        {
+            try
+            {
+                ConfigureAuthHeaders();
+                var response = await _httpClient.GetAsync("api/reservas/estadisticas");
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return JsonSerializer.Deserialize<ApiResponse<EstadisticasReservasDto>>(content, _jsonOptions);
+                }
+
+                return new ApiResponse<EstadisticasReservasDto>
+                {
+                    Success = false,
+                    Message = $"Error: {response.StatusCode}",
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<EstadisticasReservasDto>
+                {
+                    Success = false,
+                    Message = $"Error de conexión: {ex.Message}",
+                    Data = null
+                };
+            }
+        }
+
+        #endregion
+
     }
 
     #region DTOs para la API
@@ -961,4 +1269,52 @@ namespace Proyecto_PrograAvanzadaWeb.Services
     }
 
     #endregion
+
+    public class TourDisponibleDto
+    {
+        public long IdTour { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public string Destino { get; set; }
+        public decimal Precio { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string NombreCreador { get; set; }
+        public int PersonasReservadas { get; set; }
+        public int CuposDisponibles { get; set; }
+    }
+
+    public class CrearReservaDto
+    {
+        public long IdTour { get; set; }
+        public int CantidadPersonas { get; set; }
+        public string Comentarios { get; set; }
+    }
+
+    public class ReservaDto
+    {
+        public long IdReserva { get; set; }
+        public long IdTour { get; set; }
+        public string NombreTour { get; set; }
+        public string Destino { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public int CantidadPersonas { get; set; }
+        public decimal PrecioTotal { get; set; }
+        public DateTime FechaReserva { get; set; }
+        public string EstadoReserva { get; set; }
+        public string Comentarios { get; set; }
+        public string NombreCreador { get; set; }
+    }
+
+    public class EstadisticasReservasDto
+    {
+        public int TotalReservas { get; set; }
+        public int ReservasPendientes { get; set; }
+        public int ReservasConfirmadas { get; set; }
+        public int ReservasCanceladas { get; set; }
+        public decimal IngresosTotales { get; set; }
+        public int PersonasTotales { get; set; }
+    }
 }

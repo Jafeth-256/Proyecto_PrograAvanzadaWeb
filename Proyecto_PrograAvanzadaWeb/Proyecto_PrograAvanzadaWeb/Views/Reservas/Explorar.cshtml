@@ -1,0 +1,829 @@
+﻿@model List<Proyecto_PrograAvanzadaWeb.Models.TourDisponibleViewModel>
+@{
+    ViewData["Title"] = "Explorar Tours";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="explorar-container">
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-alert-circle me-2"></i>
+            @ViewBag.Error
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.Mensaje))
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="mdi mdi-information me-2"></i>
+            @ViewBag.Mensaje
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="page-header">
+        <div class="header-content">
+            <div class="breadcrumb-nav">
+                <span class="breadcrumb-current">
+                    <i class="mdi mdi-map-search"></i> Explorar Tours
+                </span>
+            </div>
+            <h1 class="page-title">
+                <i class="mdi mdi-compass-outline me-2"></i>
+                Explorar Tours Disponibles
+            </h1>
+            <p class="page-subtitle">Descubre increíbles experiencias turísticas en Costa Rica</p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-number">@(Model?.Count ?? 0)</span>
+                <span class="stat-label">Tours Disponibles</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <div class="filters-card">
+            <div class="filters-content">
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-magnify"></i>
+                        Buscar tours
+                    </label>
+                    <input type="text" id="filtro-busqueda" class="form-control" placeholder="Buscar por nombre o destino...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-currency-usd"></i>
+                        Precio máximo
+                    </label>
+                    <input type="range" id="filtro-precio" class="price-range" min="0" max="500000" value="500000">
+                    <span class="price-display">₡<span id="precio-valor">500,000</span></span>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <i class="mdi mdi-account-group"></i>
+                        Cupos mínimos
+                    </label>
+                    <select id="filtro-cupos" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="1">1+ cupos</option>
+                        <option value="5">5+ cupos</option>
+                        <option value="10">10+ cupos</option>
+                    </select>
+                </div>
+                <div class="filter-actions">
+                    <button id="limpiar-filtros" class="btn-modern btn-outline">
+                        <i class="mdi mdi-filter-remove"></i>
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tours-content">
+        @if (Model != null && Model.Any())
+        {
+            <div class="tours-grid" id="tours-grid">
+                @foreach (var tour in Model)
+                {
+                    <div class="tour-card"
+                         data-nombre="@tour.Nombre.ToLower()"
+                         data-destino="@tour.Destino.ToLower()"
+                         data-precio="@tour.Precio"
+                         data-cupos="@tour.CuposDisponibles">
+                        <div class="tour-image">
+                            <div class="tour-badge">
+                                <i class="mdi mdi-map-marker"></i>
+                            </div>
+                            <div class="availability-badge">
+                                <span class="cupos-disponibles">@tour.CuposDisponibles cupos</span>
+                            </div>
+                            <div class="price-tag">
+                                <span class="price-amount">@tour.PrecioFormateado</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                        </div>
+
+                        <div class="tour-content">
+                            <div class="tour-header">
+                                <h3 class="tour-title">@tour.Nombre</h3>
+                                <div class="tour-destination">
+                                    <i class="mdi mdi-map-marker-outline"></i>
+                                    @tour.Destino
+                                </div>
+                            </div>
+
+                            <div class="tour-description">
+                                @tour.Descripcion
+                            </div>
+
+                            <div class="tour-details">
+                                <div class="detail-item">
+                                    <i class="mdi mdi-calendar-range"></i>
+                                    <span>@tour.FechaInicioFormateada - @tour.FechaFinFormateada</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-clock-outline"></i>
+                                    <span>@tour.DuracionEnDias día@(tour.DuracionEnDias != 1 ? "s" : "")</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="mdi mdi-account-circle"></i>
+                                    <span>Organizado por @tour.NombreCreador</span>
+                                </div>
+                            </div>
+
+                            <div class="tour-progress">
+                                <div class="progress-info">
+                                    <span>Ocupación: @tour.PersonasReservadas/@tour.CantidadPersonas personas</span>
+                                    <span>@tour.PorcentajeOcupacion.ToString("F0")%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: @tour.PorcentajeOcupacion.ToString("F0")%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tour-actions">
+                            <a href="/Reservas/Detalle/@tour.IdTour" class="btn-modern btn-secondary">
+                                <i class="mdi mdi-eye"></i>
+                                Ver Detalles
+                            </a>
+                            @if (tour.TieneCuposDisponibles)
+                            {
+                                <a href="/Reservas/CrearReserva?idTour=@tour.IdTour" class="btn-modern btn-primary">
+                                    <i class="mdi mdi-calendar-plus"></i>
+                                    Reservar Ahora
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn-modern btn-disabled" disabled>
+                                    <i class="mdi mdi-close-circle"></i>
+                                    Sin Cupos
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="mdi mdi-compass-off"></i>
+                </div>
+                <h4 class="empty-title">No hay tours disponibles</h4>
+                <p class="empty-subtitle">No se encontraron tours disponibles para reservar en este momento.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .explorar-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-radius: 20px;
+        padding: 30px 40px;
+        margin-bottom: 30px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+    .header-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .breadcrumb-nav {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-current {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .header-stats {
+        z-index: 1;
+        position: relative;
+    }
+
+    .stat-badge {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px 25px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+
+    .filters-section {
+        margin-bottom: 30px;
+    }
+
+    .filters-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        padding: 25px 30px;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .filters-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr auto;
+        gap: 25px;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #374151;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #374151;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+    .price-range {
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #e5e7eb;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+    }
+
+        .price-range:hover {
+            opacity: 1;
+        }
+
+        .price-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+        }
+
+    .price-display {
+        font-weight: 600;
+        color: #10b981;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-modern {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    }
+
+        .btn-modern.btn-outline {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-modern.btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+        }
+
+        .btn-modern.btn-disabled {
+            background: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .btn-modern:hover:not(.btn-disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+
+        .btn-modern.btn-primary:hover {
+            color: white;
+        }
+
+        .btn-modern.btn-secondary:hover {
+            color: white;
+        }
+
+    .tours-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 30px;
+    }
+
+    .tour-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+        .tour-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+    .tour-image {
+        height: 200px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+        .tour-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="pattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23pattern)"/></svg>');
+        }
+
+    .tour-badge {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: white;
+        z-index: 2;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    .availability-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 3;
+    }
+
+    .cupos-disponibles {
+        background: rgba(255, 255, 255, 0.9);
+        color: #059669;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .price-tag {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 12px 16px;
+        border-radius: 15px;
+        text-align: center;
+        z-index: 3;
+        backdrop-filter: blur(10px);
+    }
+
+    .price-amount {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #059669;
+        line-height: 1;
+    }
+
+    .price-label {
+        font-size: 0.7rem;
+        color: #6b7280;
+        font-weight: 500;
+    }
+
+    .tour-content {
+        padding: 25px;
+    }
+
+    .tour-header {
+        margin-bottom: 15px;
+    }
+
+    .tour-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #374151;
+        margin: 0 0 8px 0;
+        line-height: 1.3;
+    }
+
+    .tour-destination {
+        color: #6b7280;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+    }
+
+        .tour-destination i {
+            color: #10b981;
+        }
+
+    .tour-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .tour-details {
+        margin-bottom: 20px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+        .detail-item i {
+            color: #10b981;
+            font-size: 1rem;
+            width: 16px;
+        }
+
+    .tour-progress {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 12px;
+        border-left: 4px solid #10b981;
+    }
+
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: #e5e7eb;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #059669);
+        border-radius: 3px;
+        transition: width 0.3s ease;
+    }
+
+    .tour-actions {
+        display: flex;
+        gap: 12px;
+        padding: 0 25px 25px 25px;
+    }
+
+        .tour-actions .btn-modern {
+            flex: 1;
+            justify-content: center;
+            font-size: 0.85rem;
+            padding: 10px 16px;
+        }
+
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        color: #d1d5db;
+        margin-bottom: 20px;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 10px;
+    }
+
+    .empty-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    @@media only screen and (max-width: 1024px) {
+        .explorar-container
+
+    {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .page-header {
+        padding: 25px 20px;
+    }
+
+    .filters-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .filter-actions {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+
+    .tours-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+    }
+
+    }
+
+    @@media only screen and (max-width: 768px) {
+        .explorar-container
+
+    {
+        padding: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .filters-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .filter-actions {
+        grid-column: 1;
+        justify-self: stretch;
+    }
+
+    .tours-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tour-actions {
+        flex-direction: column;
+    }
+
+    }
+
+    @@media only screen and (max-width: 480px) {
+        .explorar-container
+
+    {
+        padding: 8px;
+    }
+
+    .page-header {
+        padding: 15px 10px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .filters-card {
+        padding: 20px 15px;
+    }
+
+    .tour-content {
+        padding: 20px;
+    }
+
+    .tour-actions {
+        padding: 0 20px 20px 20px;
+    }
+
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtroBusqueda = document.getElementById('filtro-busqueda');
+        const filtroPrecio = document.getElementById('filtro-precio');
+        const precioValor = document.getElementById('precio-valor');
+        const filtroCupos = document.getElementById('filtro-cupos');
+        const limpiarFiltros = document.getElementById('limpiar-filtros');
+        const toursGrid = document.getElementById('tours-grid');
+
+        function aplicarFiltros() {
+            const busqueda = filtroBusqueda.value.toLowerCase();
+            const precioMax = parseInt(filtroPrecio.value);
+            const cuposMin = filtroCupos.value;
+
+            const cards = toursGrid.querySelectorAll('.tour-card');
+
+            cards.forEach(card => {
+                const nombre = card.dataset.nombre || '';
+                const destino = card.dataset.destino || '';
+                const precio = parseFloat(card.dataset.precio || '0');
+                const cupos = parseInt(card.dataset.cupos || '0');
+
+                const coincideBusqueda = busqueda === '' ||
+                                       nombre.includes(busqueda) ||
+                                       destino.includes(busqueda);
+
+                const coincidePrecio = precio <= precioMax;
+                const coincideCupos = cuposMin === '' || cupos >= parseInt(cuposMin);
+
+                if (coincideBusqueda && coincidePrecio && coincideCupos) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function actualizarPrecio() {
+            const valor = parseInt(filtroPrecio.value);
+            precioValor.textContent = valor.toLocaleString();
+        }
+
+        if (filtroBusqueda) filtroBusqueda.addEventListener('input', aplicarFiltros);
+        if (filtroPrecio) {
+            filtroPrecio.addEventListener('input', function() {
+                actualizarPrecio();
+                aplicarFiltros();
+            });
+        }
+        if (filtroCupos) filtroCupos.addEventListener('change', aplicarFiltros);
+
+        if (limpiarFiltros) {
+            limpiarFiltros.addEventListener('click', function() {
+                filtroBusqueda.value = '';
+                filtroPrecio.value = 500000;
+                filtroCupos.value = '';
+                actualizarPrecio();
+                aplicarFiltros();
+            });
+        }
+
+        actualizarPrecio();
+
+        const tourCards = document.querySelectorAll('.tour-card');
+        tourCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    });
+</script>
